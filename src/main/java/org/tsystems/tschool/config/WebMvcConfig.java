@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages =  "org.tsystems.tschool")
+@ComponentScan(basePackages =  "org.tsystems.tschool.controller")
 public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     public InternalResourceViewResolver resolver() {
