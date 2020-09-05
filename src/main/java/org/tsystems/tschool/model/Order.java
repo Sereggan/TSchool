@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 public class Order {
 
-    private Client client;
+    private User user;
 
     private Address address;
 
@@ -21,7 +21,7 @@ public class Order {
 
     private String deliveryMethod;
 
-    private List<Good> goodList;
+    private List<Box> boxList;
 
     private String PaymentStatus;
 

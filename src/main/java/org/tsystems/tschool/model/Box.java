@@ -5,21 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Client {
+public class Box {
 
-    private String name;
+    private String title;
 
-    private String secondName;
+    private int price;
 
-    private Date birthday;
+    private String category;
 
-    private String email;
+    private String weight;
 
-    private String password;
+    private String color;
+
+    private int quantity;
 }

@@ -5,23 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Good {
+public class User {
 
-    private String title;
+    private String name;
 
-    private int price;
+    private String secondName;
 
-    private String Category;
+    private Date birthday;
 
-    private String brand;
+    private String email;
 
-    private int power;
-
-    private String color;
-
-    private int quantity;
+    private String password;
 }
