@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class TestController {
+public class OrderController {
 
     @RequestMapping("/")
     public String getIndexPage(Model model){

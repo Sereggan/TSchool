@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 public class Order {
 
-    private User user;
+    //private User user;
 
     private Address address;
 
