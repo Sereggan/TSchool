@@ -7,7 +7,9 @@ public class ApplicationInitializer extends
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[0];
+        return new Class[] {
+                AppContext.class
+        };
     }
 
     @Override
