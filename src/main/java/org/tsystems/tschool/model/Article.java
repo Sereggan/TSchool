@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,9 +35,9 @@ public class Article {
 
     private int quantity;
 
-    @OneToOne(mappedBy = "order")
-    OrderItem orderItem;
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<OrderItem> orderItem = new HashSet<>();
 
-    @OneToOne(mappedBy = "article")
-    CartItem cartItem;
+    @OneToMany(mappedBy = "article", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<CartItem> cartItem = new HashSet<>();
 }

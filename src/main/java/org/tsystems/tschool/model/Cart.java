@@ -27,7 +27,7 @@ public class Cart {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy="cart")
+    @OneToMany(mappedBy="cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<CartItem> cartItems = new HashSet<>();
 
     @NotNull

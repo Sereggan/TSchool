@@ -25,7 +25,7 @@ public class OrderItem {
     @JoinColumn(name="order_id", nullable=false)
     private Order order;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "article_id", referencedColumnName = "id")
     private Article article;
 

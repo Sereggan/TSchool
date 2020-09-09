@@ -33,6 +33,7 @@ public class User {
     private String lastName;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "user_birthday")
     private LocalDate birthday;
 
     @Email

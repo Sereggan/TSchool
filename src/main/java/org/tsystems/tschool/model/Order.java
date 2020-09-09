@@ -39,7 +39,7 @@ public class Order {
     @Column(name = "delivery_method")
     private String deliveryMethod;
 
-    @OneToMany(mappedBy="order")
+    @OneToMany(mappedBy="order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @NotNull
