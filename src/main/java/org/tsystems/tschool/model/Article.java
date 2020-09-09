@@ -33,9 +33,9 @@ public class Article {
 
     private int quantity;
 
-    @OneToOne(mappedBy = "address")
+    @OneToOne(mappedBy = "order")
     OrderItem orderItem;
 
-    @OneToOne(mappedBy = "address")
+    @OneToOne(mappedBy = "article")
     CartItem cartItem;
 }
