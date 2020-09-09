@@ -5,11 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Box {
+@Entity
+@Table(name = "article")
+public class Article {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id;
+
 
     private String title;
 
@@ -22,4 +32,10 @@ public class Box {
     private String color;
 
     private int quantity;
+
+    @OneToOne(mappedBy = "address")
+    OrderItem orderItem;
+
+    @OneToOne(mappedBy = "address")
+    CartItem cartItem;
 }
