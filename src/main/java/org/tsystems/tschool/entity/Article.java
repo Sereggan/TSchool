@@ -1,4 +1,4 @@
-package org.tsystems.tschool.model;
+package org.tsystems.tschool.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,17 +23,28 @@ public class Article {
     @Column(name = "id")
     private Long id;
 
-
+    @NotNull
+    @Column(name = "title")
     private String title;
 
+    @NotNull
+    @Column(name = "price")
     private int price;
 
+    @NotNull
+    @Column(name = "category")
     private String category;
 
+    @NotNull
+    @Column(name = "weight")
     private String weight;
 
+    @NotNull
+    @Column(name = "color")
     private String color;
 
+    @NotNull
+    @Column(name = "quantity")
     private int quantity;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

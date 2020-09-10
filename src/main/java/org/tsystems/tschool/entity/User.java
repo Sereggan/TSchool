@@ -1,4 +1,4 @@
-package org.tsystems.tschool.model;
+package org.tsystems.tschool.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 
 @AllArgsConstructor
@@ -16,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -34,7 +35,7 @@ public class User {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "user_birthday")
-    private LocalDate birthday;
+    private Calendar birthday;
 
     @Email
     @NotNull(message = "Email cant't be empty")

@@ -1,4 +1,4 @@
-package org.tsystems.tschool.model;
+package org.tsystems.tschool.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

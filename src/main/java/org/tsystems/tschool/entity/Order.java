@@ -1,4 +1,4 @@
-package org.tsystems.tschool.model;
+package org.tsystems.tschool.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "order")
+@Table(name = "user_order")
 public class Order {
 
     @Id
@@ -24,7 +24,7 @@ public class Order {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name="order_id", nullable=false)
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -32,11 +32,11 @@ public class Order {
     private Address address;
 
     @NotNull
-    @Column(name = "payment_method")
+    @Column(name = "payment")
     private String paymentMethod;
 
     @NotNull
-    @Column(name = "delivery_method")
+    @Column(name = "delivery")
     private String deliveryMethod;
 
     @OneToMany(mappedBy="order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
