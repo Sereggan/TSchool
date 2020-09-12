@@ -1,5 +1,6 @@
 package org.tsystems.tschool.service.HibernateJPA;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tsystems.tschool.dao.ArticleDAO;
 import org.tsystems.tschool.entity.Article;

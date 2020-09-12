@@ -1,21 +1,20 @@
 package org.tsystems.tschool.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.OrderItem;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
 public class ArticleDAO {
 
-    private final EntityManager entityManager;
-
-    public ArticleDAO(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    @PersistenceContext
+    EntityManager entityManager;
 
     public List getAllArticles(){
         return entityManager.createQuery("select e from Article e")
