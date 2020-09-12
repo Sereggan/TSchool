@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @PropertySource("classpath:database.properties")
-@ComponentScan("org.tsystems.tschool.*")
+@ComponentScan("org.tsystems.tschool")
 @EnableTransactionManagement
 public class AppContext {
 
