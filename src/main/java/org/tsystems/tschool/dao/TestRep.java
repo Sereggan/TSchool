@@ -1,4 +1,4 @@
-package org.tsystems.tschool.repository;
+package org.tsystems.tschool.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;

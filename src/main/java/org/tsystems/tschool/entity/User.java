@@ -8,15 +8,16 @@ import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
+@Entity(name = "User")
 @Table(name = "users")
 public class User {
 
@@ -46,9 +47,13 @@ public class User {
     @Column(name = "user_password")
     private String password;
 
-    @NotNull
-    @Column(name = "user_role")
-    private String role;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinTable(name = "user_role",
+            joinColumns = {
+                    @JoinColumn(name = "user_id")},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "role_id")})
+    private Set<Role> roles = new HashSet<>();
 
     @OneToOne(mappedBy = "user")
     private Cart cart;

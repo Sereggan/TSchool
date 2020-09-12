@@ -1,9 +1,6 @@
 package org.tsystems.tschool.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,7 +9,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
+@EqualsAndHashCode
+@Entity(name = "Cart_item")
 @Table(name = "cart_item")
 public class CartItem {
 

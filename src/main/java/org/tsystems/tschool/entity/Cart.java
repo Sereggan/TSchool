@@ -14,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
+@Entity(name = "Cart")
 @Table(name = "cart")
 public class Cart {
 

@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
+@Entity(name = "Order")
 @Table(name = "user_order")
 public class Order {
 
@@ -24,7 +24,7 @@ public class Order {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="order_id", nullable=false)
+    @JoinColumn(name="user_id", nullable=false)
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
