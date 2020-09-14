@@ -2,11 +2,13 @@ package org.tsystems.tschool.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.service.ArticleService;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,18 +23,40 @@ public class ArticleController {
 
     @GetMapping()
     public String getIndexPage(Model model, HttpSession session) {
-        List<Article> articleList = new ArrayList<>();
-//        articleList.add(new Article("title1",1,"category1","weight","black",10));
-//        articleList.add(new Article("title2",1,"category2","weight","black",15));
-//        articleList.add(new Article("title3",1,"category3","weight","black",1));
-
-        model.addAttribute("articles", articleList);
         return "index";
     }
 
     @GetMapping("/articles")
     public String getAllArticlesPage(Model model){
-                model.addAttribute("articlesList",articleService.findAll());
+                model.addAttribute("articles",articleService.findAll());
                 return "employee/articlesListPage";
     }
+
+    @GetMapping("/articles/add-article-page")
+    public String getAddArticlePage(Article article){
+        return "employee/add-article-page";
+    }
+
+    @PostMapping("/articles/add")
+    public String addArticle( @ModelAttribute("article") @Valid Article article, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "employee/add-article-page";
+        }
+        articleService.saveArticle(article);
+        return "redirect:/articles";
+    }
+
+    @GetMapping("/articles/edit/{id}")
+    public String editArticle(@PathVariable Long id, Model model){
+        model.addAttribute(articleService.findById(id));
+        return "employee/edit-article-page";
+    }
+
+
+
+//    @RequestMapping("/articles/delete/{id}")
+//    public String deleteArticle(@PathVariable String id){
+//        articleService.removeArticleById(Long.parseLong(id));
+//        return "redirect:/articles";
+//    }
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,23 +24,23 @@ public class Article {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
+    @NotEmpty(message = "Title cant be empty")
     @Column(name = "title")
     private String title;
 
-    @NotNull
+    @NotNull(message = "Price cant be empty")
     @Column(name = "price")
-    private int price;
+    private Float price;
 
-    @NotNull
+    @NotEmpty(message = "Category cant be empty")
     @Column(name = "category")
     private String category;
 
-    @NotNull
+    @NotNull(message = "Weight cant be empty")
     @Column(name = "weight")
-    private String weight;
+    private Float weight;
 
-    @NotNull
+    @NotEmpty(message = "Color cant be empty")
     @Column(name = "color")
     private String color;
 
