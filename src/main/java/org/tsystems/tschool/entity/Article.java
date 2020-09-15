@@ -46,7 +46,7 @@ public class Article {
 
     @NotNull
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<OrderItem> orderItem = new HashSet<>();

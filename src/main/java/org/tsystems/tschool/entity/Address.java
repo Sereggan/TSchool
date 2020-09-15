@@ -31,7 +31,7 @@ public class Address {
 
     @NotNull
     @Column(name = "postalCode")
-    private int postalCode;
+    private Integer postalCode;
 
     @NotNull
     @Column(name = "street")
@@ -43,5 +43,5 @@ public class Address {
 
     @NotNull
     @Column(name = "flat")
-    private int flat;
+    private Integer flat;
 }

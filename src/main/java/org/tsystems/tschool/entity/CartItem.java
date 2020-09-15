@@ -23,7 +23,7 @@ public class CartItem {
     @JoinColumn(name="cart_id", nullable=false)
     private Cart cart;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "article_id", referencedColumnName = "id")
     private Article article;
 

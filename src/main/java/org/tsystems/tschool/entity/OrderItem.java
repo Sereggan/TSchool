@@ -29,5 +29,5 @@ public class OrderItem {
 
     @NotNull
     @Column(name = "order_item_quantity")
-    private int quantity;
+    private Integer quantity;
 }

@@ -9,27 +9,29 @@
     <div class="card">
         <div class="card-body">
             <a href="/" class="btn btn-danger">Home</a>
-            <a href="/articles/add-article-page" class="btn btn-primary"><i
-                    class="fas fa-user-plus ml-2"> Add Article</i></a>
-            <div th:switch="${articles}" class="container my-5">
+            <div th:switch="${orders}" class="container my-5">
                 <div class="col-md-10">
-                    <h2 th:case="null">No Articles yet!</h2>
+                    <h2 th:case="null">No Orders yet!</h2>
                     <div th:case="*">
                         <table class="table table-striped table-responsive-md">
                             <thead>
                             <tr>
-                                <th>Title</th>
-                                <th>Category</th>
-                                <th>Price</th>
+                                <th>id</th>
+                                <th>Payment Method</th>
+                                <th>Delivery Method</th>
+                                <th>Payment Status</th>
+                                <th>Order Status</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="article : ${articles}">
-                                <td th:text="${article.title}"></td>
-                                <td th:text="${article.category}"></td>
-                                <td th:text="${article.price}"></td>
-                                <td><a th:href="@{/articles/edit/{id}(id=${article.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i>Edit Article</a></td>
+                            <tr th:each="order : ${orders}">
+                                <td th:text="${order.id}"></td>
+                                <td th:text="${order.paymentMethod}"></td>
+                                <td th:text="${order.deliveryMethod}"></td>
+                                <td th:text="${order.isPaid} ? 'Paid' : 'Unpaid'"></td>
+                                <td th:text="${order.orderStatus}"></td>
+                                <td><a th:href="@{/orders/edit/{id}(id=${order.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i>Edit Order</a></td>
                             </tr>
                             </tbody>
                         </table>

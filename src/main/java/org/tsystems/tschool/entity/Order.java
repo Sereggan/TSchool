@@ -32,19 +32,19 @@ public class Order {
     private Address address;
 
     @NotNull
-    @Column(name = "payment")
+    @Column(name = "payment_method")
     private String paymentMethod;
 
     @NotNull
     @Column(name = "delivery")
     private String deliveryMethod;
 
-    @OneToMany(mappedBy="order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @NotNull
     @Column(name = "payment_status")
-    private boolean isPaid;
+    private Boolean isPaid;
 
     @NotNull
     @Column(name = "order_status")

@@ -21,8 +21,8 @@ public class ArticleDAO {
     }
 
     public List getAllArticlesByOrderItem(OrderItem orderItem){
-        return entityManager.createQuery("SELECT e from Article e where e.orderItem = ?")
-                .setParameter(0, orderItem)
+        return entityManager.createQuery("SELECT e from Article e where e.orderItem = ?1")
+                .setParameter(1, orderItem)
                 .getResultList();
     }
 

@@ -32,5 +32,5 @@ public class Cart {
 
     @NotNull
     @Column(name = "cart_totalcost")
-    private double totalCost;
+    private Double totalCost;
 }
