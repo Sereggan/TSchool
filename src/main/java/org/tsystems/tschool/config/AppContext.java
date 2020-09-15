@@ -72,4 +72,4 @@ public class AppContext {
         properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
         return properties;
     }
-    }
+}
