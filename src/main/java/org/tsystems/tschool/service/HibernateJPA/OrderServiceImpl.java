@@ -24,6 +24,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List findAllByOrderId(Long orderId) {
+        return orderDAO.findOrderItemsByOrderId(orderId);
+    }
+
+    @Override
     public Optional<Order> findById(Long id) {
         return Optional.empty();
     }

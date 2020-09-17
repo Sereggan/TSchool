@@ -23,4 +23,10 @@ public class OrderDAO {
                 .setParameter(1, userId)
                 .getResultList();
     }
+
+    public List findOrderItemsByOrderId(Long orderId){
+        return entityManager.createQuery("SELECT e from Order_item e where e.order.id = ?1")
+                .setParameter(1, orderId)
+                .getResultList();
+    }
 }

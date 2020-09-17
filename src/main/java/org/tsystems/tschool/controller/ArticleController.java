@@ -22,18 +22,18 @@ public class ArticleController {
     @GetMapping("")
     public String getAllArticlesPage(Model model){
                 model.addAttribute("articles",articleService.findAll());
-                return "employee/articlesListPage";
+                return "articles/articlesListPage";
     }
 
     @GetMapping("/add-article-page")
     public String getAddArticlePage(Article article){
-        return "employee/add-article-page";
+        return "articles/add-article-page";
     }
 
     @PostMapping("/add")
     public String addArticle( @ModelAttribute("article") @Valid Article article, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "employee/add-article-page";
+            return "articles/add-article-page";
         }
         articleService.saveArticle(article);
         return "redirect:/articles";
@@ -42,7 +42,7 @@ public class ArticleController {
     @GetMapping("/edit/{id}")
     public String editArticle(@PathVariable Long id, Model model){
         model.addAttribute(articleService.findById(id));
-        return "employee/edit-article-page";
+        return "articles/edit-article-page";
     }
 
 }

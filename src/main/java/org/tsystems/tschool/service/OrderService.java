@@ -14,6 +14,8 @@ public interface OrderService {
 
     public List findAllByUserId(Long userId);
 
+    public List findAllByOrderId(Long userId);
+
     public Optional<Order> findById(Long id);
 
     public void removeOrderById(Long id);

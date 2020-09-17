@@ -15,13 +15,13 @@ public class ArticleDAO {
     @PersistenceContext
     EntityManager entityManager;
 
-    public List getAllArticles(){
-        return entityManager.createQuery("select e from Article e")
+    public List<Article> getAllArticles(){
+        return entityManager.createQuery("select e from Article e", Article.class)
                 .getResultList();
     }
 
-    public List getAllArticlesByOrderItem(OrderItem orderItem){
-        return entityManager.createQuery("SELECT e from Article e where e.orderItem = ?1")
+    public List<Article> getAllArticlesByOrderItem(OrderItem orderItem){
+        return entityManager.createQuery("SELECT e from Article e where e.orderItem = ?1", Article.class)
                 .setParameter(1, orderItem)
                 .getResultList();
     }

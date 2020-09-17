@@ -1,9 +1,6 @@
 package org.tsystems.tschool.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,6 +9,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Getter
 @Setter
 @Entity(name = "Order")
@@ -23,12 +21,19 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="user_id", nullable=false)
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride( name = "country", column = @Column(name = "address_country")),
+            @AttributeOverride( name = "city", column = @Column(name = "address_city")),
+            @AttributeOverride( name = "postalCode", column = @Column(name = "address_postal_code")),
+            @AttributeOverride( name = "street", column = @Column(name = "address_street")),
+            @AttributeOverride( name = "house", column = @Column(name = "address_house")),
+            @AttributeOverride( name = "flat", column = @Column(name = "address_flat"))
+    })
     private Address address;
 
     @NotNull
@@ -49,4 +54,6 @@ public class Order {
     @NotNull
     @Column(name = "order_status")
     private String orderStatus;
+
+
 }

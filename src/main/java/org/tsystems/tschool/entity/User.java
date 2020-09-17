@@ -55,9 +55,9 @@ public class User {
                     @JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet<>();
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user" , cascade = CascadeType.ALL)
     private List<Order> orders;
 }

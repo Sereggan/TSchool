@@ -19,16 +19,16 @@
                             <thead>
                             <tr>
                                 <th>Title</th>
-                                <th>Category</th>
                                 <th>Price</th>
+                                <th>Quantity</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="article : ${articles}">
                                 <td th:text="${article.title}"></td>
-                                <td th:text="${article.category}"></td>
                                 <td th:text="${article.price}"></td>
+                                <td th:text="${article.quantity}"></td>
                                 <td><a th:href="@{/articles/edit/{id}(id=${article.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i>Edit Article</a></td>
                             </tr>
                             </tbody>
