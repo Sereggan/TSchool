@@ -36,7 +36,7 @@ public class ArticleDAO {
         entityManager.remove(articleToRemove);
     }
 
-    @Transactional
+
     public void saveArticle(Article article){
         entityManager.persist(article);
     }

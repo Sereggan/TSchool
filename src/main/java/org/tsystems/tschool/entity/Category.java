@@ -4,14 +4,13 @@ import lombok.*;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
 @Entity(name = "Category")
 @Table(name = "category")
 public class Category {
@@ -30,5 +29,5 @@ public class Category {
     private String description;
 
     @ManyToMany(mappedBy = "categories")
-    Set<Article> articleSet;
+    Set<Article> articleSet = new HashSet<>();
 }

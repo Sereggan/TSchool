@@ -10,7 +10,6 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Getter
 @Setter
 @Entity(name = "Article")
@@ -26,11 +25,11 @@ public class Article {
     @Column(name = "title")
     private String title;
 
-    @NotNull(message = "Price cant be empty")
+    @NotNull(message = "Price cant be 0")
     @Column(name = "price")
     private Float price;
 
-    @NotNull
+    @NotNull(message = "Quantity cant be 0")
     @Column(name = "quantity")
     private Integer quantity;
 
@@ -40,14 +39,10 @@ public class Article {
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<CartItem> cartItem = new HashSet<>();
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(name = "article_category",
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    Set<Category> categories;
-
+    Set<Category> categories = new HashSet<>();
 }

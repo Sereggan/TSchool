@@ -5,7 +5,8 @@ import org.mapstruct.factory.Mappers;
 import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.entity.Article;
 
-@Mapper(componentModel = "spring")
+
+@Mapper
 public interface ArticleDtoMapper {
     ArticleDtoMapper INSTANCE = Mappers.getMapper( ArticleDtoMapper.class );
 

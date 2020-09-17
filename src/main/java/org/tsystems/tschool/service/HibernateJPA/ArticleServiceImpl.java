@@ -10,17 +10,19 @@ import org.tsystems.tschool.entity.OrderItem;
 import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ArticleServiceImpl implements ArticleService {
 
     final
     ArticleDAO articleDAO;
 
-    private ArticleDtoMapper mapper
+    private final ArticleDtoMapper mapper
             = Mappers.getMapper(ArticleDtoMapper.class);
 
     public ArticleServiceImpl(ArticleDAO articleDAO) {
@@ -28,7 +30,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List findAll() {
+    public List<ArticleDto> findAll() {
 
         return articleDAO.getAllArticles().stream()
                 .map(article-> mapper.articleToDto((Article)article))
@@ -41,8 +43,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Optional<Article> findById(Long id) {
-        return Optional.ofNullable(articleDAO.getArticleById(id));
+    public Optional<ArticleDto> findById(Long id) {
+        return Optional.ofNullable(mapper.articleToDto(articleDAO.getArticleById(id)));
     }
 
     @Override
@@ -51,7 +53,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void saveArticle(Article article) {
-        articleDAO.saveArticle(article);
+    public void saveArticle(ArticleDto articleDto) {
+        articleDAO.saveArticle(mapper.DtoToArticle(articleDto));
     }
 }

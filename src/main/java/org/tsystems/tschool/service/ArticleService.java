@@ -1,5 +1,6 @@
 package org.tsystems.tschool.service;
 
+import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.OrderItem;
 
@@ -12,10 +13,10 @@ public interface ArticleService {
 
     public List findAllByOrderItem(OrderItem orderItem);
 
-    public Optional<Article> findById(Long id);
+    public Optional<ArticleDto> findById(Long id);
 
     public void removeArticleById(Long id);
 
-    public void saveArticle(Article article);
+    public void saveArticle(ArticleDto articleDto);
 }
 
