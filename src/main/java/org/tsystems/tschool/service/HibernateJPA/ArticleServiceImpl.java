@@ -56,4 +56,9 @@ public class ArticleServiceImpl implements ArticleService {
     public void saveArticle(ArticleDto articleDto) {
         articleDAO.saveArticle(mapper.DtoToArticle(articleDto));
     }
+
+    @Override
+    public void updateArticle(ArticleDto articleDto) {
+        articleDAO.updateArticle(mapper.DtoToArticle(articleDto));
+    }
 }

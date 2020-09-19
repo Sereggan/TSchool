@@ -42,15 +42,21 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Optional<CategoryDto> findById(Long id) {
-        return Optional.empty();
+        return Optional.ofNullable(mapper.categoryToDto(categoryDAO.getCategoryById(id)));
     }
 
     @Override
     public void removeCategoryById(Long id) {
+        categoryDAO.removeCategoryById(id);
     }
 
     @Override
     public void saveCategory(CategoryDto categoryDto) {
         categoryDAO.saveCategory(mapper.DtoToCategory(categoryDto));
+    }
+
+    @Override
+    public void updateCategory(CategoryDto categoryDto) {
+        categoryDAO.updateCategory(mapper.DtoToCategory(categoryDto));
     }
 }

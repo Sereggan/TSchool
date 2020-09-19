@@ -8,7 +8,9 @@ import org.tsystems.tschool.dto.CategoryDto;
 
 import org.tsystems.tschool.service.CategoryService;
 
+import javax.swing.text.html.Option;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/categories")
@@ -42,8 +44,31 @@ public class CategoryController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editCategory(@PathVariable Long id, Model model, CategoryDto categoryDto){
-        model.addAttribute("categoryDto", categoryService.findById(id));
-        return "categories/edit-category-page";
+    public String editCategoryPage(@PathVariable Long id, Model model){
+        Optional<CategoryDto> category = categoryService.findById(id);
+        if(category.isPresent()){
+            model.addAttribute("categoryDto", category.get());
+            return "categories/edit-category-page";
+        }else {
+            return "redirect:/categories";
+        }
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editCategory(@PathVariable Long id, @ModelAttribute("categoryDto") @Valid CategoryDto categoryDto, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "categories/edit-category-page";
+        }
+        if(!categoryService.findById(id).isPresent()){
+            return "redirect:/categories";
+        }
+        categoryService.updateCategory(categoryDto);
+        return "redirect:/categories";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteCategoryById(@PathVariable Long id){
+        categoryService.removeCategoryById(id);
+        return "redirect:/categories";
     }
 }

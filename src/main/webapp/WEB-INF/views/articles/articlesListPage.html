@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-<!DOCTYPE html><html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -21,6 +20,7 @@
                                 <th>Title</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
+                                <th>Categories</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -29,7 +29,8 @@
                                 <td th:text="${article.title}"></td>
                                 <td th:text="${article.price}"></td>
                                 <td th:text="${article.quantity}"></td>
-                                <td><a th:href="@{/articles/edit/{id}(id=${article.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i>Edit Article</a></td>
+                                <td><a th:href="@{/articles/article-info-page/{id}(id=${article.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i>Edit Article</a>
+                                    <a th:href="@{/articles/delete/{id}(id=${article.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i>Delete Article</a>
                             </tr>
                             </tbody>
                         </table>

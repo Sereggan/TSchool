@@ -53,4 +53,13 @@ public class Article {
             inverseJoinColumns = @JoinColumn(name = "value_id")
     )
     Set<Value> values = new HashSet<>();
+
+    public void addValue(Value value){
+        values.add(value);
+    }
+
+    public void addCategory(Category category){
+        categories.add(category);
+    }
+
 }

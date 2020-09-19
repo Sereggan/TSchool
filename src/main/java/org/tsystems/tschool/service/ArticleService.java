@@ -18,5 +18,7 @@ public interface ArticleService {
     public void removeArticleById(Long id);
 
     public void saveArticle(ArticleDto articleDto);
+
+    public void updateArticle(ArticleDto articleDto);
 }
 

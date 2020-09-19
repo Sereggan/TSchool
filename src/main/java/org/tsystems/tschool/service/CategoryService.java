@@ -19,4 +19,6 @@ public interface CategoryService {
     public void removeCategoryById(Long id);
 
     public void saveCategory(CategoryDto categoryDto);
+
+    public void updateCategory(CategoryDto categoryDto);
 }
