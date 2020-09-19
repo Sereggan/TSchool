@@ -12,6 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(exclude = {"orderItem","cartItem","categories","values"})
 @Entity(name = "Article")
 @Table(name = "article")
 public class Article {
@@ -45,4 +46,11 @@ public class Article {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     Set<Category> categories = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
+    @JoinTable(name = "article_value",
+            joinColumns = @JoinColumn(name = "article_id"),
+            inverseJoinColumns = @JoinColumn(name = "value_id")
+    )
+    Set<Value> values = new HashSet<>();
 }

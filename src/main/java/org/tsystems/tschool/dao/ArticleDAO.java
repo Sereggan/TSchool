@@ -6,7 +6,6 @@ import org.tsystems.tschool.entity.OrderItem;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -30,7 +29,6 @@ public class ArticleDAO {
         return entityManager.find(Article.class, id);
     }
 
-    @Transactional
     public void removeArticleById(Long id){
         Article articleToRemove = entityManager.find(Article.class, id);
         entityManager.remove(articleToRemove);
@@ -41,7 +39,6 @@ public class ArticleDAO {
         entityManager.persist(article);
     }
 
-    @Transactional
     public void updateArticle(Article article){
         entityManager.merge(article);
     }

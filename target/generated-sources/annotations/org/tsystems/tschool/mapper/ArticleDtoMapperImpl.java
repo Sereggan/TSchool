@@ -3,6 +3,7 @@ package org.tsystems.tschool.mapper;
 import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.Generated;
+import org.springframework.stereotype.Component;
 import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.dto.CategoryDto;
 import org.tsystems.tschool.entity.Article;
@@ -10,9 +11,10 @@ import org.tsystems.tschool.entity.Category;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-09-17T23:31:08+0300",
+    date = "2020-09-19T18:01:31+0300",
     comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 11.0.7 (JetBrains s.r.o.)"
 )
+@Component
 public class ArticleDtoMapperImpl implements ArticleDtoMapper {
 
     @Override
@@ -57,7 +59,7 @@ public class ArticleDtoMapperImpl implements ArticleDtoMapper {
         CategoryDto categoryDto = new CategoryDto();
 
         categoryDto.setId( category.getId() );
-        categoryDto.setName( category.getName() );
+        categoryDto.setTitle( category.getTitle() );
         categoryDto.setDescription( category.getDescription() );
 
         return categoryDto;
@@ -84,7 +86,7 @@ public class ArticleDtoMapperImpl implements ArticleDtoMapper {
         Category category = new Category();
 
         category.setId( categoryDto.getId() );
-        category.setName( categoryDto.getName() );
+        category.setTitle( categoryDto.getTitle() );
         category.setDescription( categoryDto.getDescription() );
 
         return category;
