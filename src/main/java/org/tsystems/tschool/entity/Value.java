@@ -1,9 +1,6 @@
 package org.tsystems.tschool.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,6 +10,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
+@EqualsAndHashCode(exclude = {"id", "category", "articles"})
 @Entity(name = "Value")
 @Table(name = "value")
 public class Value {

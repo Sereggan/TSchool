@@ -32,6 +32,15 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     Set<Article> articleSet = new HashSet<>();
 
-    @OneToMany(mappedBy="category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="category", fetch = FetchType.EAGER, cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Value> values = new HashSet<>();
+
+    public void addValue(Value value) {
+        values.add(value);
+    }
+
+    public void removeValue(Value value) {
+        value.setCategory(null);
+        values.remove(value);
+    }
 }

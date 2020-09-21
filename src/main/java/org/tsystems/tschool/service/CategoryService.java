@@ -2,6 +2,7 @@ package org.tsystems.tschool.service;
 
 import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.dto.CategoryDto;
+import org.tsystems.tschool.dto.CategoryValueDto;
 import org.tsystems.tschool.entity.Category;
 import org.tsystems.tschool.entity.OrderItem;
 
@@ -21,4 +22,8 @@ public interface CategoryService {
     public void saveCategory(CategoryDto categoryDto);
 
     public void updateCategory(CategoryDto categoryDto);
+
+    public void addValue(CategoryValueDto categoryValueDto);
+
+    public void removeValue(Long valueId);
 }

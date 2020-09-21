@@ -3,9 +3,10 @@ package org.tsystems.tschool.service.HibernateJPA;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import org.tsystems.tschool.dao.CategoryDAO;
+import org.tsystems.tschool.dao.ValueDAO;
 import org.tsystems.tschool.dto.CategoryDto;
-import org.tsystems.tschool.entity.Article;
-import org.tsystems.tschool.entity.Category;
+import org.tsystems.tschool.dto.CategoryValueDto;
+import org.tsystems.tschool.entity.Value;
 import org.tsystems.tschool.mapper.CategoryDtoMapper;
 import org.tsystems.tschool.service.CategoryService;
 
@@ -20,12 +21,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryDAO categoryDAO;
 
+    private final ValueDAO valueDAO;
+
     private final CategoryDtoMapper mapper
             = Mappers.getMapper(CategoryDtoMapper.class);
 
 
-    public CategoryServiceImpl(CategoryDAO categoryDAO) {
+    public CategoryServiceImpl(CategoryDAO categoryDAO, ValueDAO valueDAO) {
         this.categoryDAO = categoryDAO;
+        this.valueDAO = valueDAO;
     }
 
     @Override
@@ -58,5 +62,15 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void updateCategory(CategoryDto categoryDto) {
         categoryDAO.updateCategory(mapper.DtoToCategory(categoryDto));
+    }
+
+    @Override
+    public void addValue(CategoryValueDto categoryValueDto) {
+        valueDAO.addValue(Value.builder().value(categoryValueDto.getValue()).build(),categoryValueDto.getCategoryId());
+    }
+
+    @Override
+    public void removeValue(Long valueId) {
+        valueDAO.removeValueFromCategory(valueId);
     }
 }

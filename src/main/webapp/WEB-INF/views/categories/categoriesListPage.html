@@ -30,7 +30,10 @@
                                 <td th:text="${category.title}"></td>
                                 <td th:text="${category.description}"></td>
                                 <td><a th:href="@{/categories/edit/{id}(id=${category.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i>Edit Category</a>
-                                    <a th:href="@{/categories/delete/{id}(id=${category.id})}" class="btn btn-danger"><i class="fas fa-user-times ml-2"></i>Delete Category</a></td>
+                                    <a th:href="@{/categories/delete/{id}(id=${category.id})}" class="btn btn-danger"><i class="fas fa-user-times ml-2"></i>Delete Category</a>
+                                <a th:href="@{/categories/values/{id}(id=${category.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i>Edit Values</a>
+                                </td>
+
                             </tr>
                             </tbody>
                         </table>

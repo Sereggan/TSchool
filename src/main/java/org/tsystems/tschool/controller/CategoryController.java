@@ -6,9 +6,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.tsystems.tschool.dto.CategoryDto;
 
+import org.tsystems.tschool.dto.CategoryValueDto;
 import org.tsystems.tschool.service.CategoryService;
 
-import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -38,7 +38,6 @@ public class CategoryController {
         if (result.hasErrors()) {
             return "categories/add-category-page";
         }
-
         categoryService.saveCategory(categoryDto);
         return "redirect:/categories";
     }
@@ -55,7 +54,7 @@ public class CategoryController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editCategory(@PathVariable Long id, @ModelAttribute("categoryDto") @Valid CategoryDto categoryDto, BindingResult result, Model model) {
+    public String editCategory(@PathVariable Long id, @ModelAttribute("categoryDto") @Valid CategoryDto categoryDto, BindingResult result) {
         if (result.hasErrors()) {
             return "categories/edit-category-page";
         }
@@ -70,5 +69,31 @@ public class CategoryController {
     public String deleteCategoryById(@PathVariable Long id){
         categoryService.removeCategoryById(id);
         return "redirect:/categories";
+    }
+
+    @GetMapping("/values/{id}")
+    public String getCategoryValues(@PathVariable Long id, Model model, CategoryValueDto categoryValueDto){
+        Optional<CategoryDto> category = categoryService.findById(id);
+        if(category.isPresent()){
+            model.addAttribute("categoryDto", category.get());
+            return "categories/category-values-page";
+        }else {
+            return "redirect:/categories";
+        }
+    }
+
+    @PostMapping("/values/{id}/add")
+    public String editCategory(@PathVariable Long id, @ModelAttribute("categoryValueDto") @Valid CategoryValueDto categoryValueDto, BindingResult result) {
+        if (result.hasErrors()) {
+            return "redirect:/categories/values/{id}";
+        }
+        categoryService.addValue(categoryValueDto);
+        return "redirect:/categories/values/{id}";
+    }
+
+    @GetMapping("/values/delete/{id}")
+    public String deleteValueById(@PathVariable Long id){
+        categoryService.removeValue(id);
+        return "redirect:/categories/values/{id}";
     }
 }

@@ -8,10 +8,11 @@ import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.dto.CategoryDto;
 import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Category;
+import org.tsystems.tschool.entity.Value;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-09-19T18:01:31+0300",
+    date = "2020-09-21T23:47:34+0300",
     comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 11.0.7 (JetBrains s.r.o.)"
 )
 @Component
@@ -61,6 +62,10 @@ public class ArticleDtoMapperImpl implements ArticleDtoMapper {
         categoryDto.setId( category.getId() );
         categoryDto.setTitle( category.getTitle() );
         categoryDto.setDescription( category.getDescription() );
+        Set<Value> set = category.getValues();
+        if ( set != null ) {
+            categoryDto.setValues( new HashSet<Value>( set ) );
+        }
 
         return categoryDto;
     }
@@ -88,6 +93,10 @@ public class ArticleDtoMapperImpl implements ArticleDtoMapper {
         category.setId( categoryDto.getId() );
         category.setTitle( categoryDto.getTitle() );
         category.setDescription( categoryDto.getDescription() );
+        Set<Value> set = categoryDto.getValues();
+        if ( set != null ) {
+            category.setValues( new HashSet<Value>( set ) );
+        }
 
         return category;
     }
