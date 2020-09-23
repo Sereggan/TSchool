@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,10 +21,10 @@ public class ArticleDto {
     private String title;
 
     @NotNull(message = "Price cant be empty")
-    @Min(value = 0, message = "Price cant be negative")
+    @Min(value = 0,message = "Price cant be Negative")
     private Float price;
 
-    @NotNull(message = "Quanity cant be empty")
-    @Min(value = 0, message = "Quantity cant be negative")
+    @NotNull(message = "Quantity cant be empty")
+    @Min(value = 0, message = "Quantity cant be Negative")
     private Integer quantity;
 }
