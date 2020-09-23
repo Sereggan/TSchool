@@ -6,12 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.tsystems.tschool.dto.ArticleDto;
-import org.tsystems.tschool.entity.Article;
+import org.tsystems.tschool.dto.CategoryDto;
+import org.tsystems.tschool.dto.CategoryValueDto;
 import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/articles")
@@ -48,28 +48,42 @@ public class ArticleController {
     }
 
     @GetMapping("/edit/article-info-page/{id}")
-    public String getEditArticlePage(@PathVariable Long id, Model model, ArticleDto articleDto){
-        model.addAttribute("articleDto", articleService.findById(id));
-        return "articles/article-info-page";
+    public String getInfoArticlePage(@PathVariable Long id, Model model, ArticleDto articleDto){
+        model.addAttribute("articleDto", articleService.findById(id).get());
+        return "articles/article-edit-page";
     }
 
     @PostMapping("/edit/{id}")
-    public String editArticle(@PathVariable Long id, BindingResult result, @ModelAttribute("articleDto") ArticleDto articleDto){
+    public String editArticle(@PathVariable Long id, @ModelAttribute("articleDto") ArticleDto articleDto, BindingResult result){
         if(result.hasErrors()){
-            return "/articles/article-info-page";
+            return "articles/article-edit-page";
         }
-//        Optional<ArticleDto> existingArticle = articleService.findById(id);
-//        if(existingArticle.isPresent()){
-//            articleService.updateArticle(articleDto);
-//        }else {
-//            articleService.saveArticle(articleDto);
-//        }
         articleService.updateArticle(articleDto);
         return "redirect:/articles";
     }
 
+    @GetMapping("/values/{id}")
+    public String getValuesPage(@PathVariable Long id, Model model){
+        model.addAttribute("articleCategoriesDto", articleService.getAllCategoriesAndValuesByArticleId(id));
+        return "articles/article-values-page";
+    }
 
-    @DeleteMapping("/delete/${id}")
+    @GetMapping("/values/{id}/add/{valueId}")
+    public String addCategory(@PathVariable(name = "id") Long articleId, @PathVariable(name = "valueId") Long valueID) {
+        articleService.addValue(articleId, valueID);
+
+        return "redirect:/articles/values/{id}";
+    }
+
+    @GetMapping("/values/{id}/delete/{valueId}")
+    public String deleteCategory(@PathVariable(name = "id") Long articleId, @PathVariable(name = "valueId") Long valueID) {
+        articleService.deleteValue(articleId, valueID);
+
+        return "redirect:/articles/values/{id}";
+    }
+
+
+    @GetMapping("/delete/{id}")
     public String deleteArticleById(@PathVariable Long id){
         articleService.removeArticleById(id);
         return "redirect:/articles";

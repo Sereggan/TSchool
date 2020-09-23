@@ -19,10 +19,15 @@ public class CategoryDAO {
                 .getResultList();
     }
 
+    public List<Category> findAllByArticleId(Long id){
+        return entityManager.createQuery("select e.categories from Article e where e.id = ?1", Category.class)
+                .setParameter(1, id)
+                .getResultList();
+    }
+
     public Category getCategoryById(Long id){
         return entityManager.find(Category.class, id);
     }
-
 
     public void removeCategoryById(Long id){
         Category category = entityManager.find(Category.class, id);

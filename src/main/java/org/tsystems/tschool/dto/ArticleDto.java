@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,10 +19,10 @@ public class ArticleDto {
     private String title;
 
     @NotNull(message = "Price cant be empty")
+    @Min(value = 0, message = "Price cant be negative")
     private Float price;
 
     @NotNull(message = "Quanity cant be empty")
+    @Min(value = 0, message = "Quantity cant be negative")
     private Integer quantity;
-
-    private Set<CategoryDto> categories = new HashSet<>();
 }

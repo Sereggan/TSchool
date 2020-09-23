@@ -1,18 +1,13 @@
 package org.tsystems.tschool.mapper;
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
 import org.tsystems.tschool.dto.ArticleDto;
-import org.tsystems.tschool.dto.CategoryDto;
 import org.tsystems.tschool.entity.Article;
-import org.tsystems.tschool.entity.Category;
-import org.tsystems.tschool.entity.Value;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-09-21T23:47:34+0300",
+    date = "2020-09-22T15:19:29+0300",
     comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 11.0.7 (JetBrains s.r.o.)"
 )
 @Component
@@ -30,7 +25,6 @@ public class ArticleDtoMapperImpl implements ArticleDtoMapper {
         articleDto.setTitle( article.getTitle() );
         articleDto.setPrice( article.getPrice() );
         articleDto.setQuantity( article.getQuantity() );
-        articleDto.setCategories( categorySetToCategoryDtoSet( article.getCategories() ) );
 
         return articleDto;
     }
@@ -47,70 +41,7 @@ public class ArticleDtoMapperImpl implements ArticleDtoMapper {
         article.setTitle( articleDto.getTitle() );
         article.setPrice( articleDto.getPrice() );
         article.setQuantity( articleDto.getQuantity() );
-        article.setCategories( categoryDtoSetToCategorySet( articleDto.getCategories() ) );
 
         return article;
-    }
-
-    protected CategoryDto categoryToCategoryDto(Category category) {
-        if ( category == null ) {
-            return null;
-        }
-
-        CategoryDto categoryDto = new CategoryDto();
-
-        categoryDto.setId( category.getId() );
-        categoryDto.setTitle( category.getTitle() );
-        categoryDto.setDescription( category.getDescription() );
-        Set<Value> set = category.getValues();
-        if ( set != null ) {
-            categoryDto.setValues( new HashSet<Value>( set ) );
-        }
-
-        return categoryDto;
-    }
-
-    protected Set<CategoryDto> categorySetToCategoryDtoSet(Set<Category> set) {
-        if ( set == null ) {
-            return null;
-        }
-
-        Set<CategoryDto> set1 = new HashSet<CategoryDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
-        for ( Category category : set ) {
-            set1.add( categoryToCategoryDto( category ) );
-        }
-
-        return set1;
-    }
-
-    protected Category categoryDtoToCategory(CategoryDto categoryDto) {
-        if ( categoryDto == null ) {
-            return null;
-        }
-
-        Category category = new Category();
-
-        category.setId( categoryDto.getId() );
-        category.setTitle( categoryDto.getTitle() );
-        category.setDescription( categoryDto.getDescription() );
-        Set<Value> set = categoryDto.getValues();
-        if ( set != null ) {
-            category.setValues( new HashSet<Value>( set ) );
-        }
-
-        return category;
-    }
-
-    protected Set<Category> categoryDtoSetToCategorySet(Set<CategoryDto> set) {
-        if ( set == null ) {
-            return null;
-        }
-
-        Set<Category> set1 = new HashSet<Category>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
-        for ( CategoryDto categoryDto : set ) {
-            set1.add( categoryDtoToCategory( categoryDto ) );
-        }
-
-        return set1;
     }
 }

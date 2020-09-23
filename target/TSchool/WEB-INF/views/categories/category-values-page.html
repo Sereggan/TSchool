@@ -6,17 +6,6 @@
 </head>
 <body>
 <div class="container my-2">
-     <form action="#" th:action="@{/categories/values/{id}/add(id=${categoryDto.id})}" th:object="${categoryValueDto}" method="post"
-             modelAttribute="categoryValueDto" >
-        <div class="form-group col-md-8">
-            <label for="value" class="col-form-label">Add Value</label>
-            <input type="text" th:field="*{value}" class="form-control" id="value" placeholder="Value"> <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}" class="text-danger"></span>
-            <input type="hidden" name="categoryId" th:value="${categoryDto.id}" />
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-
-
     <div class="card">
         <div class="card-body">
             <a th:href="@{/categories}" class="btn btn-danger">Home</a>

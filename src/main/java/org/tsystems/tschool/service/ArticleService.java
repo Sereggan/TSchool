@@ -1,5 +1,6 @@
 package org.tsystems.tschool.service;
 
+import org.tsystems.tschool.dto.ArticleCategoriesDto;
 import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.OrderItem;
@@ -20,5 +21,12 @@ public interface ArticleService {
     public void saveArticle(ArticleDto articleDto);
 
     public void updateArticle(ArticleDto articleDto);
+
+    public ArticleCategoriesDto getAllCategoriesAndValuesByArticleId(Long articleId);
+
+    public void addValue(Long articleId, Long valueId);
+
+    public void deleteValue(Long articleId, Long valueId);
+
 }
 

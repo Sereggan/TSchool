@@ -62,4 +62,11 @@ public class Article {
         categories.add(category);
     }
 
+    public void removeValue(Value value){
+        values.remove(value);
+    }
+
+    public void removeCategory(Category category){
+        categories.remove(category);
+    }
 }
