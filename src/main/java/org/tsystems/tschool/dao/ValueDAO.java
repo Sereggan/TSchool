@@ -28,7 +28,16 @@ public class ValueDAO {
         Value value = entityManager.find(Value.class, id);
         Category category = value.getCategory();
         category.removeValue(value);
+        Set<Article> articles = new HashSet<>(value.getArticles());
+
+        if(!articles.isEmpty()){
+            for(Article article:articles){
+                article.removeValue(value);
+            }
+        }
+        category.setArticleSet(articles);
         entityManager.merge(category);
+        entityManager.remove(value);
     }
 
 

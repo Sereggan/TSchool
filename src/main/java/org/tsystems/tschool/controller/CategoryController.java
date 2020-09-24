@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.tsystems.tschool.dto.CategoryDto;
 
 import org.tsystems.tschool.dto.CategoryValueDto;
@@ -72,9 +73,10 @@ public class CategoryController {
     }
 
     @GetMapping("/values/{id}")
-    public String getCategoryValues(@PathVariable Long id, Model model, CategoryValueDto categoryValueDto){
+    public String getCategoryValues(@PathVariable Long id, Model model){
         Optional<CategoryDto> category = categoryService.findById(id);
         if(category.isPresent()){
+            model.addAttribute("categoryValueDto",  new CategoryValueDto());
             model.addAttribute("categoryDto", category.get());
             return "categories/category-values-page";
         }else {
@@ -82,8 +84,8 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/values/{id}/add")
-    public String editCategory(@PathVariable Long id, @ModelAttribute("categoryValueDto") @Valid CategoryValueDto categoryValueDto, BindingResult result) {
+    @PostMapping("/values/add/{id}")
+    public String editCategory(@PathVariable Long id, @ModelAttribute("categoryValueDto") @Valid CategoryValueDto categoryValueDto, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "redirect:/categories/values/{id}";
         }
@@ -94,6 +96,6 @@ public class CategoryController {
     @GetMapping("/values/delete/{id}")
     public String deleteValueById(@PathVariable Long id){
         categoryService.removeValue(id);
-        return "redirect:/categories/values/{id}";
+        return "redirect:/categories";
     }
 }

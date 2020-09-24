@@ -11,7 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode(exclude = {"id", "category", "articles"})
+@EqualsAndHashCode(exclude = {"category", "articles"})
 @Entity(name = "Value")
 @Table(name = "value")
 public class Value {
@@ -27,6 +27,11 @@ public class Value {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    @ManyToMany(mappedBy = "values")
+    @ManyToMany(mappedBy = "values", cascade = { CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST})
     Set<Article> articles = new HashSet<>();
+
+
 }

@@ -29,10 +29,12 @@ public class Category {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories", cascade = {
+            CascadeType.REFRESH, CascadeType.DETACH}
+            )
     Set<Article> articleSet = new HashSet<>();
 
-    @OneToMany(mappedBy="category", fetch = FetchType.EAGER, cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy="category", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE ,orphanRemoval = true)
     private Set<Value> values = new HashSet<>();
 
     public void addValue(Value value) {

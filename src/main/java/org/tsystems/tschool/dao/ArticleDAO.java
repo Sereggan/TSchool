@@ -2,11 +2,13 @@ package org.tsystems.tschool.dao;
 
 import org.springframework.stereotype.Repository;
 import org.tsystems.tschool.entity.Article;
+import org.tsystems.tschool.entity.Category;
 import org.tsystems.tschool.entity.OrderItem;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class ArticleDAO {
@@ -32,6 +34,10 @@ public class ArticleDAO {
     public void removeArticleById(Long id){
         Article articleToRemove = entityManager.find(Article.class, id);
         entityManager.remove(articleToRemove);
+    }
+
+    public Set<Article> getArticlesByCategoryId(Long id){
+        return entityManager.find(Category.class, id).getArticleSet();
     }
 
 
