@@ -27,10 +27,7 @@ public class Value {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    @ManyToMany(mappedBy = "values", cascade = { CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.REFRESH,
-            CascadeType.PERSIST})
+    @ManyToMany(mappedBy = "values")
     Set<Article> articles = new HashSet<>();
 
 

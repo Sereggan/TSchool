@@ -29,9 +29,7 @@ public class Category {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "categories", cascade = {
-            CascadeType.REFRESH, CascadeType.DETACH}
-            )
+    @ManyToMany(mappedBy = "categories")
     Set<Article> articleSet = new HashSet<>();
 
     @OneToMany(mappedBy="category", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE ,orphanRemoval = true)
