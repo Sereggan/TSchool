@@ -1,7 +1,6 @@
 package org.tsystems.tschool.entity;
 
-
-public enum Roles {
+public enum AuthorityType {
     ROLE_EMPLOYEE,
     ROLE_CLIENT
 }

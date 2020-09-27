@@ -23,7 +23,7 @@ public class OrderItem {
     @JoinColumn(name="order_id", nullable=false)
     private Order order;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "article_id", referencedColumnName = "id")
     private Article article;
 

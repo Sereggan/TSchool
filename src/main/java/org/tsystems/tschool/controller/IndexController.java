@@ -13,4 +13,9 @@ public class IndexController {
     public String getIndexPage(Model model, HttpSession session) {
         return "index";
     }
+
+    @GetMapping("/access-denied")
+    public String showAccessDenied(){
+        return "access-denied";
+    }
 }

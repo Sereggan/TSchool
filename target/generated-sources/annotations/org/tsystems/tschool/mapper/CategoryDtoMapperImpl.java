@@ -10,7 +10,7 @@ import org.tsystems.tschool.entity.Value;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-09-24T21:58:49+0300",
+    date = "2020-09-26T16:23:10+0300",
     comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 1.8.0_252 (Amazon.com Inc.)"
 )
 @Component

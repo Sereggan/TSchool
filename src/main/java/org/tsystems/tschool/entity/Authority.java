@@ -13,16 +13,16 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-@Table(name = "role")
-public class Role implements Serializable {
+@Table(name = "authority")
+public class Authority implements Serializable {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "title", nullable = false)
-    private String title;
+    @Enumerated(EnumType.STRING)
+    private AuthorityType role;
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();

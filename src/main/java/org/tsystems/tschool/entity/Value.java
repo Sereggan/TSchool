@@ -29,6 +29,4 @@ public class Value {
 
     @ManyToMany(mappedBy = "values")
     Set<Article> articles = new HashSet<>();
-
-
 }

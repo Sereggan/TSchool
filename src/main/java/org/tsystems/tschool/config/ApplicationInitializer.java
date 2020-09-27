@@ -4,6 +4,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.FrameworkServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import org.tsystems.tschool.security.SecurityConfig;
 
 public class ApplicationInitializer extends
         AbstractAnnotationConfigDispatcherServletInitializer {
@@ -11,7 +12,8 @@ public class ApplicationInitializer extends
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[] {
-                AppContext.class
+                AppContext.class,
+                SecurityConfig.class
         };
     }
 

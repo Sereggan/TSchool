@@ -32,7 +32,7 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     Set<Article> articleSet = new HashSet<>();
 
-    @OneToMany(mappedBy="category", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE ,orphanRemoval = true)
+    @OneToMany(mappedBy="category", fetch = FetchType.EAGER, cascade = CascadeType.MERGE ,orphanRemoval = true)
     private Set<Value> values = new HashSet<>();
 
     public void addValue(Value value) {

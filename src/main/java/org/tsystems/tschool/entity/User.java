@@ -8,6 +8,8 @@ import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
@@ -28,15 +30,15 @@ public class User {
 
     @NotNull(message = "Name cant't be empty")
     @Column(name = "user_name")
-    private String name;
+    private String username;
 
     @NotNull(message = "LastName cant't be empty")
     @Column(name = "user_lastName")
     private String lastName;
 
-    @Temporal(TemporalType.DATE)
+    @Basic
     @Column(name = "user_birthday")
-    private Calendar birthday;
+    private LocalDate birthday;
 
     @Email
     @NotNull(message = "Email cant't be empty")
@@ -47,13 +49,13 @@ public class User {
     @Column(name = "user_password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinTable(name = "user_role",
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinTable(name = "user_authority",
             joinColumns = {
                     @JoinColumn(name = "user_id")},
             inverseJoinColumns = {
-                    @JoinColumn(name = "role_id")})
-    private Set<Role> roles = new HashSet<>();
+                    @JoinColumn(name = "authority_id")})
+    private Set<Authority> roles = new HashSet<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
