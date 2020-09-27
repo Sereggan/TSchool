@@ -40,34 +40,31 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleDto> findAll() {
-        return articleDAO.getAllArticles().stream()
+        return articleDAO.findALl().stream()
                 .map(article-> mapper.articleToDto((Article)article))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List findAllByOrderItem(OrderItem orderItem) {
-        return articleDAO.getAllArticlesByOrderItem(orderItem);
-    }
-
-    @Override
     public Optional<ArticleDto> findById(Long id) {
-        return Optional.ofNullable(mapper.articleToDto(articleDAO.getArticleById(id)));
+        return Optional.ofNullable(mapper.articleToDto(articleDAO.findArticleById(id)));
     }
 
     @Override
-    public void removeArticleById(Long id) {
-        articleDAO.removeArticleById(id);
+    public boolean removeArticleById(Long id) {
+        return articleDAO.removeArticleById(id);
     }
 
     @Override
-    public void saveArticle(ArticleDto articleDto) {
-        articleDAO.saveArticle(mapper.DtoToArticle(articleDto));
+    public ArticleDto saveArticle(ArticleDto articleDto) {
+        Article article =  articleDAO.saveArticle(mapper.DtoToArticle(articleDto));
+        return mapper.articleToDto(article);
     }
 
     @Override
-    public void updateArticle(ArticleDto articleDto) {
-        articleDAO.updateArticle(mapper.DtoToArticle(articleDto));
+    public ArticleDto updateArticle(ArticleDto articleDto) {
+        Article article = articleDAO.updateArticle(mapper.DtoToArticle(articleDto));
+        return mapper.articleToDto(article);
     }
 
     @Override
@@ -78,7 +75,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         List<ArticleCategoriesItemDto> articleCategoriesDto = new ArrayList<>();
 
-        Article article = articleDAO.getArticleById(articleId);
+        Article article = articleDAO.findArticleById(articleId);
 
         Set<Value> valueList = article.getValues();
 
@@ -111,18 +108,18 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void addValue(Long articleId, Long valueId) {
+    public ArticleDto addValue(Long articleId, Long valueId) {
         Value value = valueDAO.findById(valueId);
-        Article article = articleDAO.getArticleById(articleId);
+        Article article = articleDAO.findArticleById(articleId);
         article.addValue(value);
         article.addCategory(value.getCategory());
-        articleDAO.saveArticle(article);
+        return mapper.articleToDto(articleDAO.saveArticle(article));
     }
 
     @Override
     public void deleteValue(Long articleId, Long valueId) {
         Value value = valueDAO.findById(valueId);
-        Article article = articleDAO.getArticleById(articleId);
+        Article article = articleDAO.findArticleById(articleId);
         article.removeValue(value);
         boolean hasCategory = false;
         for(Value articleValue: article.getValues()){

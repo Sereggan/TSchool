@@ -10,21 +10,19 @@ import java.util.Optional;
 
 public interface ArticleService {
 
-    public List findAll();
-
-    public List findAllByOrderItem(OrderItem orderItem);
+    public List<ArticleDto> findAll();
 
     public Optional<ArticleDto> findById(Long id);
 
-    public void removeArticleById(Long id);
+    public boolean removeArticleById(Long id);
 
-    public void saveArticle(ArticleDto articleDto);
+    public ArticleDto saveArticle(ArticleDto articleDto);
 
-    public void updateArticle(ArticleDto articleDto);
+    public ArticleDto updateArticle(ArticleDto articleDto);
 
     public ArticleCategoriesDto getAllCategoriesAndValuesByArticleId(Long articleId);
 
-    public void addValue(Long articleId, Long valueId);
+    public ArticleDto addValue(Long articleId, Long valueId);
 
     public void deleteValue(Long articleId, Long valueId);
 

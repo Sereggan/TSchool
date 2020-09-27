@@ -1,16 +1,11 @@
 package org.tsystems.tschool.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Category;
-import org.tsystems.tschool.entity.Value;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public class CategoryDAO {
@@ -18,10 +13,7 @@ public class CategoryDAO {
     @PersistenceContext
     EntityManager entityManager;
 
-    @Autowired
-    ValueDAO valueDAO;
-
-    public List<Category> getAllCategories(){
+    public List<Category> findAll(){
         return entityManager.createQuery("select e from Category e", Category.class)
                 .getResultList();
     }
@@ -32,21 +24,23 @@ public class CategoryDAO {
                 .getResultList();
     }
 
-    public Category getCategoryById(Long id){
+    public Category findCategoryById(Long id){
         return entityManager.find(Category.class, id);
     }
 
-    public void removeCategoryById(Long id){
+    public boolean removeCategoryById(Long id){
         Category category = entityManager.find(Category.class, id);
         entityManager.remove(category);
+        return entityManager.find(Category.class, id)==null;
     }
 
-    public void saveCategory(Category category){
+    public Category saveCategory(Category category){
         entityManager.persist(category);
+        return entityManager.find(Category.class, category.getId());
     }
 
-    public void updateCategory(Category category){
+    public Category updateCategory(Category category){
         entityManager.merge(category);
+        return entityManager.find(Category.class, category.getId());
     }
-
 }

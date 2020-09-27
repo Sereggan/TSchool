@@ -11,17 +11,15 @@ import java.util.Optional;
 
 public interface CategoryService {
 
-    public List findAll();
-
-    public List findAllByOrderItem(CategoryDto orderItem);
+    public List<CategoryDto> findAll();
 
     public Optional<CategoryDto> findById(Long id);
 
-    public void removeCategoryById(Long id);
+    public boolean removeCategoryById(Long id);
 
-    public void saveCategory(CategoryDto categoryDto);
+    public CategoryDto saveCategory(CategoryDto categoryDto);
 
-    public void updateCategory(CategoryDto categoryDto);
+    public CategoryDto updateCategory(CategoryDto categoryDto);
 
     public void addValue(CategoryValueDto categoryValueDto);
 

@@ -16,36 +16,32 @@ public class ArticleDAO {
     @PersistenceContext
     EntityManager entityManager;
 
-    public List<Article> getAllArticles(){
+    public List<Article> findALl(){
         return entityManager.createQuery("select e from Article e", Article.class)
                 .getResultList();
     }
 
-    public List<Article> getAllArticlesByOrderItem(OrderItem orderItem){
-        return entityManager.createQuery("SELECT e from Article e where e.orderItem = ?1", Article.class)
-                .setParameter(1, orderItem)
-                .getResultList();
-    }
-
-    public Article getArticleById(Long id){
+    public Article findArticleById(Long id){
         return entityManager.find(Article.class, id);
     }
 
-    public void removeArticleById(Long id){
+    public boolean removeArticleById(Long id){
         Article articleToRemove = entityManager.find(Article.class, id);
         entityManager.remove(articleToRemove);
+        return entityManager.find(Article.class, id) == null;
     }
 
-    public Set<Article> getArticlesByCategoryId(Long id){
+    public Set<Article> findArticlesByCategoryId(Long id){
         return entityManager.find(Category.class, id).getArticleSet();
     }
 
-
-    public void saveArticle(Article article){
+    public Article saveArticle(Article article){
         entityManager.persist(article);
+        return entityManager.find(Article.class, article);
     }
 
-    public void updateArticle(Article article){
+    public Article updateArticle(Article article){
         entityManager.merge(article);
+        return entityManager.find(Article.class, article);
     }
 }

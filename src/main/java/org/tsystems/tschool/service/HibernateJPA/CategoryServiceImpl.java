@@ -42,26 +42,21 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDto> findAll() {
-        return categoryDAO.getAllCategories().stream()
+        return categoryDAO.findAll().stream()
                 .map(mapper::categoryToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List findAllByOrderItem(CategoryDto orderItem) {
-        return null;
-    }
-
-    @Override
     public Optional<CategoryDto> findById(Long id) {
-        return Optional.ofNullable(mapper.categoryToDto(categoryDAO.getCategoryById(id)));
+        return Optional.ofNullable(mapper.categoryToDto(categoryDAO.findCategoryById(id)));
     }
 
     @Override
-    public void removeCategoryById(Long id) {
-        List<Article> articles  = new ArrayList<>(articleDAO.getArticlesByCategoryId(id));
-        List<Value> values = new ArrayList<>(categoryDAO.getCategoryById(id).getValues());
-        Category category = categoryDAO.getCategoryById(id);
+    public boolean removeCategoryById(Long id) {
+        List<Article> articles  = new ArrayList<>(articleDAO.findArticlesByCategoryId(id));
+        List<Value> values = new ArrayList<>(categoryDAO.findCategoryById(id).getValues());
+        Category category = categoryDAO.findCategoryById(id);
 
         for(int i=0; i<values.size();i++){
             category.removeValue(values.get(i));
@@ -78,17 +73,19 @@ public class CategoryServiceImpl implements CategoryService {
             article.removeCategory(category);
             articleDAO.updateArticle(article);
         }
-        categoryDAO.removeCategoryById(id);
+        return categoryDAO.removeCategoryById(id);
     }
 
     @Override
-    public void saveCategory(CategoryDto categoryDto) {
-        categoryDAO.saveCategory(mapper.DtoToCategory(categoryDto));
+    public CategoryDto saveCategory(CategoryDto categoryDto) {
+        Category category = categoryDAO.saveCategory(mapper.DtoToCategory(categoryDto));
+        return mapper.categoryToDto(category);
     }
 
     @Override
-    public void updateCategory(CategoryDto categoryDto) {
-        categoryDAO.updateCategory(mapper.DtoToCategory(categoryDto));
+    public CategoryDto updateCategory(CategoryDto categoryDto) {
+        Category category = categoryDAO.updateCategory(mapper.DtoToCategory(categoryDto));
+        return mapper.categoryToDto(category);
     }
 
     @Override

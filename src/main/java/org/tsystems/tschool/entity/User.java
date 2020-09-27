@@ -41,15 +41,16 @@ public class User {
     private LocalDate birthday;
 
     @Email
+
     @NotNull(message = "Email cant't be empty")
-    @Column(name = "user_email")
+    @Column(name = "user_email", unique = true)
     private String email;
 
     @NotNull
     @Column(name = "user_password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(name = "user_authority",
             joinColumns = {
                     @JoinColumn(name = "user_id")},

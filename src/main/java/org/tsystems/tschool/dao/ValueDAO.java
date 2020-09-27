@@ -18,10 +18,11 @@ public class ValueDAO {
     @PersistenceContext
     EntityManager entityManager;
 
-    public void addValue(Value value, Long categoryId){
+    public Value addValue(Value value, Long categoryId){
         Category category = entityManager.find(Category.class, categoryId);
         value.setCategory(category);
         entityManager.persist(value);
+        return entityManager.find(Value.class, value);
     }
 
     public void removeValueFromCategory(Long id){
@@ -39,7 +40,6 @@ public class ValueDAO {
         entityManager.merge(category);
         entityManager.remove(value);
     }
-
 
     public List<Value> findAll(){
         return entityManager.createQuery("select e from Value e", Value.class)

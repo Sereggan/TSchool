@@ -19,9 +19,6 @@ public class ArticleController {
 
     private ArticleService articleService;
 
-    private final ArticleDtoMapper mapper
-            = Mappers.getMapper(ArticleDtoMapper.class);
-
     public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
     }
