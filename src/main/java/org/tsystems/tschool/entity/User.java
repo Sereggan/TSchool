@@ -1,9 +1,6 @@
 package org.tsystems.tschool.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -19,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity(name = "User")
 @Table(name = "users")
 public class User {
@@ -28,11 +26,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull(message = "Name cant't be empty")
+    @NotNull(message = "Name cant be empty")
     @Column(name = "user_name", unique = true)
     private String username;
 
-    @NotNull(message = "LastName cant't be empty")
+    @NotNull(message = "LastName cant be empty")
     @Column(name = "user_lastName")
     private String lastName;
 
@@ -41,13 +39,24 @@ public class User {
     private LocalDate birthday;
 
     @Email
-    @NotNull(message = "Email cant't be empty")
+    @NotNull(message = "Email cant be empty")
     @Column(name = "user_email", unique = true)
     private String email;
 
     @NotNull
     @Column(name = "user_password")
     private String password;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride( name = "country", column = @Column(name = "user_country")),
+            @AttributeOverride( name = "city", column = @Column(name = "user_city")),
+            @AttributeOverride( name = "postalCode", column = @Column(name = "user_postal_code")),
+            @AttributeOverride( name = "street", column = @Column(name = "user_street")),
+            @AttributeOverride( name = "house", column = @Column(name = "user_house")),
+            @AttributeOverride( name = "flat", column = @Column(name = "user_flat"))
+    })
+    private Address address;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(name = "user_authority",

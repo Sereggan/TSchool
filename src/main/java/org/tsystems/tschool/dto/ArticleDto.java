@@ -6,10 +6,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
 
 @Setter
 @Getter

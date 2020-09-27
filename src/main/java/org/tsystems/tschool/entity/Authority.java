@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-@Table(name = "authority")
+@Table(name = "authorities")
 public class Authority implements Serializable {
 
     @Id

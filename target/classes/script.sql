@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `marketdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `marketdb`;
 -- MySQL dump 10.13  Distrib 8.0.21, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: marketdb
@@ -18,35 +16,6 @@ USE `marketdb`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `address`
---
-
-DROP TABLE IF EXISTS `address`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `address` (
-  `id` bigint NOT NULL,
-  `city` varchar(255) NOT NULL,
-  `country` varchar(255) NOT NULL,
-  `flat` int NOT NULL,
-  `house` varchar(255) NOT NULL,
-  `postalCode` int NOT NULL,
-  `street` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `address`
---
-
-LOCK TABLES `address` WRITE;
-/*!40000 ALTER TABLE `address` DISABLE KEYS */;
-INSERT INTO `address` VALUES (1,'Spb','Russia',1,'Big',311221,'Street');
-/*!40000 ALTER TABLE `address` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `article`
 --
 
@@ -55,12 +24,9 @@ DROP TABLE IF EXISTS `article`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `article` (
   `id` bigint NOT NULL,
-  `category` varchar(255) NOT NULL,
-  `color` varchar(255) NOT NULL,
-  `price` int NOT NULL,
+  `price` float NOT NULL,
   `quantity` int NOT NULL,
   `title` varchar(255) NOT NULL,
-  `weight` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -71,8 +37,84 @@ CREATE TABLE `article` (
 
 LOCK TABLES `article` WRITE;
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
-INSERT INTO `article` VALUES (1,'Category1','black',100,10,'Cool Article','15'),(2,'Category2','black',200,5,'Cool Article','25'),(3,'Category3','black',150,15,'Cool Article','11');
+INSERT INTO `article` VALUES (7,1232320,1111,'31223111');
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `article_category`
+--
+
+DROP TABLE IF EXISTS `article_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `article_category` (
+  `article_id` bigint NOT NULL,
+  `category_id` bigint NOT NULL,
+  PRIMARY KEY (`article_id`,`category_id`),
+  KEY `FK855bhtvb75kxl2e0nmf2sd7la` (`category_id`),
+  CONSTRAINT `FK855bhtvb75kxl2e0nmf2sd7la` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
+  CONSTRAINT `FKrw5912jiy0vyqoyqlo5r65igk` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `article_category`
+--
+
+LOCK TABLES `article_category` WRITE;
+/*!40000 ALTER TABLE `article_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `article_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `article_value`
+--
+
+DROP TABLE IF EXISTS `article_value`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `article_value` (
+  `article_id` bigint NOT NULL,
+  `value_id` bigint NOT NULL,
+  PRIMARY KEY (`article_id`,`value_id`),
+  KEY `FK662rxk60ht8oce0jm8yccf5h7` (`value_id`),
+  CONSTRAINT `FK662rxk60ht8oce0jm8yccf5h7` FOREIGN KEY (`value_id`) REFERENCES `value` (`id`),
+  CONSTRAINT `FKk5c7w5kuqeccuc3glb1f9dat` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `article_value`
+--
+
+LOCK TABLES `article_value` WRITE;
+/*!40000 ALTER TABLE `article_value` DISABLE KEYS */;
+/*!40000 ALTER TABLE `article_value` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `authority`
+--
+
+DROP TABLE IF EXISTS `authority`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `authority` (
+  `id` bigint NOT NULL,
+  `role` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `authority`
+--
+
+LOCK TABLES `authority` WRITE;
+/*!40000 ALTER TABLE `authority` DISABLE KEYS */;
+INSERT INTO `authority` VALUES (1,'ROLE_CLIENT'),(2,'ROLE_EMPLOYEE');
+/*!40000 ALTER TABLE `authority` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -131,6 +173,31 @@ LOCK TABLES `cart_item` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `category`
+--
+
+DROP TABLE IF EXISTS `category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `category` (
+  `id` bigint NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `category`
+--
+
+LOCK TABLES `category` WRITE;
+/*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES (13,'11','ewqwq');
+/*!40000 ALTER TABLE `category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `hibernate_sequence`
 --
 
@@ -148,7 +215,7 @@ CREATE TABLE `hibernate_sequence` (
 
 LOCK TABLES `hibernate_sequence` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (1),(1),(1),(1),(1),(1),(1),(1);
+INSERT INTO `hibernate_sequence` VALUES (14),(14),(14),(14),(14),(14),(14),(14),(14),(14);
 /*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,8 +268,34 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'ROLE_EMPLOYEE'),(2,'ROLE_CLIENT');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_authority`
+--
+
+DROP TABLE IF EXISTS `user_authority`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_authority` (
+  `user_id` bigint NOT NULL,
+  `authority_id` bigint NOT NULL,
+  PRIMARY KEY (`user_id`,`authority_id`),
+  KEY `FKgvxjs381k6f48d5d2yi11uh89` (`authority_id`),
+  CONSTRAINT `FKgvxjs381k6f48d5d2yi11uh89` FOREIGN KEY (`authority_id`) REFERENCES `authority` (`id`),
+  CONSTRAINT `FKhi46vu7680y1hwvmnnuh4cybx` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_authority`
+--
+
+LOCK TABLES `user_authority` WRITE;
+/*!40000 ALTER TABLE `user_authority` DISABLE KEYS */;
+INSERT INTO `user_authority` VALUES (1,1),(2,2);
+/*!40000 ALTER TABLE `user_authority` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -214,17 +307,20 @@ DROP TABLE IF EXISTS `user_order`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_order` (
   `id` bigint NOT NULL,
+  `address_city` varchar(255) DEFAULT NULL,
+  `address_country` varchar(255) DEFAULT NULL,
+  `address_flat` int DEFAULT NULL,
+  `address_house` varchar(255) DEFAULT NULL,
+  `address_postal_code` int DEFAULT NULL,
+  `address_street` varchar(255) DEFAULT NULL,
   `delivery` varchar(255) NOT NULL,
   `payment_status` bit(1) NOT NULL,
   `order_status` varchar(255) NOT NULL,
-  `payment` varchar(255) NOT NULL,
-  `address_id` bigint DEFAULT NULL,
+  `payment_method` varchar(255) NOT NULL,
   `user_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKlguxu9qa64s58y51e1371sxks` (`address_id`),
   KEY `FKbbwlke5ei3gh1ki65yiiojmck` (`user_id`),
-  CONSTRAINT `FKbbwlke5ei3gh1ki65yiiojmck` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `FKlguxu9qa64s58y51e1371sxks` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`)
+  CONSTRAINT `FKbbwlke5ei3gh1ki65yiiojmck` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -235,33 +331,6 @@ CREATE TABLE `user_order` (
 LOCK TABLES `user_order` WRITE;
 /*!40000 ALTER TABLE `user_order` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_order` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user_role`
---
-
-DROP TABLE IF EXISTS `user_role`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_role` (
-  `user_id` bigint NOT NULL,
-  `role_id` bigint NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`),
-  KEY `FKa68196081fvovjhkek5m97n3y` (`role_id`),
-  CONSTRAINT `FKa68196081fvovjhkek5m97n3y` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
-  CONSTRAINT `FKj345gk1bovqvfame88rcx7yyx` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user_role`
---
-
-LOCK TABLES `user_role` WRITE;
-/*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,1),(2,2);
-/*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -288,8 +357,34 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'1999-04-01','client@client.ru','Nikolaychuk','Sergey','123456'),(2,'1999-01-01','employee@employee.ru','Unchikov','Kirill','123456');
+INSERT INTO `users` VALUES (1,'1999-04-30','user@user.ru','Nikolaychuk','Sergey','$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.AQubh4a'),(2,'1999-03-30','admin@admin.ru','Unchikov','Kirill','$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.AQubh4a');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `value`
+--
+
+DROP TABLE IF EXISTS `value`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `value` (
+  `id` bigint NOT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `category_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKo8g8rrhrstfvpb6m4g63oeyho` (`category_id`),
+  CONSTRAINT `FKo8g8rrhrstfvpb6m4g63oeyho` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `value`
+--
+
+LOCK TABLES `value` WRITE;
+/*!40000 ALTER TABLE `value` DISABLE KEYS */;
+/*!40000 ALTER TABLE `value` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -301,4 +396,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-12 21:27:02
+-- Dump completed on 2020-09-27 17:58:31

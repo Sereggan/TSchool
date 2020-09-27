@@ -15,21 +15,21 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 public class Address {
 
-    @NotNull
+    @Column
     private String country;
 
-    @NotNull
+    @Column
     private String city;
 
-    @NotNull
+    @Column
     private Integer postalCode;
 
-    @NotNull
+    @Column
     private String street;
 
-    @NotNull
+    @Column
     private String house;
 
-    @NotNull
+    @Column
     private Integer flat;
 }

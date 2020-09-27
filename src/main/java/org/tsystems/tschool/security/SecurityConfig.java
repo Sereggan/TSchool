@@ -1,5 +1,6 @@
 package org.tsystems.tschool.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -9,12 +10,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.tsystems.tschool.service.HibernateJPA.UserDetailsServiceImpl;
+
+import javax.sql.DataSource;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    public DataSource dataSource;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -48,11 +55,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().formLogin().defaultSuccessUrl("/")
                 .permitAll()
                 .and()
-                .logout().permitAll().logoutSuccessUrl("/")// возможность логаута по урл /logout для всех
+                .logout().permitAll().logoutSuccessUrl("/")// logout for everyone
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/access-denied")
                 .and().csrf().disable();
+    }
 
+    @Bean
+    public JdbcUserDetailsManager jdbcUserDetailsManager()
+    {
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
+        jdbcUserDetailsManager.setDataSource(dataSource);
+        return jdbcUserDetailsManager;
     }
 }
