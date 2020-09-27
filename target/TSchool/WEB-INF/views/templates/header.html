@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <body>
 <div th:fragment="navigation">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -22,6 +23,14 @@
                 <li class="nav-item">
                     <a href="/categories/add-category-page" class="nav-link"> Add Category</a>
                 </li>
+                <li class="nav-item">
+                    <a href="/login" class="nav-link"> Login</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/logout" class="nav-link"> Logout</a>
+                </li>
+                <div sec:authorize="isAuthenticated()">
+                    Authenticated as <span sec:authentication="name"></span></div>
             </ul>
         </div>
     </nav>

@@ -44,10 +44,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/categories/**").hasRole("EMPLOYEE")
                 .antMatchers("/articles/**").hasRole("EMPLOYEE")
-                .antMatchers("/**").hasAnyRole("CLIENT", "EMPLOYEE")
-                .and().formLogin()
+                .antMatchers("/").permitAll()
+                .and().formLogin().defaultSuccessUrl("/")
+                .permitAll()
                 .and()
-                .logout().permitAll()// возможность логаута по урл /logout для всех
+                .logout().permitAll().logoutSuccessUrl("/")// возможность логаута по урл /logout для всех
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/access-denied")

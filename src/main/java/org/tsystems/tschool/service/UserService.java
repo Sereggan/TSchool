@@ -4,5 +4,5 @@ import org.tsystems.tschool.dto.UserDto;
 
 public interface UserService {
 
-    public UserDto getUserById(Long id);
+    public UserDto getUserByUsername(String username);
 }

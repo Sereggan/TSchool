@@ -29,7 +29,7 @@ public class User {
     private Long id;
 
     @NotNull(message = "Name cant't be empty")
-    @Column(name = "user_name")
+    @Column(name = "user_name", unique = true)
     private String username;
 
     @NotNull(message = "LastName cant't be empty")
@@ -41,7 +41,6 @@ public class User {
     private LocalDate birthday;
 
     @Email
-
     @NotNull(message = "Email cant't be empty")
     @Column(name = "user_email", unique = true)
     private String email;
