@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode
 @Entity(name = "Cart_item")
 @Table(name = "cart_item")
-public class CartItem {
+public class CartItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -22,7 +22,7 @@
                     <div class="form-group col-md-6">
                         <label for="value" class="col-form-label">Value</label>
                         <input type="hidden" th:value="${categoryDto.id}" name="categoryId"/>
-                        <input type="text" th:field="*{value}" class="form-control" id="value" placeholder="Value"> <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}" class="text-danger"></span>
+                        <input type="text" th:field="*{value}" class="form-control" id="value" placeholder="Value" required> <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-8">
                         <input type="submit" class="btn btn-primary" value="Add Value">

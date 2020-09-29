@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 @EqualsAndHashCode(exclude = {"articleSet","values"})
 @Entity(name = "Category")
 @Table(name = "category")
-public class Category {
+public class Category implements Serializable {
 
     @Id
     @Column(name = "id")

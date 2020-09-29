@@ -2,12 +2,12 @@ package org.tsystems.tschool.entity;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.sql.Date;
-import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +19,7 @@ import java.util.Set;
 @Builder
 @Entity(name = "User")
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
 
     @Id
     @Column(name = "id")
@@ -34,16 +34,15 @@ public class User {
     @Column(name = "user_lastName")
     private String lastName;
 
-    @Basic
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "user_birthday")
-    private LocalDate birthday;
+    private Date birthday;
 
     @Email
     @NotNull(message = "Email cant be empty")
     @Column(name = "user_email", unique = true)
     private String email;
 
-    @NotNull
     @Column(name = "user_password")
     private String password;
 
@@ -58,7 +57,7 @@ public class User {
     })
     private Address address;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_authority",
             joinColumns = {
                     @JoinColumn(name = "user_id")},
@@ -66,9 +65,9 @@ public class User {
                     @JoinColumn(name = "authority_id")})
     private Set<Authority> roles = new HashSet<>();
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private Cart cart;
 
-    @OneToMany(mappedBy="user" , cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="user" , cascade ={CascadeType.MERGE, CascadeType.REMOVE})
     private List<Order> orders;
 }

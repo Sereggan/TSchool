@@ -19,23 +19,27 @@ public class UserController {
 
     @GetMapping()
     public String getUserInfoPage( Authentication authentication, Model model) {
-        if(authentication==null) return "redirect:";
         UserDto userDto = userService.getUserByUsername(authentication.getName());
         if (userDto==null || !Objects.equals(authentication.getName(), userDto.getUsername())){
             return "redirect:";
         }else {
-            userDto = userService.updateUser(userDto);
             model.addAttribute("user",userDto);
             return "user/user-info-page";
         }
     }
 
-    @PostMapping("/user/{username}")
+    @PostMapping("/update/{username}")
     public String updateUser(@PathVariable("username") String username,Authentication authentication, @ModelAttribute("user") UserDto userDto) {
-        if(Objects.equals(username, authentication.getName())) {
+
             userService.updateUser(userDto);
-            return "redirect:/user";
-        }else
-            return "redirect:/user";
+
+        return "redirect:/user";
+    }
+
+    @PostMapping("/update/password/{username}")
+    public String updateUserPassword(@PathVariable("username") String username,Authentication authentication, @RequestParam String password) {
+
+
+        return "redirect:/user";
     }
 }

@@ -22,7 +22,9 @@ public class ValueDAO {
         Category category = entityManager.find(Category.class, categoryId);
         value.setCategory(category);
         entityManager.persist(value);
-        return entityManager.find(Value.class, value);
+        return entityManager.createQuery("select e from Value e where e.value = ?1", Value.class)
+                .setParameter(1,value.getValue())
+                .getSingleResult();
     }
 
     public void removeValueFromCategory(Long id){

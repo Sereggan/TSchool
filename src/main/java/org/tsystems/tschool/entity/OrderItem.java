@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Entity(name = "Order_item")
 @EqualsAndHashCode()
 @Table(name = "order_item")
-public class OrderItem {
+public class OrderItem implements Serializable {
 
     @Id
     @Column(name = "id")

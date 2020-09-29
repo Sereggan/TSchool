@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.tsystems.tschool.dao.UserDAO;
 import org.tsystems.tschool.dto.UserDto;
 import org.tsystems.tschool.entity.User;
+import org.tsystems.tschool.mapper.AddressDtoMapper;
 import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.mapper.UserDtoMapper;
 import org.tsystems.tschool.service.UserService;
@@ -20,8 +21,14 @@ public class UserServiceImpl implements UserService {
 
     final UserDAO userDAO;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     private final UserDtoMapper mapper
             = Mappers.getMapper(UserDtoMapper.class);
+
+    private final AddressDtoMapper addressDtoMapper
+            = Mappers.getMapper(AddressDtoMapper.class);
 
     public UserServiceImpl(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -30,13 +37,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserByUsername(String username) {
         User user = userDAO.getUserByUsername(username);
-        return user!=null?mapper.userToDto(user):null;
+        if(user==null) return null;
+        UserDto userDto = mapper.userToDto(user);
+        userDto.setAddressDto(addressDtoMapper.addressToDto(user.getAddress()));
+        return userDto;
     }
 
     @Override
     public UserDto updateUser(UserDto userDto) {
+        User oldUser = userDAO.getUserById(userDto.getId());
         User user = mapper.DtoToUser(userDto);
-        return mapper.userToDto(userDAO.updateUser(user));
+        user.setPassword(oldUser.getPassword());
+        user.setRoles(oldUser.getRoles());
+        user.setCart(oldUser.getCart());
+        user.setAddress(addressDtoMapper.DtoToAddress(userDto.getAddressDto()));
+        userDAO.updateUser(user);
+        User updatedUser = userDAO.getUserByUsername(user.getUsername());
+        UserDto updatedUserDto = mapper.userToDto(updatedUser);
+        updatedUserDto.setAddressDto(addressDtoMapper.addressToDto(updatedUser.getAddress()));
+        return updatedUserDto;
     }
-
 }

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ import java.util.Set;
 @Setter
 @Entity(name = "Cart")
 @Table(name = "cart")
-public class Cart {
+public class Cart implements Serializable {
 
     @Id
     @Column(name = "id")

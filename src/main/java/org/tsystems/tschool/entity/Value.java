@@ -3,6 +3,7 @@ package org.tsystems.tschool.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 @EqualsAndHashCode(exclude = {"category", "articles"})
 @Entity(name = "Value")
 @Table(name = "value")
-public class Value {
+public class Value implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)

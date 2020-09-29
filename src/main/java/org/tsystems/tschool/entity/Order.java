@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @Setter
 @Entity(name = "Order")
 @Table(name = "user_order")
-public class Order {
+public class Order implements Serializable {
 
     @Id
     @Column(name = "id")

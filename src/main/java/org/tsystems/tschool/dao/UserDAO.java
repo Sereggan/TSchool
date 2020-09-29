@@ -18,9 +18,6 @@ public class UserDAO {
     @PersistenceContext
     EntityManager entityManager;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
     public User getUserByUsername(String username) {
         try {
             return entityManager.createQuery("SELECT e from User e where e.username = ?1", User.class)
@@ -31,10 +28,12 @@ public class UserDAO {
         }
     }
 
+    public User getUserById(Long id){
+        return entityManager.find(User.class, id);
+    }
+
     public User updateUser(User user){
-        User existingUser = entityManager.find(User.class, user.getId());
-        user.setId(existingUser.getId());
         entityManager.merge(user);
-        return entityManager.find(User.class, user);
+        return entityManager.find(User.class, user.getId());
     }
 }
