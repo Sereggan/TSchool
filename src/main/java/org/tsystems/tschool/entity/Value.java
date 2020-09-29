@@ -16,6 +16,7 @@ import java.util.Set;
 @Entity(name = "Value")
 @Table(name = "value")
 public class Value implements Serializable {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,5 +30,5 @@ public class Value implements Serializable {
     private Category category;
 
     @ManyToMany(mappedBy = "values")
-    Set<Article> articles = new HashSet<>();
+    private Set<Article> articles = new HashSet<>();
 }

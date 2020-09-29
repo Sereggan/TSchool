@@ -1,14 +1,10 @@
 package org.tsystems.tschool.controller;
 
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.tsystems.tschool.dto.ArticleDto;
-import org.tsystems.tschool.dto.CategoryDto;
-import org.tsystems.tschool.dto.CategoryValueDto;
-import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
 
 import javax.validation.Valid;

@@ -46,14 +46,14 @@ public class Article implements Serializable {
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    Set<Category> categories = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE})
     @JoinTable(name = "article_value",
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "value_id")
     )
-    Set<Value> values = new HashSet<>();
+    private Set<Value> values = new HashSet<>();
 
     public void addValue(Value value){
         values.add(value);

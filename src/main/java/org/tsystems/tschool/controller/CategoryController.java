@@ -19,6 +19,8 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
+    private String categories = "/categories";
+
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
@@ -40,7 +42,7 @@ public class CategoryController {
             return "categories/add-category-page";
         }
         categoryService.saveCategory(categoryDto);
-        return "redirect:/categories";
+        return "redirect:"+categories;
     }
 
     @GetMapping("/edit/{id}")
@@ -50,7 +52,7 @@ public class CategoryController {
             model.addAttribute("categoryDto", category.get());
             return "categories/edit-category-page";
         }else {
-            return "redirect:/categories";
+            return "redirect:" + categories;
         }
     }
 
@@ -60,16 +62,16 @@ public class CategoryController {
             return "categories/edit-category-page";
         }
         if(!categoryService.findById(id).isPresent()){
-            return "redirect:/categories";
+            return "redirect:" + categories;
         }
         categoryService.updateCategory(categoryDto);
-        return "redirect:/categories";
+        return "redirect:" + categories;
     }
 
     @GetMapping("/delete/{id}")
     public String deleteCategoryById(@PathVariable Long id){
         categoryService.removeCategoryById(id);
-        return "redirect:/categories";
+        return "redirect:" + categories;
     }
 
     @GetMapping("/values/{id}")
@@ -80,7 +82,7 @@ public class CategoryController {
             model.addAttribute("categoryDto", category.get());
             return "categories/category-values-page";
         }else {
-            return "redirect:/categories";
+            return "redirect:" + categories;
         }
     }
 
@@ -96,6 +98,6 @@ public class CategoryController {
     @GetMapping("/values/delete/{id}")
     public String deleteValueById(@PathVariable Long id){
         categoryService.removeValue(id);
-        return "redirect:/categories";
+        return "redirect:" + categories;
     }
 }

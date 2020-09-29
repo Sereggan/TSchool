@@ -31,7 +31,7 @@ public class Category implements Serializable {
     private String description;
 
     @ManyToMany(mappedBy = "categories")
-    Set<Article> articleSet = new HashSet<>();
+    private Set<Article> articleSet = new HashSet<>();
 
     @OneToMany(mappedBy="category", fetch = FetchType.EAGER, cascade = CascadeType.MERGE ,orphanRemoval = true)
     private Set<Value> values = new HashSet<>();

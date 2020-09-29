@@ -9,8 +9,6 @@ import org.tsystems.tschool.dto.ArticleCategoriesDto;
 import org.tsystems.tschool.dto.ArticleCategoriesItemDto;
 import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.entity.Article;
-import org.tsystems.tschool.entity.Category;
-import org.tsystems.tschool.entity.OrderItem;
 import org.tsystems.tschool.entity.Value;
 import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
@@ -41,7 +39,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<ArticleDto> findAll() {
         return articleDAO.findALl().stream()
-                .map(article-> mapper.articleToDto((Article)article))
+                .map(mapper::articleToDto)
                 .collect(Collectors.toList());
     }
 

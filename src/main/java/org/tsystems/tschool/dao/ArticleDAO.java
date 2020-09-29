@@ -3,8 +3,6 @@ package org.tsystems.tschool.dao;
 import org.springframework.stereotype.Repository;
 import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Category;
-import org.tsystems.tschool.entity.OrderItem;
-import org.tsystems.tschool.entity.Value;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

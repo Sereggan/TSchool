@@ -1,9 +1,6 @@
 package org.tsystems.tschool.service;
 
-import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Order;
-import org.tsystems.tschool.entity.OrderItem;
-import org.tsystems.tschool.entity.User;
 
 import java.util.List;
 import java.util.Optional;
