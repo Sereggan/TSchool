@@ -3,6 +3,7 @@ package org.tsystems.tschool.dto;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
@@ -14,19 +15,20 @@ import java.util.Date;
 @Setter
 public class UserDto {
 
+    @NotNull
     private Long id;
 
-    @NotNull(message = "Name cant be empty")
+    @NotEmpty(message = "Name cant be empty")
     private String username;
 
-    @NotNull(message = "LastName cant't be empty")
+    @NotEmpty(message = "LastName cant be empty")
     private String lastName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
     @Email
-    @NotNull(message = "Email cant be empty")
+    @NotEmpty(message = "Email cant be empty")
     private String email;
 
     private AddressDto addressDto;

@@ -2,6 +2,7 @@ package org.tsystems.tschool.entity;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -26,11 +27,11 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull(message = "Name cant be empty")
+    @NotEmpty(message = "Name cant be empty")
     @Column(name = "user_name", unique = true, updatable = false)
     private String username;
 
-    @NotNull(message = "LastName cant be empty")
+    @NotEmpty(message = "LastName cant be empty")
     @Column(name = "user_lastName")
     private String lastName;
 
@@ -39,7 +40,7 @@ public class User implements Serializable {
     private Date birthday;
 
     @Email
-    @NotNull(message = "Email cant be empty")
+    @NotEmpty(message = "Email cant be empty")
     @Column(name = "user_email", unique = true)
     private String email;
 

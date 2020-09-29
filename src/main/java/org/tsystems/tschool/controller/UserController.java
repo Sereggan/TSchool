@@ -39,8 +39,8 @@ public class UserController {
             return "user/user-info-page";
         }
         userDto.setUsername(authentication.getName());
-            userService.updateUser(userDto);
-            return "redirect:/user";
+        userService.updateUser(userDto);
+        return "redirect:/user";
     }
 
     @PostMapping("/update/password")
