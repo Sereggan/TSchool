@@ -27,7 +27,7 @@ public class User implements Serializable {
     private Long id;
 
     @NotNull(message = "Name cant be empty")
-    @Column(name = "user_name", unique = true)
+    @Column(name = "user_name", unique = true, updatable = false)
     private String username;
 
     @NotNull(message = "LastName cant be empty")

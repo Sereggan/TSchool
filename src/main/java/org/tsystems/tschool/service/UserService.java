@@ -7,4 +7,6 @@ public interface UserService {
     public UserDto getUserByUsername(String username);
 
     public UserDto updateUser(UserDto userDto);
+
+    public void updatePassword(String username, String password);
 }

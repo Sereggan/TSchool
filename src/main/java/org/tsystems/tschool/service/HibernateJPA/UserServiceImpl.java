@@ -55,4 +55,12 @@ public class UserServiceImpl implements UserService {
         updatedUserDto.setAddressDto(addressDtoMapper.addressToDto(updatedUser.getAddress()));
         return updatedUserDto;
     }
+
+    @Override
+    public void updatePassword(String username, String password) {
+       User user = userDAO.getUserByUsername(username);
+       String encodedPassword = passwordEncoder.encode(password);
+       user.setPassword(encodedPassword);
+       userDAO.updateUser(user);
+    }
 }
