@@ -15,7 +15,6 @@ import org.tsystems.tschool.service.HibernateJPA.UserDetailsServiceImpl;
 
 import javax.sql.DataSource;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -27,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
     }
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/categories/**").hasRole("EMPLOYEE")
                 .antMatchers("/articles/**").hasRole("EMPLOYEE")
-                .antMatchers("/user/**").hasAnyRole("CLIENT", "EMPLOYEE")
+                .antMatchers("/user/**").hasRole("CLIENT")
                 .antMatchers("/").permitAll()
                 .and().formLogin().defaultSuccessUrl("/")
                 .permitAll()

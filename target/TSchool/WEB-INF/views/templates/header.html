@@ -10,25 +10,25 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="nav justify-content-center">
-                <li class="nav-item">
+                <li th:if="${#httpServletRequest.isUserInRole('EMPLOYEE')}" class="nav-item">
                     <a href="/articles" class="nav-link">Articles list</a>
                 </li>
-                <li class="nav-item">
+                <li th:if="${#httpServletRequest.isUserInRole('EMPLOYEE')}" class="nav-item">
                     <a href="/articles/add-article-page" class="nav-link"> Add Article</a>
                 </li>
-                <li class="nav-item">
+                <li th:if="${#httpServletRequest.isUserInRole('EMPLOYEE')}" class="nav-item">
                     <a href="/categories" class="nav-link"> Categories List</a>
                 </li>
-                <li class="nav-item">
+                <li th:if="${#httpServletRequest.isUserInRole('EMPLOYEE')}" class="nav-item">
                     <a href="/categories/add-category-page" class="nav-link"> Add Category</a>
                 </li>
-                <li class="nav-item">
-                    <a href="/user" class="nav-link"> User</a>
+                <li th:if="${#httpServletRequest.isUserInRole('CLIENT')}" class="nav-item">
+                    <a href="/user" class="nav-link"> Edit Profile</a>
                 </li>
                 <li class="nav-item">
                     <a href="/login" class="nav-link"> Login</a>
                 </li>
-                <li class="nav-item">
+                <li th:if="${#httpServletRequest.isUserInRole('EMPLOYEE')}" class="nav-item">
                     <a href="/logout" class="nav-link"> Logout</a>
                 </li>
             </ul>
