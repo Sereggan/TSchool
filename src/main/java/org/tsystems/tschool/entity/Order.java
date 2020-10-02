@@ -1,6 +1,9 @@
 package org.tsystems.tschool.entity;
 
 import lombok.*;
+import org.tsystems.tschool.enums.DeliveryMethod;
+import org.tsystems.tschool.enums.OrderStatus;
+import org.tsystems.tschool.enums.PaymentMethod;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -37,13 +40,13 @@ public class Order implements Serializable {
     })
     private Address address;
 
-    @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "payment_method")
-    private String paymentMethod;
+    private PaymentMethod paymentMethod;
 
-    @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "delivery")
-    private String deliveryMethod;
+    private DeliveryMethod deliveryMethod;
 
     @OneToMany(mappedBy="order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
@@ -52,9 +55,7 @@ public class Order implements Serializable {
     @Column(name = "payment_status")
     private Boolean isPaid;
 
-    @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
-    private String orderStatus;
-
-
+    private OrderStatus orderStatus;
 }

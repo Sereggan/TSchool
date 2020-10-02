@@ -3,6 +3,7 @@ package org.tsystems.tschool.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.tsystems.tschool.enums.AuthorityType;
 
 import javax.persistence.*;
 import java.io.Serializable;
