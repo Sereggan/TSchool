@@ -6,9 +6,11 @@ import org.tsystems.tschool.entity.Category;
 import org.tsystems.tschool.entity.Value;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -20,10 +22,18 @@ public class ValueDAO {
     public Value addValue(Value value, Long categoryId){
         Category category = entityManager.find(Category.class, categoryId);
         value.setCategory(category);
-        entityManager.persist(value);
-        return entityManager.createQuery("select e from Value e where e.value = ?1", Value.class)
-                .setParameter(1,value.getValue())
-                .getSingleResult();
+        try {
+            return entityManager.createQuery("select e from Value e where e.value = ?1 and e.category = ?2", Value.class)
+                    .setParameter(1, value.getValue())
+                    .setParameter(2, value.getCategory())
+                    .getSingleResult();
+        }catch (NoResultException e){
+            entityManager.persist(value);
+            return entityManager.createQuery("select e from Value e where e.value = ?1 and e.category = ?2", Value.class)
+                    .setParameter(1,value.getValue())
+                    .setParameter(2,value.getCategory())
+                    .getSingleResult();
+        }
     }
 
     public void removeValueFromCategory(Long id){

@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode(exclude = {"category", "articles"})
+@EqualsAndHashCode(exclude = {"articles"})
 @Entity(name = "Value")
 @Table(name = "value")
 public class Value implements Serializable {

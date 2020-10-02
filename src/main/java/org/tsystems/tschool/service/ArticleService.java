@@ -2,6 +2,7 @@ package org.tsystems.tschool.service;
 
 import org.tsystems.tschool.dto.ArticleCategoriesDto;
 import org.tsystems.tschool.dto.ArticleDto;
+import org.tsystems.tschool.dto.CatalogDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,5 +25,6 @@ public interface ArticleService {
 
     public void deleteValue(Long articleId, Long valueId);
 
+    public CatalogDto getCatalog();
 }
 

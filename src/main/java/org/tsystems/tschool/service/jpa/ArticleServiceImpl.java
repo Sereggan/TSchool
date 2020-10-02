@@ -1,16 +1,16 @@
-package org.tsystems.tschool.service.HibernateJPA;
+package org.tsystems.tschool.service.jpa;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import org.tsystems.tschool.dao.ArticleDAO;
 import org.tsystems.tschool.dao.CategoryDAO;
 import org.tsystems.tschool.dao.ValueDAO;
-import org.tsystems.tschool.dto.ArticleCategoriesDto;
-import org.tsystems.tschool.dto.ArticleCategoriesItemDto;
-import org.tsystems.tschool.dto.ArticleDto;
+import org.tsystems.tschool.dto.*;
 import org.tsystems.tschool.entity.Article;
+import org.tsystems.tschool.entity.Category;
 import org.tsystems.tschool.entity.Value;
 import org.tsystems.tschool.mapper.ArticleDtoMapper;
+import org.tsystems.tschool.mapper.CatalogArticleDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
 
 import javax.transaction.Transactional;
@@ -29,6 +29,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleDtoMapper mapper
             = Mappers.getMapper(ArticleDtoMapper.class);
+
+    private final CatalogArticleDtoMapper catalogArticleDtoMapper
+            = Mappers.getMapper(CatalogArticleDtoMapper.class);
 
     public ArticleServiceImpl(ArticleDAO articleDAO, ValueDAO valueDAO, CategoryDAO categoryDAO, CategoryDAO categoryDAO1) {
         this.articleDAO = articleDAO;
@@ -128,5 +131,25 @@ public class ArticleServiceImpl implements ArticleService {
         if(!hasCategory)  article.removeCategory(value.getCategory());
 
         articleDAO.saveArticle(article);
+    }
+
+    @Override
+    public CatalogDto getCatalog() {
+        List<Article> articles = articleDAO.findALl();
+
+        Set<CatalogArticleDto> articleDto = new HashSet<>();
+        for(int i = 0;i<articles.size();i++){
+            Article article = articles.get(i);
+            CatalogArticleDto catalogArticleDto = catalogArticleDtoMapper.articleToDto(article);
+//            Set<CatalogValueDto> valueCategoryDtos = catalogArticleDto.getValues();
+//            for(CatalogValueDto valueCategoryDto: valueCategoryDtos){
+//                valueCategoryDto.setCategoryTitle();
+//            }
+            articleDto.add(catalogArticleDto);
+        }
+
+        CatalogDto catalogDto = new CatalogDto();
+        catalogDto.setCatalogArticleDto(articleDto);
+        return catalogDto;
     }
 }

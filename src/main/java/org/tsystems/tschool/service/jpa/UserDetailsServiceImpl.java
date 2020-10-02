@@ -1,4 +1,4 @@
-package org.tsystems.tschool.service.HibernateJPA;
+package org.tsystems.tschool.service.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

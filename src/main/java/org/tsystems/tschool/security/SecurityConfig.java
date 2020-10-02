@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.tsystems.tschool.service.HibernateJPA.UserDetailsServiceImpl;
+import org.tsystems.tschool.service.jpa.UserDetailsServiceImpl;
 
 import javax.sql.DataSource;
 
@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/articles/**").hasRole("EMPLOYEE")
                 .antMatchers("/user/**").hasRole("CLIENT")
                 .antMatchers("/").permitAll()
+                .antMatchers("/catalog").permitAll()
                 .and().formLogin().defaultSuccessUrl("/")
                 .permitAll()
                 .and()
