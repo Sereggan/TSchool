@@ -43,4 +43,9 @@ public class CategoryDAO {
         entityManager.merge(category);
         return entityManager.find(Category.class, category.getId());
     }
+
+    public boolean removeCategory(Category category){
+        entityManager.remove(category);
+        return entityManager.find(Category.class, category.getId())==null;
+    }
 }

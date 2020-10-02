@@ -65,9 +65,11 @@ public class Article implements Serializable {
 
     public void removeValue(Value value){
         values.remove(value);
+        value.getArticles().remove(this);
     }
 
     public void removeCategory(Category category){
         categories.remove(category);
+        category.getArticleSet().remove(this);
     }
 }

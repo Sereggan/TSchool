@@ -60,4 +60,8 @@ public class ValueDAO {
     public Value findById(Long id){
         return entityManager.find(Value.class, id);
     }
+
+    public void removeValue(Value value){
+        entityManager.remove(value);
+    }
 }

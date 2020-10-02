@@ -31,4 +31,9 @@ public class Value implements Serializable {
 
     @ManyToMany(mappedBy = "values")
     private Set<Article> articles = new HashSet<>();
+
+    public void removeArticle(Article article){
+        articles.remove(article);
+        article.getValues().remove(this);
+    }
 }

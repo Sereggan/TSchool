@@ -128,6 +128,7 @@ public class ArticleServiceImpl implements ArticleService {
                 hasCategory = true;
             }
         }
+
         if(!hasCategory)  article.removeCategory(value.getCategory());
 
         articleDAO.saveArticle(article);

@@ -57,22 +57,15 @@ public class CategoryServiceImpl implements CategoryService {
         List<Value> values = new ArrayList<>(categoryDAO.findCategoryById(id).getValues());
         Category category = categoryDAO.findCategoryById(id);
 
-        for(int i=0; i<values.size();i++){
-            category.removeValue(values.get(i));
-            for(int j=0; j<articles.size();j++){
-                articles.get(j).removeValue(values.get(i));
-                articleDAO.updateArticle(articles.get(j));
-            }
-        }
-
-        categoryDAO.updateCategory(category);
-
 
         for(Article article: articles){
             article.removeCategory(category);
-            articleDAO.updateArticle(article);
+            for(Value value: values){
+                article.removeValue(value);
+            }
         }
-        return categoryDAO.removeCategoryById(id);
+
+        return categoryDAO.removeCategory(category);
     }
 
     @Override
