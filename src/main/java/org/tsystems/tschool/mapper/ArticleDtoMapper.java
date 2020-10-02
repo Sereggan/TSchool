@@ -10,6 +10,6 @@ public interface ArticleDtoMapper {
     ArticleDtoMapper INSTANCE = Mappers.getMapper( ArticleDtoMapper.class );
 
     ArticleDto articleToDto(Article article);
-    Article DtoToArticle(ArticleDto articleDto);
+    Article dtoToArticle(ArticleDto articleDto);
 
 }

@@ -28,12 +28,6 @@ public class CategoryDAO {
         return entityManager.find(Category.class, id);
     }
 
-    public boolean removeCategoryById(Long id){
-        Category category = entityManager.find(Category.class, id);
-        entityManager.remove(category);
-        return entityManager.find(Category.class, id)==null;
-    }
-
     public Category saveCategory(Category category){
         entityManager.persist(category);
         return entityManager.find(Category.class, category.getId());

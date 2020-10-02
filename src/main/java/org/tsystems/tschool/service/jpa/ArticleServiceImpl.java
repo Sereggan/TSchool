@@ -7,7 +7,6 @@ import org.tsystems.tschool.dao.CategoryDAO;
 import org.tsystems.tschool.dao.ValueDAO;
 import org.tsystems.tschool.dto.*;
 import org.tsystems.tschool.entity.Article;
-import org.tsystems.tschool.entity.Category;
 import org.tsystems.tschool.entity.Value;
 import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.mapper.CatalogArticleDtoMapper;
@@ -33,10 +32,10 @@ public class ArticleServiceImpl implements ArticleService {
     private final CatalogArticleDtoMapper catalogArticleDtoMapper
             = Mappers.getMapper(CatalogArticleDtoMapper.class);
 
-    public ArticleServiceImpl(ArticleDAO articleDAO, ValueDAO valueDAO, CategoryDAO categoryDAO, CategoryDAO categoryDAO1) {
+    public ArticleServiceImpl(ArticleDAO articleDAO, ValueDAO valueDAO, CategoryDAO categoryDAO) {
         this.articleDAO = articleDAO;
         this.valueDAO = valueDAO;
-        this.categoryDAO = categoryDAO1;
+        this.categoryDAO = categoryDAO;
     }
 
     @Override
@@ -58,13 +57,13 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDto saveArticle(ArticleDto articleDto) {
-        Article article =  articleDAO.saveArticle(mapper.DtoToArticle(articleDto));
+        Article article =  articleDAO.saveArticle(mapper.dtoToArticle(articleDto));
         return mapper.articleToDto(article);
     }
 
     @Override
     public ArticleDto updateArticle(ArticleDto articleDto) {
-        Article article = articleDAO.updateArticle(mapper.DtoToArticle(articleDto));
+        Article article = articleDAO.updateArticle(mapper.dtoToArticle(articleDto));
         return mapper.articleToDto(article);
     }
 
@@ -73,11 +72,8 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleCategoriesDto categoriesDto = new ArticleCategoriesDto();
 
         categoriesDto.setArticleId(articleId);
-
         List<ArticleCategoriesItemDto> articleCategoriesDto = new ArrayList<>();
-
         Article article = articleDAO.findArticleById(articleId);
-
         Set<Value> valueList = article.getValues();
 
         article.getValues().forEach(value->articleCategoriesDto.add(
@@ -85,9 +81,7 @@ public class ArticleServiceImpl implements ArticleService {
                         value.getValue(),value.getCategory().getTitle())));
 
         categoriesDto.setCurrent(articleCategoriesDto);
-
         List<Value> allValues = valueDAO.findAll();
-
         List<Value> filteredValues = new ArrayList<>();
 
         for(Value value: allValues){
@@ -95,14 +89,12 @@ public class ArticleServiceImpl implements ArticleService {
                 filteredValues.add(value);
             }
         }
-
         List<ArticleCategoriesItemDto> articleCategoriesDtoOther = new ArrayList<>();
 
         filteredValues.stream().forEach(value ->  articleCategoriesDtoOther.add(
                 new ArticleCategoriesItemDto(
                         value.getId(), value.getCategory().getId(),
                         value.getValue(),value.getCategory().getTitle())));
-
         categoriesDto.setOther(articleCategoriesDtoOther);
 
         return categoriesDto;
@@ -128,7 +120,6 @@ public class ArticleServiceImpl implements ArticleService {
                 hasCategory = true;
             }
         }
-
         if(!hasCategory)  article.removeCategory(value.getCategory());
 
         articleDAO.saveArticle(article);
@@ -142,10 +133,6 @@ public class ArticleServiceImpl implements ArticleService {
         for(int i = 0;i<articles.size();i++){
             Article article = articles.get(i);
             CatalogArticleDto catalogArticleDto = catalogArticleDtoMapper.articleToDto(article);
-//            Set<CatalogValueDto> valueCategoryDtos = catalogArticleDto.getValues();
-//            for(CatalogValueDto valueCategoryDto: valueCategoryDtos){
-//                valueCategoryDto.setCategoryTitle();
-//            }
             articleDto.add(catalogArticleDto);
         }
 

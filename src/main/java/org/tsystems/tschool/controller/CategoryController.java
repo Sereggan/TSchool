@@ -19,6 +19,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
+    private String redirect = "redirect:";
     private String categories = "/categories";
 
     public CategoryController(CategoryService categoryService) {
@@ -42,7 +43,7 @@ public class CategoryController {
             return "categories/add-category-page";
         }
         categoryService.saveCategory(categoryDto);
-        return "redirect:"+categories;
+        return redirect+categories;
     }
 
     @GetMapping("/edit/{id}")
@@ -52,7 +53,7 @@ public class CategoryController {
             model.addAttribute("categoryDto", category.get());
             return "categories/edit-category-page";
         }else {
-            return "redirect:" + categories;
+            return redirect + categories;
         }
     }
 
@@ -62,16 +63,16 @@ public class CategoryController {
             return "categories/edit-category-page";
         }
         if(!categoryService.findById(id).isPresent()){
-            return "redirect:" + categories;
+            return redirect + categories;
         }
         categoryService.updateCategory(categoryDto);
-        return "redirect:" + categories;
+        return redirect + categories;
     }
 
     @GetMapping("/delete/{id}")
     public String deleteCategoryById(@PathVariable Long id){
         categoryService.removeCategoryById(id);
-        return "redirect:" + categories;
+        return redirect + categories;
     }
 
     @GetMapping("/values/{id}")
@@ -82,22 +83,22 @@ public class CategoryController {
             model.addAttribute("categoryDto", category.get());
             return "categories/category-values-page";
         }else {
-            return "redirect:" + categories;
+            return redirect + categories;
         }
     }
 
     @PostMapping("/values/add/{id}")
     public String editCategory(@PathVariable Long id, @ModelAttribute("categoryValueDto") @Valid CategoryValueDto categoryValueDto, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            return "redirect:/categories/values/{id}";
+            return redirect+ "/categories/values/{id}";
         }
         categoryService.addValue(categoryValueDto);
-        return "redirect:/categories/values/{id}";
+        return redirect + "/categories/values/{id}";
     }
 
     @GetMapping("/values/delete/{id}")
     public String deleteValueById(@PathVariable Long id){
         categoryService.removeValue(id);
-        return "redirect:" + categories;
+        return redirect + categories;
     }
 }

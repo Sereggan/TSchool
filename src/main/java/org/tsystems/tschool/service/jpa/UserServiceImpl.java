@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUser(UserDto userDto) {
         User oldUser = userDAO.getUserByUsername(userDto.getUsername());
-        User user = mapper.DtoToUser(userDto);
+        User user = mapper.dtoToUser(userDto);
         user.setPassword(oldUser.getPassword());
         user.setRoles(oldUser.getRoles());
         user.setCart(oldUser.getCart());

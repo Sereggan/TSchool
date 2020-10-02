@@ -7,7 +7,7 @@ import org.tsystems.tschool.entity.Address;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-10-02T22:00:31+0300",
+    date = "2020-10-03T02:12:22+0300",
     comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 11.0.7 (JetBrains s.r.o.)"
 )
 @Component
@@ -32,7 +32,7 @@ public class AddressDtoMapperImpl implements AddressDtoMapper {
     }
 
     @Override
-    public Address DtoToAddress(AddressDto addressDto) {
+    public Address dtoToAddress(AddressDto addressDto) {
         if ( addressDto == null ) {
             return null;
         }

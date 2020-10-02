@@ -11,7 +11,7 @@ import org.tsystems.tschool.entity.User.UserBuilder;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-10-02T22:00:32+0300",
+    date = "2020-10-03T02:12:21+0300",
     comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 11.0.7 (JetBrains s.r.o.)"
 )
 @Component
@@ -36,7 +36,7 @@ public class UserDtoMapperImpl implements UserDtoMapper {
     }
 
     @Override
-    public User DtoToUser(UserDto userDto) {
+    public User dtoToUser(UserDto userDto) {
         if ( userDto == null ) {
             return null;
         }

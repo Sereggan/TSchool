@@ -14,6 +14,7 @@ import javax.validation.Valid;
 public class ArticleController {
 
     private ArticleService articleService;
+    private String redirect = "redirect:";
 
     public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
@@ -37,7 +38,7 @@ public class ArticleController {
         }
 
         articleService.saveArticle(articleDto);
-        return "redirect:/articles";
+        return redirect + "/articles";
     }
 
     @GetMapping("/edit/article-info-page/{id}")
@@ -52,7 +53,7 @@ public class ArticleController {
             return "articles/article-edit-page";
         }
         articleService.updateArticle(articleDto);
-        return "redirect:/articles";
+        return redirect + "/articles";
     }
 
     @GetMapping("/values/{id}")
@@ -65,20 +66,20 @@ public class ArticleController {
     public String addCategory(@PathVariable(name = "id") Long articleId, @PathVariable(name = "valueId") Long valueID) {
         articleService.addValue(articleId, valueID);
 
-        return "redirect:/articles/values/{id}";
+        return redirect + "/articles/values/{id}";
     }
 
     @GetMapping("/values/{id}/delete/{valueId}")
     public String deleteCategory(@PathVariable(name = "id") Long articleId, @PathVariable(name = "valueId") Long valueID) {
         articleService.deleteValue(articleId, valueID);
 
-        return "redirect:/articles/values/{id}";
+        return redirect + "/articles/values/{id}";
     }
 
 
     @GetMapping("/delete/{id}")
     public String deleteArticleById(@PathVariable Long id){
         articleService.removeArticleById(id);
-        return "redirect:/articles";
+        return redirect + "/articles";
     }
 }

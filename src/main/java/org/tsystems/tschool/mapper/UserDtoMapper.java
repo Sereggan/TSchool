@@ -15,5 +15,5 @@ public interface UserDtoMapper {
     UserDto userToDto(User user);
 
     @Mapping(source = "userDto.addressDto", target = "address")
-    User DtoToUser(UserDto userDto);
+    User dtoToUser(UserDto userDto);
 }
