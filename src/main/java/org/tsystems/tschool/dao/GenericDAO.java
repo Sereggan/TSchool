@@ -1,19 +1,21 @@
 package org.tsystems.tschool.dao;
 
-
 import org.tsystems.tschool.entity.Article;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.Serializable;
 import java.util.List;
 
-public class GenericDAO<T extends Object> {
+public interface GenericDAO <T, V extends Serializable> {
 
+    List<T> findAll();
 
-    @PersistenceContext
-    EntityManager entityManager;
+    T findById(V id);
 
-    public List<T> findAll(){
-        return null;
-    }
+    boolean remove(V id);
+
+    T update(T obj);
+
+    T save(T obj);
 }

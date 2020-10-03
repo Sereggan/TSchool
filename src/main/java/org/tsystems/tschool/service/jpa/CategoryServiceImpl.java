@@ -48,14 +48,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Optional<CategoryDto> findById(Long id) {
-        return Optional.ofNullable(mapper.categoryToDto(categoryDAO.findCategoryById(id)));
+        return Optional.ofNullable(mapper.categoryToDto(categoryDAO.findById(id)));
     }
 
     @Override
     public boolean removeCategoryById(Long id) {
         List<Article> articles  = new ArrayList<>(articleDAO.findArticlesByCategoryId(id));
-        List<Value> values = new ArrayList<>(categoryDAO.findCategoryById(id).getValues());
-        Category category = categoryDAO.findCategoryById(id);
+        List<Value> values = new ArrayList<>(categoryDAO.findById(id).getValues());
+        Category category = categoryDAO.findById(id);
 
         for(Article article: articles){
             article.removeCategory(category);
@@ -64,18 +64,18 @@ public class CategoryServiceImpl implements CategoryService {
             }
         }
 
-        return categoryDAO.removeCategory(category);
+        return categoryDAO.remove(category);
     }
 
     @Override
     public CategoryDto saveCategory(CategoryDto categoryDto) {
-        Category category = categoryDAO.saveCategory(mapper.DtoToCategory(categoryDto));
+        Category category = categoryDAO.save(mapper.DtoToCategory(categoryDto));
         return mapper.categoryToDto(category);
     }
 
     @Override
     public CategoryDto updateCategory(CategoryDto categoryDto) {
-        Category category = categoryDAO.updateCategory(mapper.DtoToCategory(categoryDto));
+        Category category = categoryDAO.update(mapper.DtoToCategory(categoryDto));
         return mapper.categoryToDto(category);
     }
 

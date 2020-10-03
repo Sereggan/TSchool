@@ -18,27 +18,22 @@ public class CategoryDAO {
                 .getResultList();
     }
 
-    public List<Category> findAllByArticleId(Long id){
-        return entityManager.createQuery("select e.categories from Article e where e.id = ?1", Category.class)
-                .setParameter(1, id)
-                .getResultList();
-    }
 
-    public Category findCategoryById(Long id){
+    public Category findById(Long id){
         return entityManager.find(Category.class, id);
     }
 
-    public Category saveCategory(Category category){
+    public Category save(Category category){
         entityManager.persist(category);
         return entityManager.find(Category.class, category.getId());
     }
 
-    public Category updateCategory(Category category){
+    public Category update(Category category){
         entityManager.merge(category);
         return entityManager.find(Category.class, category.getId());
     }
 
-    public boolean removeCategory(Category category){
+    public boolean remove(Category category){
         entityManager.remove(category);
         return entityManager.find(Category.class, category.getId())==null;
     }
