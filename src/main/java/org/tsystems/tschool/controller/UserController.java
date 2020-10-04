@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.tsystems.tschool.dto.UserDto;
+import org.tsystems.tschool.service.OrderService;
 import org.tsystems.tschool.service.UserService;
 
 import javax.validation.constraints.Size;
@@ -21,6 +22,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    OrderService orderService;
 
     @GetMapping()
     public String getUserInfoPage( Authentication authentication, Model model) {
@@ -47,5 +51,11 @@ public class UserController {
     public String updateUserPassword(@RequestParam("password") @NotBlank @Size(min = 4,max = 20,message = "password's length should be between 4 and 20") String password, Authentication authentication) {
         userService.updatePassword(authentication.getName(), password);
         return "redirect:/user";
+    }
+
+    @GetMapping("/orders")
+    public String getOrdersPage(Authentication authentication, Model model){
+        model.addAttribute("orders", orderService.findAllByUsername(authentication.getName()));
+        return "user/orders";
     }
 }

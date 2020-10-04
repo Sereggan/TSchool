@@ -9,13 +9,11 @@ public interface OrderService {
 
     public List findAll();
 
-    public List findAllByUserId(Long userId);
-
-    public List findAllByOrderId(Long userId);
+    public List findAllByUsername(String username);
 
     public Optional<Order> findById(Long id);
 
-    public void removeOrderById(Long id);
+    public void remove(Long id);
 
-    public void saveOrder(Order order);
+    public void save(Order order);
 }

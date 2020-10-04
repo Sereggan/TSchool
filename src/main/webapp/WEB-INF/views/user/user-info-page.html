@@ -31,6 +31,7 @@
                             <label for="birthday" class="col-form-label">Date of birth</label>
                             <input type="date" th:field="*{birthday}" th:value="*{birthday}" required class="form-control" id="birthday"> <span th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}" class="text-danger"></span>
                         </div>
+                        <hr />
                         <div class="form-group col-md-6">
                             <h2>Address information: </h2>
                         </div>

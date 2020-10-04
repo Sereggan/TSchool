@@ -13,7 +13,7 @@ public class OrderDAO {
     @PersistenceContext
     EntityManager entityManager;
 
-    public List<Order> getAllOrders(){
+    public List<Order> findALl(){
         return entityManager.createQuery("select e from Order e" ,Order.class)
                 .getResultList();
     }

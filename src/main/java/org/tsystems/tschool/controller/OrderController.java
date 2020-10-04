@@ -11,7 +11,9 @@ import org.tsystems.tschool.entity.Order;
 import java.util.List;
 
 @Controller
-@RequestMapping("/orders")
+@RequestMapping("/order")
 public class OrderController {
+
+
 
 }

@@ -10,8 +10,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 @Entity(name = "Order_item")
-@EqualsAndHashCode()
 @Table(name = "order_item")
 public class OrderItem implements Serializable {
 
@@ -31,4 +31,8 @@ public class OrderItem implements Serializable {
     @NotNull
     @Column(name = "order_item_quantity")
     private Integer quantity;
+
+    @NotNull
+    @Column(name = "order_item_price")
+    private Long price;
 }

@@ -25,9 +25,6 @@ public class UserServiceImpl implements UserService {
     private final UserDtoMapper mapper
             = Mappers.getMapper(UserDtoMapper.class);
 
-    private final AddressDtoMapper addressDtoMapper
-            = Mappers.getMapper(AddressDtoMapper.class);
-
     public UserServiceImpl(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
