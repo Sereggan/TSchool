@@ -24,9 +24,9 @@ public class OrderItem implements Serializable {
     @JoinColumn(name="order_id", nullable=false)
     private Order order;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "article_id", referencedColumnName = "id")
-    private Article article;
+    @NotNull
+    @Column(name = "order_article_title")
+    private String articleTitle;
 
     @NotNull
     @Column(name = "order_item_quantity")

@@ -19,6 +19,6 @@ public interface OrderDtoMapper {
     @Mapping(source = "order.address", target = "addressDto")
     OrderDto orderToDto(Order order);
 
-    @Mapping(source = "item.article.title", target = "article")
+    @Mapping(source = "item.articleTitle", target = "article")
     OrderItemDto orderItemToDto(OrderItem item);
 }

@@ -22,6 +22,9 @@
                 <li th:if="${#httpServletRequest.isUserInRole('EMPLOYEE')}" class="nav-item">
                     <a href="/categories/add-category-page" class="nav-link"> Add Category</a>
                 </li>
+                <li th:if="${#httpServletRequest.isUserInRole('EMPLOYEE')}" class="nav-item">
+                    <a href="/orders" class="nav-link"> All Orders List</a>
+                </li>
                 <li th:if="${#httpServletRequest.isUserInRole('CLIENT')}" class="nav-item">
                     <a href="/user" class="nav-link"> Edit Profile</a>
                 </li>

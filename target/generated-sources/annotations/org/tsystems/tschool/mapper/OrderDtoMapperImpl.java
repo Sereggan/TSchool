@@ -9,14 +9,13 @@ import org.tsystems.tschool.dto.AddressDto;
 import org.tsystems.tschool.dto.OrderDto;
 import org.tsystems.tschool.dto.OrderItemDto;
 import org.tsystems.tschool.entity.Address;
-import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Order;
 import org.tsystems.tschool.entity.OrderItem;
 import org.tsystems.tschool.entity.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-10-05T01:19:45+0300",
+    date = "2020-10-05T14:55:55+0300",
     comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 11.0.7 (JetBrains s.r.o.)"
 )
 @Component
@@ -51,7 +50,7 @@ public class OrderDtoMapperImpl implements OrderDtoMapper {
 
         OrderItemDto orderItemDto = new OrderItemDto();
 
-        orderItemDto.setArticle( itemArticleTitle( item ) );
+        orderItemDto.setArticle( item.getArticleTitle() );
         orderItemDto.setId( item.getId() );
         orderItemDto.setQuantity( item.getQuantity() );
         orderItemDto.setPrice( item.getPrice() );
@@ -102,20 +101,5 @@ public class OrderDtoMapperImpl implements OrderDtoMapper {
         }
 
         return list;
-    }
-
-    private String itemArticleTitle(OrderItem orderItem) {
-        if ( orderItem == null ) {
-            return null;
-        }
-        Article article = orderItem.getArticle();
-        if ( article == null ) {
-            return null;
-        }
-        String title = article.getTitle();
-        if ( title == null ) {
-            return null;
-        }
-        return title;
     }
 }

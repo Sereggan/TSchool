@@ -35,9 +35,6 @@ public class Article implements Serializable {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
-    private Set<OrderItem> orderItem = new HashSet<>();
-
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
     private Set<CartItem> cartItem = new HashSet<>();
 
