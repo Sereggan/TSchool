@@ -47,23 +47,23 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Optional<ArticleDto> findById(Long id) {
-        return Optional.ofNullable(mapper.articleToDto(articleDAO.findArticleById(id)));
+        return Optional.ofNullable(mapper.articleToDto(articleDAO.findById(id)));
     }
 
     @Override
     public boolean removeArticleById(Long id) {
-        return articleDAO.removeArticleById(id);
+        return articleDAO.removeById(id);
     }
 
     @Override
     public ArticleDto saveArticle(ArticleDto articleDto) {
-        Article article =  articleDAO.saveArticle(mapper.dtoToArticle(articleDto));
+        Article article =  articleDAO.save(mapper.dtoToArticle(articleDto));
         return mapper.articleToDto(article);
     }
 
     @Override
     public ArticleDto updateArticle(ArticleDto articleDto) {
-        Article article = articleDAO.updateArticle(mapper.dtoToArticle(articleDto));
+        Article article = articleDAO.update(mapper.dtoToArticle(articleDto));
         return mapper.articleToDto(article);
     }
 
@@ -73,7 +73,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         categoriesDto.setArticleId(articleId);
         List<ArticleCategoriesItemDto> articleCategoriesDto = new ArrayList<>();
-        Article article = articleDAO.findArticleById(articleId);
+        Article article = articleDAO.findById(articleId);
         Set<Value> valueList = article.getValues();
 
         article.getValues().forEach(value->articleCategoriesDto.add(
@@ -103,16 +103,16 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleDto addValue(Long articleId, Long valueId) {
         Value value = valueDAO.findById(valueId);
-        Article article = articleDAO.findArticleById(articleId);
+        Article article = articleDAO.findById(articleId);
         article.addValue(value);
         article.addCategory(value.getCategory());
-        return mapper.articleToDto(articleDAO.saveArticle(article));
+        return mapper.articleToDto(articleDAO.save(article));
     }
 
     @Override
     public void deleteValue(Long articleId, Long valueId) {
         Value value = valueDAO.findById(valueId);
-        Article article = articleDAO.findArticleById(articleId);
+        Article article = articleDAO.findById(articleId);
         article.removeValue(value);
         boolean hasCategory = false;
         for(Value articleValue: article.getValues()){
@@ -122,7 +122,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         if(!hasCategory)  article.removeCategory(value.getCategory());
 
-        articleDAO.saveArticle(article);
+        articleDAO.save(article);
     }
 
     @Override

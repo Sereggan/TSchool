@@ -60,7 +60,7 @@ public class ValueDAO {
         return entityManager.find(Value.class, id);
     }
 
-    public void removeValue(Value value){
+    public void remove(Value value){
         entityManager.remove(value);
     }
 }

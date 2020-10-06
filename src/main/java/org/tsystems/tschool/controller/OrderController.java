@@ -1,19 +1,12 @@
 package org.tsystems.tschool.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.tsystems.tschool.dao.OrderDAO;
-import org.tsystems.tschool.dto.ArticleDto;
-import org.tsystems.tschool.dto.OrderDto;
 import org.tsystems.tschool.dto.OrderStatusDto;
-import org.tsystems.tschool.entity.Order;
 import org.tsystems.tschool.service.OrderService;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/orders")

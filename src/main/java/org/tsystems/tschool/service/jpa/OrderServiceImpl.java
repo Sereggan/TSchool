@@ -7,7 +7,6 @@ import org.tsystems.tschool.dao.OrderDAO;
 import org.tsystems.tschool.dto.OrderDto;
 import org.tsystems.tschool.dto.OrderStatusDto;
 import org.tsystems.tschool.entity.Order;
-import org.tsystems.tschool.mapper.AddressDtoMapper;
 import org.tsystems.tschool.mapper.OrderDtoMapper;
 import org.tsystems.tschool.service.OrderService;
 import org.tsystems.tschool.service.UserService;
@@ -34,9 +33,7 @@ public class OrderServiceImpl implements OrderService {
     public List findAll() {
         List<OrderDto> orderDtos = new ArrayList<>();
 
-        orderDAO.findALl().forEach(order-> {
-            orderDtos.add(orderDtoMapper.orderToDto(order));
-        });
+        orderDAO.findALl().forEach(order-> orderDtos.add(orderDtoMapper.orderToDto(order)));
         return orderDtos;
     }
 
@@ -46,9 +43,7 @@ public class OrderServiceImpl implements OrderService {
         List<Order> orders
          = orderDAO.findOrdersByUserId(userService.getUserByUsername(username).getId());
         List<OrderDto> orderDtos = new ArrayList<>();
-        orders.forEach(order-> {
-            orderDtos.add(orderDtoMapper.orderToDto(order));
-        });
+        orders.forEach(order-> orderDtos.add(orderDtoMapper.orderToDto(order)));
         return orderDtos;
     }
 

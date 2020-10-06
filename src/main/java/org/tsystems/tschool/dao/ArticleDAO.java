@@ -20,21 +20,21 @@ public class ArticleDAO {
                 .getResultList();
     }
 
-    public Article findArticleById(Long id){
+    public Article findById(Long id){
         return entityManager.find(Article.class, id);
     }
 
-    public boolean removeArticleById(Long id){
+    public boolean removeById(Long id){
         Article articleToRemove = entityManager.find(Article.class, id);
         entityManager.remove(articleToRemove);
         return entityManager.find(Article.class, id) == null;
     }
 
-    public Set<Article> findArticlesByCategoryId(Long id){
+    public Set<Article> findByCategoryId(Long id){
         return entityManager.find(Category.class, id).getArticleSet();
     }
 
-    public Article saveArticle(Article article){
+    public Article save(Article article){
         entityManager.persist(article);
         return entityManager.createQuery("select e from Article e where e.price = ?1 AND e.quantity = ?2 and e.title = ?3", Article.class)
                 .setParameter(1,article.getPrice())
@@ -43,7 +43,7 @@ public class ArticleDAO {
                 .getSingleResult();
     }
 
-    public Article updateArticle(Article article){
+    public Article update(Article article){
         entityManager.merge(article);
         return entityManager.find(Article.class, article.getId());
     }

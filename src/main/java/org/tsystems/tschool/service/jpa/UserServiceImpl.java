@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.tsystems.tschool.dao.UserDAO;
 import org.tsystems.tschool.dto.UserDto;
 import org.tsystems.tschool.entity.User;
-import org.tsystems.tschool.mapper.AddressDtoMapper;
 import org.tsystems.tschool.mapper.UserDtoMapper;
 import org.tsystems.tschool.service.UserService;
 
@@ -43,7 +42,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(oldUser.getPassword());
         user.setRoles(oldUser.getRoles());
         user.setCart(oldUser.getCart());
-        userDAO.updateUser(user);
+        userDAO.update(user);
         User updatedUser = userDAO.getUserByUsername(user.getUsername());
         return mapper.userToDto(updatedUser);
     }
@@ -53,6 +52,6 @@ public class UserServiceImpl implements UserService {
        User user = userDAO.getUserByUsername(username);
        String encodedPassword = passwordEncoder.encode(password);
        user.setPassword(encodedPassword);
-       userDAO.updateUser(user);
+       userDAO.update(user);
     }
 }

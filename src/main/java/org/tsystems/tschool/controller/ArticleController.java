@@ -15,6 +15,8 @@ public class ArticleController {
 
     private ArticleService articleService;
     private String redirect = "redirect:";
+    private String articles = "articles/";
+    private String articlesUrl = "/articles";
 
     public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
@@ -23,22 +25,22 @@ public class ArticleController {
     @GetMapping("")
     public String getAllArticlesPage(Model model){
         model.addAttribute("articles",articleService.findAll());
-        return "articles/articlesListPage";
+        return articles + "articlesListPage";
     }
 
     @GetMapping("/add-article-page")
     public String getAddArticlePage(ArticleDto articleDto){
-        return "articles/add-article-page";
+        return articles + "add-article-page";
     }
 
     @PostMapping("/add")
     public String addArticle( @ModelAttribute("articleDto") @Valid ArticleDto articleDto, BindingResult result) {
         if (result.hasErrors()) {
-            return "articles/add-article-page";
+            return articles + "add-article-page";
         }
 
         articleService.saveArticle(articleDto);
-        return redirect + "/articles";
+        return redirect + articlesUrl;
     }
 
     @GetMapping("/edit/article-info-page/{id}")
@@ -53,7 +55,7 @@ public class ArticleController {
             return "articles/article-edit-page";
         }
         articleService.updateArticle(articleDto);
-        return redirect + "/articles";
+        return redirect + articlesUrl;
     }
 
     @GetMapping("/values/{id}")
@@ -80,6 +82,6 @@ public class ArticleController {
     @GetMapping("/delete/{id}")
     public String deleteArticleById(@PathVariable Long id){
         articleService.removeArticleById(id);
-        return redirect + "/articles";
+        return redirect + articlesUrl;
     }
 }

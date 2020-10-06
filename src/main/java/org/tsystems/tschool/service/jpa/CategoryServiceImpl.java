@@ -53,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public boolean removeCategoryById(Long id) {
-        List<Article> articles  = new ArrayList<>(articleDAO.findArticlesByCategoryId(id));
+        List<Article> articles  = new ArrayList<>(articleDAO.findByCategoryId(id));
         List<Value> values = new ArrayList<>(categoryDAO.findById(id).getValues());
         Category category = categoryDAO.findById(id);
 
