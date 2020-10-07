@@ -5,12 +5,12 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
 @Entity(name = "Cart_item")
 @Table(name = "cart_item")
 public class CartItem implements Serializable {
@@ -31,4 +31,22 @@ public class CartItem implements Serializable {
     @NotNull
     @Column(name = "cart_item_quantity")
     private Integer quantity;
+
+    @NotNull
+    @Column(name = "cart_item_price")
+    private Float price;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CartItem)) return false;
+        CartItem cartItem = (CartItem) o;
+        return getCart().equals(cartItem.getCart()) &&
+                getArticle().equals(cartItem.getArticle());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCart(), getArticle());
+    }
 }

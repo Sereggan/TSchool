@@ -35,7 +35,7 @@ public class Article implements Serializable {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<CartItem> cartItem = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })

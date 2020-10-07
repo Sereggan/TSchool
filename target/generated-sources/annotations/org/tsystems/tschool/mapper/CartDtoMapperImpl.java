@@ -13,7 +13,7 @@ import org.tsystems.tschool.entity.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-10-07T03:12:57+0300",
+    date = "2020-10-08T00:53:09+0300",
     comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 11.0.7 (JetBrains s.r.o.)"
 )
 @Component
@@ -45,6 +45,7 @@ public class CartDtoMapperImpl implements CartDtoMapper {
 
         cartItemDto.setArticle( itemArticleTitle( item ) );
         cartItemDto.setArticleId( itemArticleId( item ) );
+        cartItemDto.setPrice( itemArticlePrice( item ) );
         cartItemDto.setId( item.getId() );
         cartItemDto.setQuantity( item.getQuantity() );
 
@@ -77,6 +78,7 @@ public class CartDtoMapperImpl implements CartDtoMapper {
         cartItem.setArticle( cartItemDtoToArticle( item ) );
         cartItem.setId( item.getId() );
         cartItem.setQuantity( item.getQuantity() );
+        cartItem.setPrice( item.getPrice() );
 
         return cartItem;
     }
@@ -139,6 +141,21 @@ public class CartDtoMapperImpl implements CartDtoMapper {
         return id;
     }
 
+    private Float itemArticlePrice(CartItem cartItem) {
+        if ( cartItem == null ) {
+            return null;
+        }
+        Article article = cartItem.getArticle();
+        if ( article == null ) {
+            return null;
+        }
+        Float price = article.getPrice();
+        if ( price == null ) {
+            return null;
+        }
+        return price;
+    }
+
     protected Set<CartItem> cartItemDtoSetToCartItemSet(Set<CartItemDto> set) {
         if ( set == null ) {
             return null;
@@ -160,6 +177,7 @@ public class CartDtoMapperImpl implements CartDtoMapper {
         Article article = new Article();
 
         article.setTitle( cartItemDto.getArticle() );
+        article.setPrice( cartItemDto.getPrice() );
 
         return article;
     }

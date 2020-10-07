@@ -21,5 +21,5 @@ public class CartDto implements Serializable {
 
     private Set<CartItemDto> cartItems = new HashSet<>();
 
-    private Double totalCost = 0D;
+    private Float totalCost = 0F;
 }

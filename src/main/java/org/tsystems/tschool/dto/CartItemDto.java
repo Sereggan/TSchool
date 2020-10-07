@@ -16,4 +16,6 @@ public class CartItemDto implements Serializable {
     private Long articleId;
 
     private Integer quantity;
+
+    private Float price;
 }

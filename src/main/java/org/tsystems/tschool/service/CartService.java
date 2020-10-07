@@ -9,9 +9,13 @@ import java.util.List;
 
 public interface CartService {
 
-    public CartDto addArticle(CartDto cartDto, ArticleDto articleDto);
+    public CartDto addArticle(Long cartId, Long articleId);
 
     public CartDto addArticleInSession(CartDto cartDto, ArticleDto articleDto);
 
+    public CartDto removeArticleInSession(CartDto cartDto, Long id);
+
     CartDto findByUsername(String name);
+
+    public void removeArticle(Long cartId, Long id);
 }

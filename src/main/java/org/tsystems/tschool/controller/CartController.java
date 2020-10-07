@@ -4,6 +4,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,16 @@ public class CartController {
     private final CartDtoMapper mapper
             = Mappers.getMapper(CartDtoMapper.class);
 
+    @GetMapping()
+    public String getCart(Model model, Authentication authentication, HttpSession session){
+        CartDto cart;
+        if(authentication==null){
+            cart = createCartIfDoesntExist(session);
+        }else  cart = cartService.findByUsername(authentication.getName());
+        model.addAttribute("cart", cart);
+        return "user/cart";
+    }
+
 
     @GetMapping("/buy/{id}")
     public String buy(@PathVariable Long id,  Authentication authentication, HttpSession session){
@@ -47,9 +58,23 @@ public class CartController {
             session.setAttribute("cart",cart);
         } else {
             cart = cartService.findByUsername(authentication.getName());
-            cartService.addArticle(cart, articleDto.get());
+            cartService.addArticle(cart.getId(), articleDto.get().getId());
         }
         return "redirect:/catalog";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id,  Authentication authentication, HttpSession session){
+        CartDto cart;
+        if(authentication==null){
+            cart = (CartDto) session.getAttribute("cart");
+            cart = cartService.removeArticleInSession(cart, id);
+            session.setAttribute("cart",cart);
+        } else {
+            cart = cartService.findByUsername(authentication.getName());
+            cartService.removeArticle(cart.getId(), id);
+        }
+        return "redirect:/cart";
     }
 
     private CartDto createCartIfDoesntExist(HttpSession httpSession) {
