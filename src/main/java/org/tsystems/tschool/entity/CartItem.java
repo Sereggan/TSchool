@@ -30,5 +30,5 @@ public class CartItem implements Serializable {
 
     @NotNull
     @Column(name = "cart_item_quantity")
-    private int quantity;
+    private Integer quantity;
 }
