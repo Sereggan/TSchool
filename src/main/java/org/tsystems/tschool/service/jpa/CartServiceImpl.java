@@ -19,7 +19,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -88,7 +88,7 @@ public class CartServiceImpl implements CartService {
     public CartDto addArticleInSession(CartDto cartDto, ArticleDto articleDto) {
 
         for(CartItemDto item: cartDto.getCartItems()){
-            if(Objects.equals(item.getArticleId(), articleDto.getId())) {
+            if(item.getArticleId()==articleDto.getId()) {
                 item.setQuantity(item.getQuantity()+1);
                 item.setPrice(item.getQuantity()*articleDto.getPrice());
                 cartDto.setTotalCost(cartDto.getTotalCost()+articleDto.getPrice());

@@ -53,12 +53,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void remove(Long id) throws UnsupportedOperationException{
+    public void remove(Long id) {
 
     }
 
     @Override
-    public OrderDto update(OrderDto orderDto) throws UnsupportedOperationException{
+    public OrderDto update(OrderDto orderDto) {
         return null;
     }
 
@@ -72,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void save(Order order) throws UnsupportedOperationException{
+    public void save(Order order) {
 
     }
 }

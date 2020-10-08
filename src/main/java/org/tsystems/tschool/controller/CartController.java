@@ -9,13 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.tsystems.tschool.dto.ArticleDto;
-import org.tsystems.tschool.dto.CartDetailsDto;
 import org.tsystems.tschool.dto.CartDto;
+import org.tsystems.tschool.dto.CartItemDto;
+import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.mapper.CartDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
 import org.tsystems.tschool.service.CartService;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -81,11 +84,5 @@ public class CartController {
             return cart;
         }
         return (CartDto) httpSession.getAttribute("cart");
-    }
-
-    @GetMapping("/order")
-    public String getCartConfirmationPage(Model model, CartDetailsDto cartDetailsDto){
-        model.addAttribute("cart", new CartDetailsDto());
-        return "user/make-order-page";
     }
 }

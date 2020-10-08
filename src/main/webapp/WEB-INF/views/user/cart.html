@@ -9,14 +9,12 @@
 <div class="container my-2">
     <div class="card">
         <div class="card-body">
-<<<<<<< Updated upstream
-            <a href="/cart/order" class="btn btn-primary">Make Order</a>
-=======
-            <a href="/cart/order" class="btn btn-primary" th:if="${#httpServletRequest.isUserInRole('CLIENT')}>Make Order</a>
->>>>>>> Stashed changes
+            <a href="/" class="btn btn-danger">Home</a>
             <div th:switch="${cart.cartItems}" class="container my-5">
                 <input type="text" class="form-control" id="filter" placeholder="Filter Articles">
                 <div class="col-md-10">
+                    <form action="#" th:action="@{/articles/add}" th:object="${articleDto}" method="post"
+                          modelAttribute="articleDto" >
                     <h2 th:case="null">No Articles yet!</h2>
                     <h2 th:text="'Total cost:' + ${cart.totalCost}"></h2>
                     <div th:case="*">
@@ -39,6 +37,8 @@
                             </tbody>
                         </table>
                     </div>
+                        <input type="submit" class="btn btn-primary" value="Make Order">
+                    </form>
                 </div>
             </div>
         </div>
