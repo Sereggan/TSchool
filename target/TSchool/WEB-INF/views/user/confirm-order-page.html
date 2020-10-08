@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="templates/header :: navigation"></div>
+<div class="container my-5">
+    <h3> Order Information</h3>
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-8">
+                <form action="#" th:action="@{/cart/order/}"  th:object="${order}" method="post"
+                      modelAttribute="order">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="paymentMethod" class="col-form-label">Payment Method</label>
+                            <select name="paymentMethod">
+                                <option th:each="paymentMethod : ${T(org.tsystems.tschool.enums.PaymentMethod).values()}"
+                                    th:value="${paymentMethod}" th:text="${paymentMethod.displayValue}" id="paymentMethod"></option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="deliveryMethod" class="col-form-label">Delivery Method</label>
+                            <select name="deliveryMethod">
+                                <option th:each="deliveryMethod : ${T(org.tsystems.tschool.enums.DeliveryMethod).values()}"
+                                    th:value="${deliveryMethod}" th:text="${deliveryMethod.displayValue}" id="deliveryMethod"></option>
+                            </select>
+                        </div>
+                        <hr />
+                        <div class="form-group col-md-6">
+                            <h2>Delivery/Pickup Address information: </h2>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="country" class="col-form-label">Country</label>
+                            <input type="text" th:field="*{addressDto.country}" required maxlength="30" class="form-control" id="country" placeholder="Country">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="city" class="col-form-label">City</label>
+                            <input type="text" th:field="*{addressDto.city}" required  maxlength="30" class="form-control" id="city" placeholder="City">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="postalCode" class="col-form-label">PostalCode</label>
+                            <input type="number" th:field="*{addressDto.postalCode}" required max="1000000" class="form-control" id="postalCode" placeholder="PostalCode">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="street" class="col-form-label">Street</label>
+                            <input type="text" th:field="*{addressDto.street}" required maxlength="30" class="form-control" id="street" placeholder="Street">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="house" class="col-form-label">House</label>
+                            <input type="text" th:field="*{addressDto.house}" required maxlength="30" class="form-control" id="house" placeholder="House">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="flat" class="col-form-label">Flat</label>
+                            <input type="number" th:field="*{addressDto.flat}" required min="1" max="100000" class="form-control" id="flat" placeholder="Flat">
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <input type="submit" class="btn btn-primary" value="Confirm Order">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -4,14 +4,12 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import org.tsystems.tschool.dao.ArticleDAO;
 import org.tsystems.tschool.dao.CartDAO;
+import org.tsystems.tschool.dao.OrderDAO;
 import org.tsystems.tschool.dao.UserDAO;
-import org.tsystems.tschool.dto.ArticleDto;
-import org.tsystems.tschool.dto.CartDto;
-import org.tsystems.tschool.dto.CartItemDto;
-import org.tsystems.tschool.entity.Article;
-import org.tsystems.tschool.entity.Cart;
-import org.tsystems.tschool.entity.CartItem;
-import org.tsystems.tschool.entity.User;
+import org.tsystems.tschool.dto.*;
+import org.tsystems.tschool.entity.*;
+import org.tsystems.tschool.enums.OrderStatus;
+import org.tsystems.tschool.mapper.AddressDtoMapper;
 import org.tsystems.tschool.mapper.CartDtoMapper;
 import org.tsystems.tschool.service.CartService;
 
@@ -31,13 +29,19 @@ public class CartServiceImpl implements CartService {
 
     final ArticleDAO articleDAO;
 
+    final OrderDAO orderDAO;
+
     private final CartDtoMapper mapper
             = Mappers.getMapper(CartDtoMapper.class);
 
-    public CartServiceImpl(CartDAO cartDao, UserDAO userDAO, ArticleDAO articleDAO) {
+    private final AddressDtoMapper addressDtoMapper
+            = Mappers.getMapper(AddressDtoMapper.class);
+
+    public CartServiceImpl(CartDAO cartDao, UserDAO userDAO, ArticleDAO articleDAO, OrderDAO orderDAO) {
         this.cartDao = cartDao;
         this.userDAO = userDAO;
         this.articleDAO = articleDAO;
+        this.orderDAO = orderDAO;
     }
 
     @Override
@@ -135,5 +139,35 @@ public class CartServiceImpl implements CartService {
             cart = cartDao.save(cart);
         }
         return mapper.cartToDto(cart);
+    }
+
+    @Override
+    public void createOrder(CartDto cartDto, OrderDetailsDto orderDetailsDto) {
+        Order order = new Order();
+        User user = userDAO.getUserById(cartDto.getUserId());
+        order.setUser(user);
+        order.setAddress(addressDtoMapper.dtoToAddress(orderDetailsDto.getAddressDto()));
+        order.setDeliveryMethod(orderDetailsDto.getDeliveryMethod());
+        order.setPaymentMethod(orderDetailsDto.getPaymentMethod());
+        order.setIsPaid(false);
+        order.setPrice(cartDto.getTotalCost());
+        order.setOrderStatus(OrderStatus.STATUS_AWAITING_SHIPMENT);
+
+        for(CartItemDto item: cartDto.getCartItems()){
+            Article article = articleDAO.findById(item.getArticleId());
+            OrderItem orderItem = new OrderItem();
+            orderItem.setArticleTitle(article.getTitle());
+            orderItem.setArticleTitle(item.getArticle());
+            orderItem.setOrder(order);
+            orderItem.setPrice(item.getPrice());
+            orderItem.setQuantity(item.getQuantity());
+            order.addOrderItem(orderItem);
+        }
+
+        user.getOrders().add(order);
+        orderDAO.save(order);
+        Cart cart = cartDao.findById(cartDto.getId());
+        cartDao.update(cart);
+        cartDao.delete(cart);
     }
 }

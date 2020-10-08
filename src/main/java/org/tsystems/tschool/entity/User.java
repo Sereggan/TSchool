@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -71,4 +72,18 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy="user" , cascade ={CascadeType.MERGE, CascadeType.REMOVE})
     private List<Order> orders;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getUsername().equals(user.getUsername()) &&
+                getEmail().equals(user.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUsername(), getEmail());
+    }
 }

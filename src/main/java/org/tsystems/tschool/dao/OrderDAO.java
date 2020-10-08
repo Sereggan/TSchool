@@ -2,6 +2,7 @@ package org.tsystems.tschool.dao;
 
 import org.springframework.stereotype.Repository;
 import org.tsystems.tschool.entity.Article;
+import org.tsystems.tschool.entity.Category;
 import org.tsystems.tschool.entity.Order;
 
 import javax.persistence.EntityManager;
@@ -25,10 +26,9 @@ public class OrderDAO {
                 .getResultList();
     }
 
-    public List<Order>  findOrderItemsByOrderId(Long orderId){
-        return entityManager.createQuery("SELECT e from Order_item e where e.order.id = ?1" ,Order.class)
-                .setParameter(1, orderId)
-                .getResultList();
+    public Order save(Order order){
+        entityManager.persist(order);
+        return entityManager.find(Order.class, order.getId());
     }
 
     public Order findById(Long id){

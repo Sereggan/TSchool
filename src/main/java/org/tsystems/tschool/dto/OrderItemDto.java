@@ -13,5 +13,5 @@ public class OrderItemDto {
 
     private Integer quantity;
 
-    private Long price;
+    private Float price;
 }

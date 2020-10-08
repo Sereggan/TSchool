@@ -34,5 +34,5 @@ public class OrderItem implements Serializable {
 
     @NotNull
     @Column(name = "order_item_price")
-    private Long price;
+    private Float price;
 }

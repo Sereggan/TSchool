@@ -6,17 +6,14 @@ import org.tsystems.tschool.enums.DeliveryMethod;
 import org.tsystems.tschool.enums.OrderStatus;
 import org.tsystems.tschool.enums.PaymentMethod;
 
-import javax.persistence.*;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.ArrayList;
 import java.util.List;
 
 @Setter
 @Getter
-public class OrderDto {
-
-    private Long id;
-
-    private Long userId;
+public class OrderDetailsDto {
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
@@ -25,13 +22,4 @@ public class OrderDto {
     private DeliveryMethod deliveryMethod;
 
     private AddressDto addressDto;
-
-    private List<OrderItemDto> orderItems = new ArrayList<>();
-
-    private Boolean isPaid;
-
-    @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
-
-    private Float price;
 }

@@ -46,7 +46,7 @@ public class Order implements Serializable {
     @Column(name = "delivery")
     private DeliveryMethod deliveryMethod;
 
-    @OneToMany(mappedBy="order", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy="order", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)
     private Set<OrderItem> orderItems = new HashSet<>();
 
     @NotNull
@@ -58,7 +58,7 @@ public class Order implements Serializable {
     private OrderStatus orderStatus;
 
     @Column(name="price")
-    private Long price;
+    private Float price;
 
     @Override
     public boolean equals(Object o) {
@@ -77,6 +77,10 @@ public class Order implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getUser(), getAddress(), getPaymentMethod(), getDeliveryMethod(), getIsPaid(), getOrderStatus(), getPrice());
+    }
+
+    public void addOrderItem(OrderItem orderItem){
+        orderItems.add(orderItem);
     }
 
 }

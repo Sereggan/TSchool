@@ -5,18 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.dto.CartDto;
 import org.tsystems.tschool.dto.CartItemDto;
+import org.tsystems.tschool.dto.OrderDetailsDto;
 import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.mapper.CartDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
 import org.tsystems.tschool.service.CartService;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -84,5 +85,21 @@ public class CartController {
             return cart;
         }
         return (CartDto) httpSession.getAttribute("cart");
+    }
+
+    @GetMapping("/details")
+    public String getOrderDetailsPage(Model model){
+        model.addAttribute("order", new OrderDetailsDto());
+        return "user/confirm-order-page";
+    }
+
+    @PostMapping("/order")
+    public String makeOrder(Authentication authentication, @ModelAttribute("order") @Valid OrderDetailsDto dto, BindingResult result) {
+        if (result.hasErrors()) {
+            return "user/confirm-order-page";
+        }
+       CartDto cart = cartService.findByUsername(authentication.getName());
+        cartService.createOrder(cart, dto);
+       return "redirect:/user/orders";
     }
 }

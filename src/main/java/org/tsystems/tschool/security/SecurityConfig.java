@@ -53,6 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/articles/**").hasRole("EMPLOYEE")
                 .antMatchers("/user/**").hasRole("CLIENT")
                 .antMatchers("/").permitAll()
+                .antMatchers("/cart").permitAll()
+                .antMatchers("/cart/**").hasRole("CLIENT")
                 .antMatchers("/catalog").permitAll()
                 .and().formLogin().defaultSuccessUrl("/")
                 .permitAll()

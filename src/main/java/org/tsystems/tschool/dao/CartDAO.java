@@ -37,4 +37,13 @@ public class CartDAO {
                 .setParameter(1,cart.getUser())
                 .getSingleResult();
     }
+
+    public void delete(Cart cart){
+        entityManager.remove(cart);
+    }
+
+    public Cart update(Cart cart){
+        entityManager.merge(cart);
+        return entityManager.find(Cart.class, cart.getId());
+    }
 }
