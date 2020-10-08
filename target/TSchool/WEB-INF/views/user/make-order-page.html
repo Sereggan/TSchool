@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="templates/header :: navigation"></div>
+<div class="container my-5">
+    <h3> Order Details</h3>
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-8">
+                <form action="#" th:action="@{/orders/add/{id}(id=${cart.id})}"  th:object="${cart}" method="post"
+                      modelAttribute="cart">
+                    <input type="hidden" th:value="${cart.id}" name="id"/>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <h2>Payment Method: </h2>
+                            <select name="paymentMethod">
+                                <option th:each="paymentMethod : ${T(org.tsystems.tschool.enums.PaymentMethod).values()}"
+                                        th:value="${paymentMethod}" th:text="${paymentMethod.displayValue}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <h2>Delivery Method: </h2>
+                            <select name="deliveryMethod">
+                                <option th:each="deliveryMethod : ${T(org.tsystems.tschool.enums.DeliveryMethod).values()}"
+                                        th:value="${deliveryMethod}" th:text="${deliveryMethod.displayValue}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <h2>Address information: </h2>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="country" class="col-form-label">Country</label>
+                            <input type="text" th:field="*{addressDto.country}" maxlength="30" class="form-control" id="country" placeholder="Country">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="city" class="col-form-label">City</label>
+                            <input type="text" th:field="*{addressDto.city}"  maxlength="30" class="form-control" id="city" placeholder="City">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="postalCode" class="col-form-label">PostalCode</label>
+                            <input type="number" th:field="*{addressDto.postalCode}" max="1000000" class="form-control" id="postalCode" placeholder="PostalCode">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="street" class="col-form-label">Street</label>
+                            <input type="text" th:field="*{addressDto.street}" maxlength="30" class="form-control" id="street" placeholder="Street">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="house" class="col-form-label">House</label>
+                            <input type="text" th:field="*{addressDto.house}" maxlength="30" class="form-control" id="house" placeholder="House">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="flat" class="col-form-label">Flat</label>
+                            <input type="number" th:field="*{addressDto.flat}" min="1" max="100000" class="form-control" id="flat" placeholder="Flat">
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <input type="submit" class="btn btn-primary" value="Make Order">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <form th:action="@{/user/update/password}" method="post">
+                <input type="text" required minlength="4" maxlength="20" th:name="password" class="form-control"/>
+                <input type="submit" class="btn btn-primary" value="Change Password">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
