@@ -12,8 +12,8 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.4.0.CR1/mapstruct-1.4.0.CR1.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.12/lombok-1.18.12.jar" />
         </processorPath>
-        <module name="tschool" />
         <module name="Tschool_task" />
+        <module name="tschool" />
         <module name="TSchool" />
       </profile>
     </annotationProcessing>

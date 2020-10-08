@@ -24,6 +24,8 @@ hs_err_pid*
 
 .idea/
 
+tartget/
+
 **/build/
 
 *.iml
@@ -35,3 +37,23 @@ hs_err_pid*
 *.log
 *.log*
 **/out
+target/generated-sources/annotations/org/tsystems/tschool/mapper/ArticleDtoMapperImpl.java
+target/generated-sources/annotations/org/tsystems/tschool/mapper/ArticleDtoMapperImpl.java
+target/generated-sources/annotations/org/tsystems/tschool/mapper/CartDtoMapperImpl.java
+target/generated-sources/annotations/org/tsystems/tschool/mapper/AddressDtoMapperImpl.java
+target/generated-sources/annotations/org/tsystems/tschool/mapper/ArticleDtoMapperImpl.java
+target/generated-sources/annotations/org/tsystems/tschool/mapper/CatalogArticleDtoMapperImpl.java
+target/generated-sources/annotations/org/tsystems/tschool/mapper/CategoryDtoMapperImpl.java
+target/generated-sources/annotations/org/tsystems/tschool/mapper/OrderDtoMapperImpl.java
+target/generated-sources/annotations/org/tsystems/tschool/mapper/UserDtoMapperImpl.java
+target/TSchool/META-INF/MANIFEST.MF
+target/TSchool/WEB-INF/views/user/cart.html
+target/generated-sources/annotations/org/tsystems/tschool/mapper/CartDtoMapperImpl.java
+target/generated-sources/annotations/org/tsystems/tschool/mapper/AddressDtoMapperImpl.java
+target/generated-sources/annotations/org/tsystems/tschool/mapper/ArticleDtoMapperImpl.java
+target/generated-sources/annotations/org/tsystems/tschool/mapper/CatalogArticleDtoMapperImpl.java
+target/generated-sources/annotations/org/tsystems/tschool/mapper/CategoryDtoMapperImpl.java
+target/generated-sources/annotations/org/tsystems/tschool/mapper/OrderDtoMapperImpl.java
+target/generated-sources/annotations/org/tsystems/tschool/mapper/UserDtoMapperImpl.java
+target/TSchool/META-INF/MANIFEST.MF
+target/TSchool/WEB-INF/views/user/cart.html

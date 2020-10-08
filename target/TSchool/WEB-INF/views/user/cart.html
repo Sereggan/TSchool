@@ -9,7 +9,11 @@
 <div class="container my-2">
     <div class="card">
         <div class="card-body">
+<<<<<<< Updated upstream
             <a href="/cart/order" class="btn btn-primary">Make Order</a>
+=======
+            <a href="/cart/order" class="btn btn-primary" th:if="${#httpServletRequest.isUserInRole('CLIENT')}>Make Order</a>
+>>>>>>> Stashed changes
             <div th:switch="${cart.cartItems}" class="container my-5">
                 <input type="text" class="form-control" id="filter" placeholder="Filter Articles">
                 <div class="col-md-10">
