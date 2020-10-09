@@ -18,4 +18,6 @@ public interface CartService {
     public void createOrder(CartDto cartDto, OrderDetailsDto orderDetailsDto);
 
     public void removeArticle(Long cartId, Long id);
+
+    public CartDto addItemsToDatabase(CartDto cartDto, String username);
 }

@@ -36,6 +36,10 @@ public class Cart implements Serializable {
     @Column(name = "cart_totalcost")
     private Float totalCost;
 
+    public void addItem(CartItem item){
+        cartItems.add(item);
+    }
+
     public void removeItem(CartItem item){
         cartItems.remove(item);
     }

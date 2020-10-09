@@ -78,7 +78,7 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    private CartDto createCartIfDoesntExist(HttpSession httpSession) {
+    public CartDto createCartIfDoesntExist(HttpSession httpSession) {
         if (httpSession.getAttribute("cart") == null) {
             CartDto cart = new CartDto();
             httpSession.setAttribute("cart", cart);
@@ -95,10 +95,11 @@ public class CartController {
 
     @PostMapping("/order")
     public String makeOrder(Authentication authentication, @ModelAttribute("order") @Valid OrderDetailsDto dto, BindingResult result) {
-        if (result.hasErrors()) {
-            return "user/confirm-order-page";
-        }
+
        CartDto cart = cartService.findByUsername(authentication.getName());
+       if(cart.getCartItems()==null){
+           return "redirect:/catalog";
+       }
         cartService.createOrder(cart, dto);
        return "redirect:/user/orders";
     }

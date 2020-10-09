@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
@@ -67,10 +66,10 @@ public class User implements Serializable {
                     @JoinColumn(name = "authority_id")})
     private Set<Authority> roles = new HashSet<>();
 
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     private Cart cart;
 
-    @OneToMany(mappedBy="user" , cascade ={CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy="user" , cascade ={CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     private List<Order> orders;
 
     @Override

@@ -35,16 +35,17 @@ public class UserServiceImpl implements UserService {
         return mapper.userToDto(user);
     }
 
+
     @Override
     public UserDto updateUser(UserDto userDto) {
-        User oldUser = userDAO.getUserByUsername(userDto.getUsername());
-        User user = mapper.dtoToUser(userDto);
-        user.setPassword(oldUser.getPassword());
-        user.setRoles(oldUser.getRoles());
-        user.setCart(oldUser.getCart());
-        userDAO.update(user);
-        User updatedUser = userDAO.getUserByUsername(user.getUsername());
-        return mapper.userToDto(updatedUser);
+        User user = userDAO.getUserByUsername(userDto.getUsername());
+        User newUser = mapper.dtoToUser(userDto);
+
+        user.setBirthday(newUser.getBirthday());
+        user.setAddress(newUser.getAddress());
+        user.setLastName(newUser.getLastName());
+
+        return mapper.userToDto(user);
     }
 
     @Override

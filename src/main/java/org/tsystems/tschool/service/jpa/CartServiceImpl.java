@@ -89,6 +89,25 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public CartDto addItemsToDatabase(CartDto cartDto, String username) {
+        Cart cart = mapper.dtoToCart(findByUsername(username));
+        cart.setTotalCost(cartDto.getTotalCost());
+        List<CartItemDto> cartItemDtos = new ArrayList<>(cartDto.getCartItems());
+        Set<CartItem> cartItems = new HashSet<>();
+        for(int i=0; i< cartItemDtos.size(); i++){
+            CartItemDto cartItemDto = cartItemDtos.get(i);
+            CartItem item = mapper.dtoToCartItem(cartItemDto);
+            cartItems.add(item);
+            cart.getCartItems().add(item);
+        }
+
+
+        cart.setUser(userDAO.getUserByUsername(username));
+        cartDao.update(cart);
+        return mapper.cartToDto(cart);
+    }
+
+    @Override
     public CartDto addArticleInSession(CartDto cartDto, ArticleDto articleDto) {
 
         for(CartItemDto item: cartDto.getCartItems()){

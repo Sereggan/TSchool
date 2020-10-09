@@ -33,4 +33,9 @@ public class UserDAO {
         entityManager.merge(user);
         return entityManager.find(User.class, user.getId());
     }
+
+    public User save(User user){
+        entityManager.persist(user);
+        return entityManager.find(User.class, user.getId());
+    }
 }
