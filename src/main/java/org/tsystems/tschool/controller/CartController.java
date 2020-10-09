@@ -97,7 +97,7 @@ public class CartController {
     public String makeOrder(Authentication authentication, @ModelAttribute("order") @Valid OrderDetailsDto dto, BindingResult result) {
 
        CartDto cart = cartService.findByUsername(authentication.getName());
-       if(cart.getCartItems()==null){
+       if(cart.getCartItems().isEmpty()){
            return "redirect:/catalog";
        }
         cartService.createOrder(cart, dto);

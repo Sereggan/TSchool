@@ -67,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderDAO.findById(id);
         order.setIsPaid(orderStatusDto.getIsPaid());
         order.setOrderStatus(orderStatusDto.getOrderStatus());
-        return orderDtoMapper.orderToDto(orderDAO.update(order));
+        return orderDtoMapper.orderToDto(order);
     }
 
 
