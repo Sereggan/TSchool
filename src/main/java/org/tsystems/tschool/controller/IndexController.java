@@ -18,11 +18,12 @@ public class IndexController {
 
     private final ArticleService articleService;
 
-    @Autowired
-    CartService cartService;
+    private final CartService cartService;
 
-    public IndexController(ArticleService articleService) {
+
+    public IndexController(ArticleService articleService, CartService cartService) {
         this.articleService = articleService;
+        this.cartService = cartService;
     }
 
     @GetMapping()

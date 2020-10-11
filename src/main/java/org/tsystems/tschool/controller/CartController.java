@@ -32,6 +32,8 @@ public class CartController {
     @Autowired
     CartService cartService;
 
+    private final String REDIRECT_CATALOG_URL = "redirect:catalog";
+
     private final CartDtoMapper mapper
             = Mappers.getMapper(CartDtoMapper.class);
 
@@ -50,8 +52,9 @@ public class CartController {
     public String buy(@PathVariable Long id,  Authentication authentication, HttpSession session){
         Optional<ArticleDto> articleDto = articleService.findById(id);
         if(!articleDto.isPresent()){
-            return "redirect:/catalog";
+            return REDIRECT_CATALOG_URL;
         }
+
         CartDto cart;
         if(authentication==null){
             cart = createCartIfDoesntExist(session);
@@ -61,7 +64,7 @@ public class CartController {
             cart = cartService.findByUsername(authentication.getName());
             cartService.addArticle(cart.getId(), articleDto.get().getId());
         }
-        return "redirect:/catalog";
+        return REDIRECT_CATALOG_URL;
     }
 
     @GetMapping("/delete/{id}")
@@ -98,7 +101,7 @@ public class CartController {
 
        CartDto cart = cartService.findByUsername(authentication.getName());
        if(cart.getCartItems().isEmpty()){
-           return "redirect:/catalog";
+           return REDIRECT_CATALOG_URL;
        }
         cartService.createOrder(cart, dto);
        return "redirect:/user/orders";

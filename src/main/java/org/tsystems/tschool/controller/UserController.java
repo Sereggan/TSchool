@@ -12,6 +12,7 @@ import org.tsystems.tschool.dto.UserDto;
 import org.tsystems.tschool.service.OrderService;
 import org.tsystems.tschool.service.UserService;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
@@ -38,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/update/{username}")
-    public String updateUser(@PathVariable("username") String username,Authentication authentication, @ModelAttribute("user") UserDto userDto, BindingResult result) {
+    public String updateUser(@PathVariable("username") String username, Authentication authentication, @Valid @ModelAttribute("user") UserDto userDto, BindingResult result) {
         if(result.hasErrors()){
             return "user/user-info-page";
         }

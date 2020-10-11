@@ -39,6 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
         this.articleDAO = articleDAO;
     }
 
+
     @Override
     public List<CategoryDto> findAll() {
         return categoryDAO.findAll().stream()

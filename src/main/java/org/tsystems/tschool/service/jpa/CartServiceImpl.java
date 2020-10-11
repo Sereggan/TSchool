@@ -88,6 +88,7 @@ public class CartServiceImpl implements CartService {
         }
     }
 
+    // Moves cart from session to database after authorization
     @Override
     public CartDto addItemsToDatabase(CartDto cartDto, String username) {
 
@@ -162,6 +163,7 @@ public class CartServiceImpl implements CartService {
         return mapper.cartToDto(cart);
     }
 
+    // Converts Cart to Order when user makes order
     @Override
     public void createOrder(CartDto cartDto, OrderDetailsDto orderDetailsDto) {
         Order order = new Order();
