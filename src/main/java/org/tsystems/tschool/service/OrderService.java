@@ -9,17 +9,11 @@ import java.util.Optional;
 
 public interface OrderService {
 
-    public List findAll();
+    public List<OrderDto> findAll();
 
-    public List findAllByUsername(String username);
-
-    public Optional<Order> findById(Long id);
-
-    public void remove(Long id);
+    public List<OrderDto> findAllByUsername(String username);
 
     public OrderDto update(OrderDto orderDto);
 
     public OrderDto updateStatus(OrderStatusDto orderStatusDto, Long id);
-
-    public void save(Order order);
 }

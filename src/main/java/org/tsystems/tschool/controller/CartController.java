@@ -32,7 +32,7 @@ public class CartController {
     @Autowired
     CartService cartService;
 
-    private final String REDIRECT_CATALOG_URL = "redirect:catalog";
+    private final String REDIRECT_CATALOG_URL = "redirect:/catalog";
 
     private final CartDtoMapper mapper
             = Mappers.getMapper(CartDtoMapper.class);

@@ -4,16 +4,17 @@ import lombok.*;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"orderItem","cartItem","categories","values","id"})
 @Entity(name = "Article")
 @Table(name = "article")
 public class Article implements Serializable {
@@ -32,6 +33,7 @@ public class Article implements Serializable {
     private Float price;
 
     @NotNull(message = "Quantity cant be 0")
+    @Min(value = 0, message = "Quantity cant be Negative")
     @Column(name = "quantity")
     private Integer quantity;
 
@@ -68,5 +70,18 @@ public class Article implements Serializable {
     public void removeCategory(Category category){
         categories.remove(category);
         category.getArticleSet().remove(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Article)) return false;
+        Article article = (Article) o;
+        return getTitle().equals(article.getTitle());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitle());
     }
 }

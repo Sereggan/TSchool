@@ -14,7 +14,6 @@ import org.tsystems.tschool.service.UserService;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Transactional
 @Service
@@ -33,10 +32,9 @@ public class OrderServiceImpl implements OrderService {
     public List findAll() {
         List<OrderDto> orderDtos = new ArrayList<>();
 
-        orderDAO.findALl().forEach(order-> orderDtos.add(orderDtoMapper.orderToDto(order)));
+        orderDAO.findAll().forEach(order-> orderDtos.add(orderDtoMapper.orderToDto(order)));
         return orderDtos;
     }
-
 
     @Override
     public List<OrderDto> findAllByUsername(String username) {
@@ -45,16 +43,6 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDto> orderDtos = new ArrayList<>();
         orders.forEach(order-> orderDtos.add(orderDtoMapper.orderToDto(order)));
         return orderDtos;
-    }
-
-    @Override
-    public Optional<Order> findById(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public void remove(Long id) {
-
     }
 
     @Override
@@ -68,11 +56,5 @@ public class OrderServiceImpl implements OrderService {
         order.setIsPaid(orderStatusDto.getIsPaid());
         order.setOrderStatus(orderStatusDto.getOrderStatus());
         return orderDtoMapper.orderToDto(order);
-    }
-
-
-    @Override
-    public void save(Order order) {
-
     }
 }

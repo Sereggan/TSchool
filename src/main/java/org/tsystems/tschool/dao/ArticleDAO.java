@@ -3,8 +3,10 @@ package org.tsystems.tschool.dao;
 import org.springframework.stereotype.Repository;
 import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Category;
+import org.tsystems.tschool.entity.OrderItem;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Set;
@@ -15,13 +17,19 @@ public class ArticleDAO {
     @PersistenceContext
     EntityManager entityManager;
 
-    public List<Article> findALl(){
+    public List<Article> findAll(){
         return entityManager.createQuery("select e from Article e", Article.class)
                 .getResultList();
     }
 
     public Article findById(Long id){
         return entityManager.find(Article.class, id);
+    }
+
+    public Article findByIdWithLock(Long id){
+        Article article = entityManager.find(Article.class, id);
+        entityManager.lock(article, LockModeType.PESSIMISTIC_READ);
+        return article;
     }
 
     public boolean removeById(Long id){
@@ -36,10 +44,8 @@ public class ArticleDAO {
 
     public Article save(Article article){
         entityManager.persist(article);
-        return entityManager.createQuery("select e from Article e where e.price = ?1 AND e.quantity = ?2 and e.title = ?3", Article.class)
-                .setParameter(1,article.getPrice())
-                .setParameter(2,article.getQuantity())
-                .setParameter(3,article.getTitle())
+        return entityManager.createQuery("select e from Article e where e.title = ?1", Article.class)
+                .setParameter(1,article.getTitle())
                 .getSingleResult();
     }
 
@@ -47,4 +53,5 @@ public class ArticleDAO {
         entityManager.merge(article);
         return entityManager.find(Article.class, article.getId());
     }
+
 }

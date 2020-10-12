@@ -1,6 +1,7 @@
 package org.tsystems.tschool.mapper;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,7 @@ import org.tsystems.tschool.entity.Value;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-10-11T17:40:46+0300",
+    date = "2020-10-12T20:42:33+0300",
     comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 1.8.0_252 (Amazon.com Inc.)"
 )
 @Component
@@ -30,7 +31,7 @@ public class CatalogArticleDtoMapperImpl implements CatalogArticleDtoMapper {
         catalogArticleDto.setTitle( article.getTitle() );
         catalogArticleDto.setPrice( article.getPrice() );
         catalogArticleDto.setQuantity( article.getQuantity() );
-        catalogArticleDto.setValues( valueSetToCatalogValueDtoSet( article.getValues() ) );
+        catalogArticleDto.setValues( valueSetToCatalogValueDtoList( article.getValues() ) );
 
         return catalogArticleDto;
     }
@@ -50,17 +51,17 @@ public class CatalogArticleDtoMapperImpl implements CatalogArticleDtoMapper {
         return catalogValueDto;
     }
 
-    protected Set<CatalogValueDto> valueSetToCatalogValueDtoSet(Set<Value> set) {
+    protected List<CatalogValueDto> valueSetToCatalogValueDtoList(Set<Value> set) {
         if ( set == null ) {
             return null;
         }
 
-        Set<CatalogValueDto> set1 = new HashSet<CatalogValueDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        List<CatalogValueDto> list = new ArrayList<CatalogValueDto>( set.size() );
         for ( Value value : set ) {
-            set1.add( valueToDto( value ) );
+            list.add( valueToDto( value ) );
         }
 
-        return set1;
+        return list;
     }
 
     private String valueCategoryTitle(Value value) {

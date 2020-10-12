@@ -4,9 +4,11 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import org.tsystems.tschool.dao.ArticleDAO;
 import org.tsystems.tschool.dao.CategoryDAO;
+import org.tsystems.tschool.dao.OrderDAO;
 import org.tsystems.tschool.dao.ValueDAO;
 import org.tsystems.tschool.dto.*;
 import org.tsystems.tschool.entity.Article;
+import org.tsystems.tschool.entity.OrderItem;
 import org.tsystems.tschool.entity.Value;
 import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.mapper.CatalogArticleDtoMapper;
@@ -26,23 +28,34 @@ public class ArticleServiceImpl implements ArticleService {
 
     final CategoryDAO categoryDAO;
 
+    final OrderDAO orderDAO;
+
     private final ArticleDtoMapper mapper
             = Mappers.getMapper(ArticleDtoMapper.class);
 
     private final CatalogArticleDtoMapper catalogArticleDtoMapper
             = Mappers.getMapper(CatalogArticleDtoMapper.class);
 
-    public ArticleServiceImpl(ArticleDAO articleDAO, ValueDAO valueDAO, CategoryDAO categoryDAO) {
+    public ArticleServiceImpl(ArticleDAO articleDAO, ValueDAO valueDAO, CategoryDAO categoryDAO, OrderDAO orderDAO) {
         this.articleDAO = articleDAO;
         this.valueDAO = valueDAO;
         this.categoryDAO = categoryDAO;
+        this.orderDAO = orderDAO;
     }
 
     @Override
     public List<ArticleDto> findAll() {
-        return articleDAO.findALl().stream()
-                .map(mapper::articleToDto)
+        List<ArticleDto> articleDtos = articleDAO.findAll().stream()
+                .map(item-> {
+                    ArticleDto articleDto = mapper.articleToDto(item);
+                    if(item.getCartItem().isEmpty()){
+                        articleDto.setIsActive(true);
+                    }
+                    return articleDto;
+                })
                 .collect(Collectors.toList());
+        Collections.sort(articleDtos);
+        return articleDtos;
     }
 
     @Override
@@ -127,17 +140,55 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public CatalogDto getCatalog() {
-        List<Article> articles = articleDAO.findALl();
+        List<Article> articles = articleDAO.findAll();
 
-        Set<CatalogArticleDto> articleDto = new HashSet<>();
+        List<CatalogArticleDto> articleDto = new ArrayList<>();
         for(int i = 0;i<articles.size();i++){
             Article article = articles.get(i);
-            CatalogArticleDto catalogArticleDto = catalogArticleDtoMapper.articleToDto(article);
-            articleDto.add(catalogArticleDto);
+            if(article.getQuantity()>0){
+                CatalogArticleDto catalogArticleDto = catalogArticleDtoMapper.articleToDto(article);
+                articleDto.add(catalogArticleDto);
+            }
         }
+        Collections.sort(articleDto);
 
         CatalogDto catalogDto = new CatalogDto();
         catalogDto.setCatalogArticleDto(articleDto);
         return catalogDto;
+    }
+
+    @Override
+    public List<ArticleRatingDto> getArticlesRating() {
+        List<OrderItem> orderItems =  orderDAO.findAllItems();
+        List<ArticleRatingDto> dtos = new ArrayList<>();
+
+        for(int i = 0; i < orderItems.size(); i++){
+            ArticleRatingDto ratingDto = new ArticleRatingDto();
+            ratingDto.setArticle(orderItems.get(i).getArticleTitle());
+            if(dtos.contains(ratingDto)){
+                for(int j = 0; j < dtos.size(); j++){
+                    if(dtos.get(j).getArticle().equals(ratingDto.getArticle())){
+                        ArticleRatingDto current = dtos.get(j);
+                        current.setQuantity(orderItems.get(i).getQuantity()+current.getQuantity());
+                        current.setTotalIncome(current.getPrice()* current.getQuantity());
+                    }
+                }
+            } else{
+                ratingDto.setQuantity(orderItems.get(i).getQuantity());
+                ratingDto.setPrice(orderItems.get(i).getPrice());
+                ratingDto.setQuantity(orderItems.get(i).getQuantity());
+                ratingDto.setTotalIncome(orderItems.get(i).getPrice()*orderItems.get(i).getQuantity());
+                dtos.add(ratingDto);
+            }
+        }
+        Collections.sort(dtos);
+
+        List<ArticleRatingDto> result = new ArrayList<>();
+
+        for(int i = 0; i < dtos.size();i++){
+            if(i==10) break;
+            else result.add(dtos.get(i));
+        }
+        return result;
     }
 }

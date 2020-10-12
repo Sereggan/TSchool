@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
-public class ArticleDto {
+public class ArticleDto implements Comparable<ArticleDto>{
 
     private Long id;
 
@@ -23,4 +23,11 @@ public class ArticleDto {
     @NotNull(message = "Quantity cant be empty")
     @Min(value = 0, message = "Quantity cant be Negative")
     private Integer quantity;
+
+    private Boolean isActive = false;
+
+    @Override
+    public int compareTo(ArticleDto o) {
+        return o.getPrice().compareTo(this.getPrice());
+    }
 }

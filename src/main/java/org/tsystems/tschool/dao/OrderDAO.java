@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Category;
 import org.tsystems.tschool.entity.Order;
+import org.tsystems.tschool.entity.OrderItem;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,8 +16,13 @@ public class OrderDAO {
     @PersistenceContext
     EntityManager entityManager;
 
-    public List<Order> findALl(){
+    public List<Order> findAll(){
         return entityManager.createQuery("select e from Order e" ,Order.class)
+                .getResultList();
+    }
+
+    public List<OrderItem> findAllItems(){
+        return entityManager.createQuery("select e from Order_item e" ,OrderItem.class)
                 .getResultList();
     }
 

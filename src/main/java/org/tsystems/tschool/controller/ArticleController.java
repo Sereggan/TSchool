@@ -84,4 +84,10 @@ public class ArticleController {
         articleService.removeArticleById(id);
         return redirect + articlesUrl;
     }
+
+    @GetMapping("/rating")
+    public String getTopArticles(Model model){
+        model.addAttribute("articles",articleService.getArticlesRating());
+        return "articles/top-articles";
+    }
 }

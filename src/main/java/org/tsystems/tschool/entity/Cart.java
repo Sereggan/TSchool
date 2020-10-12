@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -33,6 +34,7 @@ public class Cart implements Serializable {
     private Set<CartItem> cartItems = new HashSet<>();
 
     @NotNull
+    @Min(value = 0, message = "Total cost cant be negative")
     @Column(name = "cart_totalcost")
     private Float totalCost;
 

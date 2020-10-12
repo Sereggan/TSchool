@@ -12,4 +12,5 @@ public class ControllerAdvisor {
     public String handle(Model model) {
         return "redirect:/";
     }
+
 }
