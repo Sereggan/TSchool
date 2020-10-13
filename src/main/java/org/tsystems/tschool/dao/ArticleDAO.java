@@ -23,11 +23,9 @@ public class ArticleDAO {
     }
 
     public Article findById(Long id) {
-
         return entityManager.createQuery("select e from Article e where e.id = ?1", Article.class)
                 .setParameter(1, id)
                 .getSingleResult();
-
     }
 
     public Article findByIdWithLock(Long id) {

@@ -1,7 +1,6 @@
 package org.tsystems.tschool.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 import org.tsystems.tschool.dto.AddressDto;
 import org.tsystems.tschool.entity.Address;
 

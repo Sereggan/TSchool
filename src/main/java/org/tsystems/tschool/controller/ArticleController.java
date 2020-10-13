@@ -43,8 +43,8 @@ public class ArticleController {
     }
 
     @GetMapping("/edit/article-info-page/{id}")
-    public String getInfoArticlePage(@PathVariable Long id, Model model, ArticleDto articleDto) {
-        articleDto = articleService.findById(id);
+    public String getInfoArticlePage(@PathVariable Long id, Model model) {
+        ArticleDto articleDto = articleService.findById(id);
         model.addAttribute("articleDto", articleDto);
         return "articles/article-edit-page";
     }

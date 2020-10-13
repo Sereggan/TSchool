@@ -18,7 +18,7 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(ItemNotFoundException.class)
-    @ResponseStatus(value= HttpStatus.NOT_FOUND)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public String articleNotFound(Model model) {
         model.addAttribute("message", "Could not find this object, Please try again later");
         return "errors/notfound";
@@ -26,7 +26,7 @@ public class ControllerAdvisor {
 
     @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
     @ResponseStatus(value = HttpStatus.CONFLICT)
-    public String LockingFailure() {
+    public String lockingFailure() {
         return "errors/articleConflict";
     }
 }

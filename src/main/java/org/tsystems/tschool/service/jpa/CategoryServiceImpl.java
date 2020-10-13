@@ -70,13 +70,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto saveCategory(CategoryDto categoryDto) {
-        Category category = categoryDAO.save(mapper.DtoToCategory(categoryDto));
+        Category category = categoryDAO.save(mapper.dtoToCategory(categoryDto));
         return mapper.categoryToDto(category);
     }
 
     @Override
     public CategoryDto updateCategory(CategoryDto categoryDto) {
-        Category category = categoryDAO.update(mapper.DtoToCategory(categoryDto));
+        Category category = categoryDAO.update(mapper.dtoToCategory(categoryDto));
         return mapper.categoryToDto(category);
     }
 

@@ -9,18 +9,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.dto.CartDto;
-import org.tsystems.tschool.dto.CartItemDto;
 import org.tsystems.tschool.dto.OrderDetailsDto;
-import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.mapper.CartDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
 import org.tsystems.tschool.service.CartService;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/cart")
@@ -32,7 +27,7 @@ public class CartController {
     @Autowired
     CartService cartService;
 
-    private final String REDIRECT_CATALOG_URL = "redirect:/catalog";
+    private final static String REDIRECT_CATALOG_URL = "redirect:/catalog";
 
     private final CartDtoMapper mapper
             = Mappers.getMapper(CartDtoMapper.class);

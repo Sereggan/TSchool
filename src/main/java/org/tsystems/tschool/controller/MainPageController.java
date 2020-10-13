@@ -2,11 +2,8 @@ package org.tsystems.tschool.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.tsystems.tschool.dto.CartDto;
-import org.tsystems.tschool.dto.CatalogDto;
-import org.tsystems.tschool.service.ArticleService;
 import org.tsystems.tschool.service.CartService;
 
 import javax.servlet.http.HttpSession;

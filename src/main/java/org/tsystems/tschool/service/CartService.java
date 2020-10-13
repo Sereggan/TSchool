@@ -1,10 +1,6 @@
 package org.tsystems.tschool.service;
 
 import org.tsystems.tschool.dto.*;
-import org.tsystems.tschool.entity.Cart;
-import org.tsystems.tschool.exception.CartNotFoundException;
-
-import java.util.List;
 
 public interface CartService {
 

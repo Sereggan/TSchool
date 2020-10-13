@@ -1,6 +1,5 @@
 package org.tsystems.tschool.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -19,10 +18,18 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    public DataSource dataSource;
+    public final DataSource dataSource;
+
+    private static final String ROLE_EMPLOYEE = "EMPLOYEE";
+    private static final String ROLE_CLIENT = "CLIENT";
+
+    public SecurityConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
 
     @Bean
+    @Override
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
     }
@@ -49,13 +56,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/categories/**").hasRole("EMPLOYEE")
-                .antMatchers("/articles/**").hasRole("EMPLOYEE")
-                .antMatchers("/user/**").hasRole("CLIENT")
+                .antMatchers("/categories/**").hasRole(ROLE_EMPLOYEE)
+                .antMatchers("/articles/**").hasRole(ROLE_EMPLOYEE)
+                .antMatchers("/user/**").hasRole(ROLE_CLIENT)
                 .antMatchers("/").permitAll()
                 .antMatchers("/cart").permitAll()
-                .antMatchers("/cart/order").hasRole("CLIENT")
-                .antMatchers("/cart/convert").hasRole("CLIENT")
+                .antMatchers("/cart/order").hasRole(ROLE_CLIENT)
+                .antMatchers("/cart/convert").hasRole(ROLE_CLIENT)
                 .antMatchers("/catalog").permitAll()
                 .and().formLogin().defaultSuccessUrl("/")
                 .permitAll()

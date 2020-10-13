@@ -2,10 +2,8 @@ package org.tsystems.tschool.service;
 
 import org.tsystems.tschool.dto.OrderDto;
 import org.tsystems.tschool.dto.OrderStatusDto;
-import org.tsystems.tschool.entity.Order;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface OrderService {
 
