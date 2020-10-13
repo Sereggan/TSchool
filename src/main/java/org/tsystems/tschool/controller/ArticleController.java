@@ -23,18 +23,18 @@ public class ArticleController {
     }
 
     @GetMapping("")
-    public String getAllArticlesPage(Model model){
-        model.addAttribute("articles",articleService.findAll());
+    public String getAllArticlesPage(Model model) {
+        model.addAttribute("articles", articleService.findAll());
         return articles + "articlesListPage";
     }
 
     @GetMapping("/add-article-page")
-    public String getAddArticlePage(ArticleDto articleDto){
+    public String getAddArticlePage(ArticleDto articleDto) {
         return articles + "add-article-page";
     }
 
     @PostMapping("/add")
-    public String addArticle( @ModelAttribute("articleDto") @Valid ArticleDto articleDto, BindingResult result) {
+    public String addArticle(@ModelAttribute("articleDto") @Valid ArticleDto articleDto, BindingResult result) {
         if (result.hasErrors()) {
             return articles + "add-article-page";
         }
@@ -44,14 +44,14 @@ public class ArticleController {
     }
 
     @GetMapping("/edit/article-info-page/{id}")
-    public String getInfoArticlePage(@PathVariable Long id, Model model, ArticleDto articleDto){
+    public String getInfoArticlePage(@PathVariable Long id, Model model, ArticleDto articleDto) {
         model.addAttribute("articleDto", articleService.findById(id).get());
         return "articles/article-edit-page";
     }
 
     @PostMapping("/edit/{id}")
-    public String editArticle(@PathVariable Long id, @ModelAttribute("articleDto") ArticleDto articleDto, BindingResult result){
-        if(result.hasErrors()){
+    public String editArticle(@PathVariable Long id, @ModelAttribute("articleDto") ArticleDto articleDto, BindingResult result) {
+        if (result.hasErrors()) {
             return "articles/article-edit-page";
         }
         articleService.updateArticle(articleDto);
@@ -59,7 +59,7 @@ public class ArticleController {
     }
 
     @GetMapping("/values/{id}")
-    public String getValuesPage(@PathVariable Long id, Model model){
+    public String getValuesPage(@PathVariable Long id, Model model) {
         model.addAttribute("articleCategoriesDto", articleService.getAllCategoriesAndValuesByArticleId(id));
         return "articles/article-values-page";
     }
@@ -80,14 +80,14 @@ public class ArticleController {
 
 
     @GetMapping("/delete/{id}")
-    public String deleteArticleById(@PathVariable Long id){
+    public String deleteArticleById(@PathVariable Long id) {
         articleService.removeArticleById(id);
         return redirect + articlesUrl;
     }
 
     @GetMapping("/rating")
-    public String getTopArticles(Model model){
-        model.addAttribute("articles",articleService.getArticlesRating());
+    public String getTopArticles(Model model) {
+        model.addAttribute("articles", articleService.getArticlesRating());
         return "articles/top-articles";
     }
 }

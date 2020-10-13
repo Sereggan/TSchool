@@ -30,7 +30,7 @@ public class Cart implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy="cart", fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, orphanRemoval = true)
     private Set<CartItem> cartItems = new HashSet<>();
 
     @NotNull
@@ -38,11 +38,11 @@ public class Cart implements Serializable {
     @Column(name = "cart_totalcost")
     private Float totalCost;
 
-    public void addItem(CartItem item){
+    public void addItem(CartItem item) {
         cartItems.add(item);
     }
 
-    public void removeItem(CartItem item){
+    public void removeItem(CartItem item) {
         cartItems.remove(item);
     }
 

@@ -32,16 +32,16 @@ public class OrderServiceImpl implements OrderService {
     public List findAll() {
         List<OrderDto> orderDtos = new ArrayList<>();
 
-        orderDAO.findAll().forEach(order-> orderDtos.add(orderDtoMapper.orderToDto(order)));
+        orderDAO.findAll().forEach(order -> orderDtos.add(orderDtoMapper.orderToDto(order)));
         return orderDtos;
     }
 
     @Override
     public List<OrderDto> findAllByUsername(String username) {
         List<Order> orders
-         = orderDAO.findOrdersByUserId(userService.getUserByUsername(username).getId());
+                = orderDAO.findOrdersByUserId(userService.getUserByUsername(username).getId());
         List<OrderDto> orderDtos = new ArrayList<>();
-        orders.forEach(order-> orderDtos.add(orderDtoMapper.orderToDto(order)));
+        orders.forEach(order -> orderDtos.add(orderDtoMapper.orderToDto(order)));
         return orderDtos;
     }
 

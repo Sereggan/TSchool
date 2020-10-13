@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserByUsername(String username) {
         User user = userDAO.getUserByUsername(username);
-        if(user==null) return null;
+        if (user == null) return null;
         return mapper.userToDto(user);
     }
 
@@ -50,9 +50,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updatePassword(String username, String password) {
-       User user = userDAO.getUserByUsername(username);
-       String encodedPassword = passwordEncoder.encode(password);
-       user.setPassword(encodedPassword);
-       userDAO.update(user);
+        User user = userDAO.getUserByUsername(username);
+        String encodedPassword = passwordEncoder.encode(password);
+        user.setPassword(encodedPassword);
+        userDAO.update(user);
     }
 }

@@ -18,7 +18,7 @@ public class ValueDAO {
     @PersistenceContext
     EntityManager entityManager;
 
-    public Value addValue(Value value, Long categoryId){
+    public Value addValue(Value value, Long categoryId) {
         Category category = entityManager.find(Category.class, categoryId);
         value.setCategory(category);
         try {
@@ -26,23 +26,23 @@ public class ValueDAO {
                     .setParameter(1, value.getValue())
                     .setParameter(2, value.getCategory())
                     .getSingleResult();
-        }catch (NoResultException e){
+        } catch (NoResultException e) {
             entityManager.persist(value);
             return entityManager.createQuery("select e from Value e where e.value = ?1 and e.category = ?2", Value.class)
-                    .setParameter(1,value.getValue())
-                    .setParameter(2,value.getCategory())
+                    .setParameter(1, value.getValue())
+                    .setParameter(2, value.getCategory())
                     .getSingleResult();
         }
     }
 
-    public void removeValueFromCategory(Long id){
+    public void removeValueFromCategory(Long id) {
         Value value = entityManager.find(Value.class, id);
         Category category = value.getCategory();
         category.removeValue(value);
         Set<Article> articles = new HashSet<>(value.getArticles());
 
-        if(!articles.isEmpty()){
-            for(Article article:articles){
+        if (!articles.isEmpty()) {
+            for (Article article : articles) {
                 article.removeValue(value);
             }
         }
@@ -51,16 +51,16 @@ public class ValueDAO {
         entityManager.remove(value);
     }
 
-    public List<Value> findAll(){
+    public List<Value> findAll() {
         return entityManager.createQuery("select e from Value e", Value.class)
                 .getResultList();
     }
 
-    public Value findById(Long id){
+    public Value findById(Long id) {
         return entityManager.find(Value.class, id);
     }
 
-    public void remove(Value value){
+    public void remove(Value value) {
         entityManager.remove(value);
     }
 }

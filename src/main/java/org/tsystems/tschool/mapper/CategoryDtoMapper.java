@@ -8,5 +8,6 @@ import org.tsystems.tschool.entity.Category;
 public interface CategoryDtoMapper {
 
     CategoryDto categoryToDto(Category category);
+
     Category DtoToCategory(CategoryDto categoryDto);
 }

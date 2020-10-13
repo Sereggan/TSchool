@@ -40,34 +40,34 @@ public class Article implements Serializable {
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<CartItem> cartItem = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(name = "article_category",
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Category> categories = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(name = "article_value",
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "value_id")
     )
     private Set<Value> values = new HashSet<>();
 
-    public void addValue(Value value){
+    public void addValue(Value value) {
         values.add(value);
     }
 
-    public void addCategory(Category category){
+    public void addCategory(Category category) {
         categories.add(category);
     }
 
-    public void removeValue(Value value){
+    public void removeValue(Value value) {
         values.remove(value);
         value.getArticles().remove(this);
     }
 
-    public void removeCategory(Category category){
+    public void removeCategory(Category category) {
         categories.remove(category);
         category.getArticleSet().remove(this);
     }

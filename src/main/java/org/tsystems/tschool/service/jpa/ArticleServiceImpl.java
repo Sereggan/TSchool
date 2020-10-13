@@ -46,9 +46,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<ArticleDto> findAll() {
         List<ArticleDto> articleDtos = articleDAO.findAll().stream()
-                .map(item-> {
+                .map(item -> {
                     ArticleDto articleDto = mapper.articleToDto(item);
-                    if(item.getCartItem().isEmpty()){
+                    if (item.getCartItem().isEmpty()) {
                         articleDto.setIsActive(true);
                     }
                     return articleDto;
@@ -70,7 +70,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDto saveArticle(ArticleDto articleDto) {
-        Article article =  articleDAO.save(mapper.dtoToArticle(articleDto));
+        Article article = articleDAO.save(mapper.dtoToArticle(articleDto));
         return mapper.articleToDto(article);
     }
 
@@ -89,25 +89,25 @@ public class ArticleServiceImpl implements ArticleService {
         Article article = articleDAO.findById(articleId);
         Set<Value> valueList = article.getValues();
 
-        article.getValues().forEach(value->articleCategoriesDto.add(
-                new ArticleCategoriesItemDto( value.getId(), value.getCategory().getId(),
-                        value.getValue(),value.getCategory().getTitle())));
+        article.getValues().forEach(value -> articleCategoriesDto.add(
+                new ArticleCategoriesItemDto(value.getId(), value.getCategory().getId(),
+                        value.getValue(), value.getCategory().getTitle())));
 
         categoriesDto.setCurrent(articleCategoriesDto);
         List<Value> allValues = valueDAO.findAll();
         List<Value> filteredValues = new ArrayList<>();
 
-        for(Value value: allValues){
-            if(!valueList.contains(value)){
+        for (Value value : allValues) {
+            if (!valueList.contains(value)) {
                 filteredValues.add(value);
             }
         }
         List<ArticleCategoriesItemDto> articleCategoriesDtoOther = new ArrayList<>();
 
-        filteredValues.stream().forEach(value ->  articleCategoriesDtoOther.add(
+        filteredValues.stream().forEach(value -> articleCategoriesDtoOther.add(
                 new ArticleCategoriesItemDto(
                         value.getId(), value.getCategory().getId(),
-                        value.getValue(),value.getCategory().getTitle())));
+                        value.getValue(), value.getCategory().getTitle())));
         categoriesDto.setOther(articleCategoriesDtoOther);
 
         return categoriesDto;
@@ -128,12 +128,12 @@ public class ArticleServiceImpl implements ArticleService {
         Article article = articleDAO.findById(articleId);
         article.removeValue(value);
         boolean hasCategory = false;
-        for(Value articleValue: article.getValues()){
-            if(articleValue.getCategory().getTitle().equals(value.getCategory().getTitle())){
+        for (Value articleValue : article.getValues()) {
+            if (articleValue.getCategory().getTitle().equals(value.getCategory().getTitle())) {
                 hasCategory = true;
             }
         }
-        if(!hasCategory)  article.removeCategory(value.getCategory());
+        if (!hasCategory) article.removeCategory(value.getCategory());
 
         articleDAO.save(article);
     }
@@ -143,9 +143,9 @@ public class ArticleServiceImpl implements ArticleService {
         List<Article> articles = articleDAO.findAll();
 
         List<CatalogArticleDto> articleDto = new ArrayList<>();
-        for(int i = 0;i<articles.size();i++){
+        for (int i = 0; i < articles.size(); i++) {
             Article article = articles.get(i);
-            if(article.getQuantity()>0){
+            if (article.getQuantity() > 0) {
                 CatalogArticleDto catalogArticleDto = catalogArticleDtoMapper.articleToDto(article);
                 articleDto.add(catalogArticleDto);
             }
@@ -159,25 +159,25 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleRatingDto> getArticlesRating() {
-        List<OrderItem> orderItems =  orderDAO.findAllItems();
+        List<OrderItem> orderItems = orderDAO.findAllItems();
         List<ArticleRatingDto> dtos = new ArrayList<>();
 
-        for(int i = 0; i < orderItems.size(); i++){
+        for (int i = 0; i < orderItems.size(); i++) {
             ArticleRatingDto ratingDto = new ArticleRatingDto();
             ratingDto.setArticle(orderItems.get(i).getArticleTitle());
-            if(dtos.contains(ratingDto)){
-                for(int j = 0; j < dtos.size(); j++){
-                    if(dtos.get(j).getArticle().equals(ratingDto.getArticle())){
+            if (dtos.contains(ratingDto)) {
+                for (int j = 0; j < dtos.size(); j++) {
+                    if (dtos.get(j).getArticle().equals(ratingDto.getArticle())) {
                         ArticleRatingDto current = dtos.get(j);
-                        current.setQuantity(orderItems.get(i).getQuantity()+current.getQuantity());
-                        current.setTotalIncome(current.getPrice()* current.getQuantity());
+                        current.setQuantity(orderItems.get(i).getQuantity() + current.getQuantity());
+                        current.setTotalIncome(current.getPrice() * current.getQuantity());
                     }
                 }
-            } else{
+            } else {
                 ratingDto.setQuantity(orderItems.get(i).getQuantity());
                 ratingDto.setPrice(orderItems.get(i).getPrice());
                 ratingDto.setQuantity(orderItems.get(i).getQuantity());
-                ratingDto.setTotalIncome(orderItems.get(i).getPrice()*orderItems.get(i).getQuantity());
+                ratingDto.setTotalIncome(orderItems.get(i).getPrice() * orderItems.get(i).getQuantity());
                 dtos.add(ratingDto);
             }
         }
@@ -185,8 +185,8 @@ public class ArticleServiceImpl implements ArticleService {
 
         List<ArticleRatingDto> result = new ArrayList<>();
 
-        for(int i = 0; i < dtos.size();i++){
-            if(i==10) break;
+        for (int i = 0; i < dtos.size(); i++) {
+            if (i == 10) break;
             else result.add(dtos.get(i));
         }
         return result;

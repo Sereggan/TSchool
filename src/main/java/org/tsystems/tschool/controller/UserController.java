@@ -28,19 +28,19 @@ public class UserController {
     OrderService orderService;
 
     @GetMapping()
-    public String getUserInfoPage( Authentication authentication, Model model) {
+    public String getUserInfoPage(Authentication authentication, Model model) {
         UserDto userDto = userService.getUserByUsername(authentication.getName());
-        if (userDto==null || !Objects.equals(authentication.getName(), userDto.getUsername())){
+        if (userDto == null || !Objects.equals(authentication.getName(), userDto.getUsername())) {
             return "redirect:";
-        }else {
-            model.addAttribute("user",userDto);
+        } else {
+            model.addAttribute("user", userDto);
             return "user/user-info-page";
         }
     }
 
     @PostMapping("/update/{username}")
     public String updateUser(@PathVariable("username") String username, Authentication authentication, @Valid @ModelAttribute("user") UserDto userDto, BindingResult result) {
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             return "user/user-info-page";
         }
         userDto.setUsername(authentication.getName());
@@ -49,13 +49,13 @@ public class UserController {
     }
 
     @PostMapping("/update/password")
-    public String updateUserPassword(@RequestParam("password") @NotBlank @Size(min = 4,max = 20,message = "password's length should be between 4 and 20") String password, Authentication authentication) {
+    public String updateUserPassword(@RequestParam("password") @NotBlank @Size(min = 4, max = 20, message = "password's length should be between 4 and 20") String password, Authentication authentication) {
         userService.updatePassword(authentication.getName(), password);
         return "redirect:/user";
     }
 
     @GetMapping("/orders")
-    public String getOrdersPage(Authentication authentication, Model model){
+    public String getOrdersPage(Authentication authentication, Model model) {
         model.addAttribute("orders", orderService.findAllByUsername(authentication.getName()));
         return "user/orders";
     }

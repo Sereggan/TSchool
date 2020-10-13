@@ -49,14 +49,14 @@ public class CartServiceImpl implements CartService {
         Cart cart = cartDao.findById(cartId);
         Article article = articleDAO.findByIdWithLock(articleId);
         Float articlePrice = article.getPrice();
-        article.setQuantity(article.getQuantity()-1);
+        article.setQuantity(article.getQuantity() - 1);
         List<CartItem> items = new ArrayList<>(cart.getCartItems());
-        for(int i = 0;i<items.size(); i++){
-            if(items.get(i).getArticle().getId().equals(articleId)){
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getArticle().getId().equals(articleId)) {
                 CartItem item = items.get(i);
-                item.setQuantity(item.getQuantity()+1);
-                item.setPrice(article.getPrice()*item.getQuantity());
-                cart.setTotalCost(cart.getTotalCost()+article.getPrice());
+                item.setQuantity(item.getQuantity() + 1);
+                item.setPrice(article.getPrice() * item.getQuantity());
+                cart.setTotalCost(cart.getTotalCost() + article.getPrice());
                 return mapper.cartToDto(cart);
             }
         }
@@ -75,19 +75,19 @@ public class CartServiceImpl implements CartService {
         Cart cart = cartDao.findById(cartId);
         List<CartItem> items = new ArrayList<>(cart.getCartItems());
         Article article = articleDAO.findByIdWithLock(articleId);
-        article.setQuantity(article.getQuantity()+1);
-        for(int i = 0; i < items.size(); i++){
-            if(items.get(i).getArticle().getId().equals(articleId)){
+        article.setQuantity(article.getQuantity() + 1);
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getArticle().getId().equals(articleId)) {
                 CartItem item = items.get(i);
-                cart.setTotalCost(cart.getTotalCost()-article.getPrice());
-                if(item.getQuantity()==1){
+                cart.setTotalCost(cart.getTotalCost() - article.getPrice());
+                if (item.getQuantity() == 1) {
                     cart.removeItem(item);
 
                     return mapper.cartToDto(cart);
                 }
-                Float price = item.getPrice()/item.getQuantity();
-                item.setQuantity(item.getQuantity()-1);
-                item.setPrice(price*item.getQuantity());
+                Float price = item.getPrice() / item.getQuantity();
+                item.setQuantity(item.getQuantity() - 1);
+                item.setPrice(price * item.getQuantity());
             }
         }
 
@@ -103,7 +103,7 @@ public class CartServiceImpl implements CartService {
         cart.setTotalCost(cartDto.getTotalCost());
         List<CartItemDto> cartItemDtos = new ArrayList<>(cartDto.getCartItems());
         Set<CartItem> cartItems = new HashSet<>();
-        for(int i=0; i< cartItemDtos.size(); i++){
+        for (int i = 0; i < cartItemDtos.size(); i++) {
             CartItemDto cartItemDto = cartItemDtos.get(i);
             CartItem item = mapper.dtoToCartItem(cartItemDto);
             Article article = articleDAO.findById(cartItemDto.getArticleId());
@@ -120,13 +120,13 @@ public class CartServiceImpl implements CartService {
     public CartDto addArticleInSession(CartDto cartDto, ArticleDto articleDto) {
 
         Article article = articleDAO.findByIdWithLock(articleDto.getId());
-        article.setQuantity(article.getQuantity()-1);
-        
-        for(CartItemDto item: cartDto.getCartItems()){
-            if(item.getArticleId().equals(articleDto.getId())) {
-                item.setQuantity(item.getQuantity()+1);
-                item.setPrice(item.getQuantity()*articleDto.getPrice());
-                cartDto.setTotalCost(cartDto.getTotalCost()+articleDto.getPrice());
+        article.setQuantity(article.getQuantity() - 1);
+
+        for (CartItemDto item : cartDto.getCartItems()) {
+            if (item.getArticleId().equals(articleDto.getId())) {
+                item.setQuantity(item.getQuantity() + 1);
+                item.setPrice(item.getQuantity() * articleDto.getPrice());
+                cartDto.setTotalCost(cartDto.getTotalCost() + articleDto.getPrice());
                 return cartDto;
             }
         }
@@ -134,9 +134,9 @@ public class CartServiceImpl implements CartService {
         cartItemDto.setArticle(articleDto.getTitle());
         cartItemDto.setArticleId(articleDto.getId());
         cartItemDto.setQuantity(1);
-        cartItemDto.setPrice(articleDto.getPrice()*cartItemDto.getQuantity());
+        cartItemDto.setPrice(articleDto.getPrice() * cartItemDto.getQuantity());
         cartDto.getCartItems().add(cartItemDto);
-        cartDto.setTotalCost(cartDto.getTotalCost()+articleDto.getPrice());
+        cartDto.setTotalCost(cartDto.getTotalCost() + articleDto.getPrice());
 
         return cartDto;
     }
@@ -145,16 +145,16 @@ public class CartServiceImpl implements CartService {
     public CartDto removeArticleInSession(CartDto cartDto, Long id) {
         List<CartItemDto> list = new ArrayList<>(cartDto.getCartItems());
         Article article = articleDAO.findByIdWithLock(id);
-        article.setQuantity(article.getQuantity()+1);
-        for(int i=0; i<list.size(); i++){
-            if(list.get(i).getArticleId().equals(id)){
+        article.setQuantity(article.getQuantity() + 1);
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getArticleId().equals(id)) {
                 CartItemDto item = list.get(i);
-                if(item.getQuantity()==1){
+                if (item.getQuantity() == 1) {
                     list.remove(item);
                 }
-                Float price = item.getPrice()/item.getQuantity();
-                item.setQuantity(item.getQuantity()-1);
-                item.setPrice(price*item.getQuantity());
+                Float price = item.getPrice() / item.getQuantity();
+                item.setQuantity(item.getQuantity() - 1);
+                item.setPrice(price * item.getQuantity());
             }
         }
         cartDto.setTotalCost(cartDto.getTotalCost() - article.getPrice());
@@ -165,7 +165,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartDto findByUsername(String name) {
         Cart cart = cartDao.findByUsername(name);
-        if(cart == null) {
+        if (cart == null) {
             User user = userDAO.getUserByUsername(name);
             cart = new Cart();
             cart.setUser(user);
@@ -188,7 +188,7 @@ public class CartServiceImpl implements CartService {
         order.setPrice(cartDto.getTotalCost());
         order.setOrderStatus(OrderStatus.STATUS_AWAITING_SHIPMENT);
 
-        for(CartItemDto item: cartDto.getCartItems()){
+        for (CartItemDto item : cartDto.getCartItems()) {
             Article article = articleDAO.findById(item.getArticleId());
             OrderItem orderItem = new OrderItem();
             orderItem.setArticleTitle(article.getTitle());

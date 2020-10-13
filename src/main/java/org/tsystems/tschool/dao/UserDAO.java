@@ -20,21 +20,21 @@ public class UserDAO {
             return entityManager.createQuery("SELECT e from User e where e.username = ?1", User.class)
                     .setParameter(1, username)
                     .getSingleResult();
-        }catch (NoResultException e){
+        } catch (NoResultException e) {
             return null;
         }
     }
 
-    public User getUserById(Long id){
+    public User getUserById(Long id) {
         return entityManager.find(User.class, id);
     }
 
-    public User update(User user){
+    public User update(User user) {
         entityManager.merge(user);
         return entityManager.find(User.class, user.getId());
     }
 
-    public User save(User user){
+    public User save(User user) {
         entityManager.persist(user);
         return entityManager.find(User.class, user.getId());
     }

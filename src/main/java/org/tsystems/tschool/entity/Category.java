@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"articleSet","values"})
+@EqualsAndHashCode(exclude = {"articleSet", "values"})
 @Entity(name = "Category")
 @Table(name = "category")
 public class Category implements Serializable {
@@ -33,7 +33,7 @@ public class Category implements Serializable {
     @ManyToMany(mappedBy = "categories")
     private Set<Article> articleSet = new HashSet<>();
 
-    @OneToMany(mappedBy="category", fetch = FetchType.EAGER, cascade = CascadeType.MERGE ,orphanRemoval = true)
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = true)
     private Set<Value> values = new HashSet<>();
 
     public void addValue(Value value) {

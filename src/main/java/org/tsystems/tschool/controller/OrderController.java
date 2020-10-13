@@ -17,15 +17,15 @@ public class OrderController {
     OrderService orderService;
 
     @GetMapping()
-    public String getAllOrdersPage(Model model){
+    public String getAllOrdersPage(Model model) {
 
         model.addAttribute("orders", orderService.findAll());
         return "orders/orders";
     }
 
     @PostMapping("/{id}")
-    public String updateOrder(@PathVariable Long id, @ModelAttribute("order") OrderStatusDto orderStatusDto, BindingResult result){
-        if(result.hasErrors()){
+    public String updateOrder(@PathVariable Long id, @ModelAttribute("order") OrderStatusDto orderStatusDto, BindingResult result) {
+        if (result.hasErrors()) {
             return "orders/orders";
         }
         orderService.updateStatus(orderStatusDto, id);

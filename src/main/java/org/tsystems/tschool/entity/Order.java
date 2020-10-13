@@ -23,18 +23,18 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(cascade=CascadeType.PERSIST)
-    @JoinColumn(name="user_id", nullable=false)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride( name = "country", column = @Column(name = "address_country")),
-            @AttributeOverride( name = "city", column = @Column(name = "address_city")),
-            @AttributeOverride( name = "postalCode", column = @Column(name = "address_postal_code")),
-            @AttributeOverride( name = "street", column = @Column(name = "address_street")),
-            @AttributeOverride( name = "house", column = @Column(name = "address_house")),
-            @AttributeOverride( name = "flat", column = @Column(name = "address_flat"))
+            @AttributeOverride(name = "country", column = @Column(name = "address_country")),
+            @AttributeOverride(name = "city", column = @Column(name = "address_city")),
+            @AttributeOverride(name = "postalCode", column = @Column(name = "address_postal_code")),
+            @AttributeOverride(name = "street", column = @Column(name = "address_street")),
+            @AttributeOverride(name = "house", column = @Column(name = "address_house")),
+            @AttributeOverride(name = "flat", column = @Column(name = "address_flat"))
     })
     private Address address;
 
@@ -46,7 +46,7 @@ public class Order implements Serializable {
     @Column(name = "delivery")
     private DeliveryMethod deliveryMethod;
 
-    @OneToMany(mappedBy="order", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)
     private Set<OrderItem> orderItems = new HashSet<>();
 
     @NotNull
@@ -57,7 +57,7 @@ public class Order implements Serializable {
     @Column(name = "order_status")
     private OrderStatus orderStatus;
 
-    @Column(name="price")
+    @Column(name = "price")
     private Float price;
 
     @Override
@@ -79,7 +79,7 @@ public class Order implements Serializable {
         return Objects.hash(getUser(), getAddress(), getPaymentMethod(), getDeliveryMethod(), getIsPaid(), getOrderStatus(), getPrice());
     }
 
-    public void addOrderItem(OrderItem orderItem){
+    public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
     }
 

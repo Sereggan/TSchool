@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -30,7 +30,7 @@
                                 <td th:text="${article.price}"></td>
                                 <td th:text="${article.quantity}"></td>
                                 <td><a th:href="@{/articles/edit/article-info-page/{id}(id=${article.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i>Edit Article</a>
-                                    <a th:href="@{/articles/delete/{id}(id=${article.id})}" class="btn btn-danger"><i class="fas fa-user-times ml-2"></i>Delete Article</a>
+                                    <a th:href="@{/articles/delete/{id}(id=${article.id})}" th:if="${article.isActive}" class="btn btn-danger"><i class="fas fa-user-times ml-2"></i>Delete Article</a>
                                     <a th:href="@{/articles/values/{id}(id=${article.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i>Edit Values</a>
                             </tr>
                             </tbody>

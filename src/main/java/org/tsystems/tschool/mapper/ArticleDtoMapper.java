@@ -8,6 +8,7 @@ import org.tsystems.tschool.entity.Article;
 public interface ArticleDtoMapper {
 
     ArticleDto articleToDto(Article article);
+
     Article dtoToArticle(ArticleDto articleDto);
 
 }

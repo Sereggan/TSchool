@@ -49,12 +49,12 @@ public class User implements Serializable {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride( name = "country", column = @Column(name = "user_country")),
-            @AttributeOverride( name = "city", column = @Column(name = "user_city")),
-            @AttributeOverride( name = "postalCode", column = @Column(name = "user_postal_code")),
-            @AttributeOverride( name = "street", column = @Column(name = "user_street")),
-            @AttributeOverride( name = "house", column = @Column(name = "user_house")),
-            @AttributeOverride( name = "flat", column = @Column(name = "user_flat"))
+            @AttributeOverride(name = "country", column = @Column(name = "user_country")),
+            @AttributeOverride(name = "city", column = @Column(name = "user_city")),
+            @AttributeOverride(name = "postalCode", column = @Column(name = "user_postal_code")),
+            @AttributeOverride(name = "street", column = @Column(name = "user_street")),
+            @AttributeOverride(name = "house", column = @Column(name = "user_house")),
+            @AttributeOverride(name = "flat", column = @Column(name = "user_flat"))
     })
     private Address address;
 
@@ -69,7 +69,7 @@ public class User implements Serializable {
     @OneToOne(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     private Cart cart;
 
-    @OneToMany(mappedBy="user" , cascade ={CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     private List<Order> orders;
 
     @Override

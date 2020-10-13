@@ -8,5 +8,6 @@ import org.tsystems.tschool.entity.Address;
 @Mapper(componentModel = "spring")
 public interface AddressDtoMapper {
     AddressDto addressToDto(Address address);
+
     Address dtoToAddress(AddressDto addressDto);
 }

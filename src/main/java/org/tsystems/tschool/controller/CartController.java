@@ -38,28 +38,28 @@ public class CartController {
             = Mappers.getMapper(CartDtoMapper.class);
 
     @GetMapping()
-    public String getCart(Model model, Authentication authentication, HttpSession session){
+    public String getCart(Model model, Authentication authentication, HttpSession session) {
         CartDto cart;
-        if(authentication==null){
+        if (authentication == null) {
             cart = createCartIfDoesntExist(session);
-        }else  cart = cartService.findByUsername(authentication.getName());
+        } else cart = cartService.findByUsername(authentication.getName());
         model.addAttribute("cart", cart);
         return "user/cart";
     }
 
 
     @GetMapping("/buy/{id}")
-    public String buy(@PathVariable Long id,  Authentication authentication, HttpSession session){
+    public String buy(@PathVariable Long id, Authentication authentication, HttpSession session) {
         Optional<ArticleDto> articleDto = articleService.findById(id);
-        if(!articleDto.isPresent()){
+        if (!articleDto.isPresent()) {
             return REDIRECT_CATALOG_URL;
         }
 
         CartDto cart;
-        if(authentication==null){
+        if (authentication == null) {
             cart = createCartIfDoesntExist(session);
             cart = cartService.addArticleInSession(cart, articleDto.get());
-            session.setAttribute("cart",cart);
+            session.setAttribute("cart", cart);
         } else {
             cart = cartService.findByUsername(authentication.getName());
             cartService.addArticle(cart.getId(), articleDto.get().getId());
@@ -68,12 +68,12 @@ public class CartController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id,  Authentication authentication, HttpSession session){
+    public String delete(@PathVariable Long id, Authentication authentication, HttpSession session) {
         CartDto cart;
-        if(authentication==null){
+        if (authentication == null) {
             cart = (CartDto) session.getAttribute("cart");
             cart = cartService.removeArticleInSession(cart, id);
-            session.setAttribute("cart",cart);
+            session.setAttribute("cart", cart);
         } else {
             cart = cartService.findByUsername(authentication.getName());
             cartService.removeArticle(cart.getId(), id);
@@ -91,7 +91,7 @@ public class CartController {
     }
 
     @GetMapping("/details")
-    public String getOrderDetailsPage(Model model){
+    public String getOrderDetailsPage(Model model) {
         model.addAttribute("order", new OrderDetailsDto());
         return "user/confirm-order-page";
     }
@@ -99,11 +99,11 @@ public class CartController {
     @PostMapping("/order")
     public String makeOrder(Authentication authentication, @ModelAttribute("order") @Valid OrderDetailsDto dto, BindingResult result) {
 
-       CartDto cart = cartService.findByUsername(authentication.getName());
-       if(cart.getCartItems().isEmpty()){
-           return REDIRECT_CATALOG_URL;
-       }
+        CartDto cart = cartService.findByUsername(authentication.getName());
+        if (cart.getCartItems().isEmpty()) {
+            return REDIRECT_CATALOG_URL;
+        }
         cartService.createOrder(cart, dto);
-       return "redirect:/user/orders";
+        return "redirect:/user/orders";
     }
 }

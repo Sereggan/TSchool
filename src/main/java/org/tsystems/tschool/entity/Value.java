@@ -22,7 +22,7 @@ public class Value implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="value")
+    @Column(name = "value")
     private String value;
 
     @ManyToOne()
@@ -32,7 +32,7 @@ public class Value implements Serializable {
     @ManyToMany(mappedBy = "values")
     private Set<Article> articles = new HashSet<>();
 
-    public void removeArticle(Article article){
+    public void removeArticle(Article article) {
         articles.remove(article);
         article.getValues().remove(this);
     }
