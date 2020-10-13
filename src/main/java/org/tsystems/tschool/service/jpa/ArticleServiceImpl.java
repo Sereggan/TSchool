@@ -10,6 +10,7 @@ import org.tsystems.tschool.dto.*;
 import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.OrderItem;
 import org.tsystems.tschool.entity.Value;
+import org.tsystems.tschool.exception.ArticleNotFoundException;
 import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.mapper.CatalogArticleDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
@@ -59,8 +60,12 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Optional<ArticleDto> findById(Long id) {
-        return Optional.ofNullable(mapper.articleToDto(articleDAO.findById(id)));
+    public ArticleDto findById(Long id) {
+        Article article = articleDAO.findById(id);
+        if(article==null) {
+            throw new ArticleNotFoundException("Article doesnt exist");
+        }
+        return mapper.articleToDto(article);
     }
 
     @Override

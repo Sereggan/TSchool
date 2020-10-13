@@ -15,6 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity(name = "Article")
 @Table(name = "article")
 public class Article implements Serializable {

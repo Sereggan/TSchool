@@ -58,7 +58,8 @@ public class CategoryController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editCategory(@PathVariable Long id, @ModelAttribute("categoryDto") @Valid CategoryDto categoryDto, BindingResult result) {
+    public String editCategory(@PathVariable Long id, @ModelAttribute("categoryDto") @Valid CategoryDto categoryDto,
+                               BindingResult result) {
         if (result.hasErrors()) {
             return "categories/edit-category-page";
         }
@@ -88,7 +89,9 @@ public class CategoryController {
     }
 
     @PostMapping("/values/add/{id}")
-    public String editCategory(@PathVariable Long id, @ModelAttribute("categoryValueDto") @Valid CategoryValueDto categoryValueDto, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String editCategory(@PathVariable Long id,
+                               @ModelAttribute("categoryValueDto") @Valid CategoryValueDto categoryValueDto,
+                               BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return redirect + "/categories/values/{id}";
         }

@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.tsystems.tschool.dto.ArticleDto;
+import org.tsystems.tschool.exception.ArticleNotFoundException;
 import org.tsystems.tschool.service.ArticleService;
 
 import javax.validation.Valid;
@@ -14,48 +15,49 @@ import javax.validation.Valid;
 public class ArticleController {
 
     private ArticleService articleService;
-    private String redirect = "redirect:";
-    private String articles = "articles/";
-    private String articlesUrl = "/articles";
+    private static final String REDIRECT = "redirect:";
+    private static final String ARTICLES_URL = "/articles";
 
     public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
     }
 
-    @GetMapping("")
+    @GetMapping()
     public String getAllArticlesPage(Model model) {
         model.addAttribute("articles", articleService.findAll());
-        return articles + "articlesListPage";
+        return ARTICLES_URL + "/articlesListPage";
     }
 
     @GetMapping("/add-article-page")
     public String getAddArticlePage(ArticleDto articleDto) {
-        return articles + "add-article-page";
+        return ARTICLES_URL + "/add-article-page";
     }
 
     @PostMapping("/add")
     public String addArticle(@ModelAttribute("articleDto") @Valid ArticleDto articleDto, BindingResult result) {
         if (result.hasErrors()) {
-            return articles + "add-article-page";
+            return ARTICLES_URL + "/add-article-page";
         }
 
         articleService.saveArticle(articleDto);
-        return redirect + articlesUrl;
+        return REDIRECT + ARTICLES_URL;
     }
 
     @GetMapping("/edit/article-info-page/{id}")
     public String getInfoArticlePage(@PathVariable Long id, Model model, ArticleDto articleDto) {
-        model.addAttribute("articleDto", articleService.findById(id).get());
+        articleDto = articleService.findById(id);
+        model.addAttribute("articleDto", articleDto);
         return "articles/article-edit-page";
     }
 
     @PostMapping("/edit/{id}")
-    public String editArticle(@PathVariable Long id, @ModelAttribute("articleDto") ArticleDto articleDto, BindingResult result) {
+    public String editArticle(@PathVariable Long id, @ModelAttribute("articleDto") ArticleDto articleDto,
+                              BindingResult result) {
         if (result.hasErrors()) {
-            return "articles/article-edit-page";
+            return ARTICLES_URL + "/article-edit-page";
         }
         articleService.updateArticle(articleDto);
-        return redirect + articlesUrl;
+        return REDIRECT + ARTICLES_URL;
     }
 
     @GetMapping("/values/{id}")
@@ -68,26 +70,26 @@ public class ArticleController {
     public String addCategory(@PathVariable(name = "id") Long articleId, @PathVariable(name = "valueId") Long valueID) {
         articleService.addValue(articleId, valueID);
 
-        return redirect + "/articles/values/{id}";
+        return REDIRECT + "/articles/values/{id}";
     }
 
     @GetMapping("/values/{id}/delete/{valueId}")
-    public String deleteCategory(@PathVariable(name = "id") Long articleId, @PathVariable(name = "valueId") Long valueID) {
+    public String deleteCategory(@PathVariable(name = "id") Long articleId,
+                                 @PathVariable(name = "valueId") Long valueID) {
         articleService.deleteValue(articleId, valueID);
 
-        return redirect + "/articles/values/{id}";
+        return REDIRECT + "/articles/values/{id}";
     }
-
 
     @GetMapping("/delete/{id}")
     public String deleteArticleById(@PathVariable Long id) {
         articleService.removeArticleById(id);
-        return redirect + articlesUrl;
+        return REDIRECT + ARTICLES_URL;
     }
 
     @GetMapping("/rating")
     public String getTopArticles(Model model) {
         model.addAttribute("articles", articleService.getArticlesRating());
-        return "articles/top-articles";
+        return ARTICLES_URL + "/top-articles";
     }
 }

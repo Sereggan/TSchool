@@ -16,7 +16,6 @@ public class IndexController {
 
     private final CartService cartService;
 
-
     public IndexController(CartService cartService) {
         this.cartService = cartService;
     }
@@ -30,7 +29,7 @@ public class IndexController {
 
             if (!cartDto.getCartItems().isEmpty()) {
                 cartDto = (CartDto) session.getAttribute("cart");
-                if (!cartDto.getCartItems().isEmpty()) cartService.clearSessionCart(cartDto);
+              //  if (!cartDto.getCartItems().isEmpty()) cartService.clearSessionCart(cartDto);
 
                 return "index";
             }

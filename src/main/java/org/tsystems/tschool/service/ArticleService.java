@@ -12,7 +12,7 @@ public interface ArticleService {
 
     public List<ArticleDto> findAll();
 
-    public Optional<ArticleDto> findById(Long id);
+    public ArticleDto findById(Long id);
 
     public boolean removeArticleById(Long id);
 

@@ -50,19 +50,19 @@ public class CartController {
 
     @GetMapping("/buy/{id}")
     public String buy(@PathVariable Long id, Authentication authentication, HttpSession session) {
-        Optional<ArticleDto> articleDto = articleService.findById(id);
-        if (!articleDto.isPresent()) {
+        ArticleDto articleDto = articleService.findById(id);
+        if (articleDto == null) {
             return REDIRECT_CATALOG_URL;
         }
 
         CartDto cart;
         if (authentication == null) {
             cart = createCartIfDoesntExist(session);
-            cart = cartService.addArticleInSession(cart, articleDto.get());
+            cart = cartService.addArticleInSession(cart, articleDto);
             session.setAttribute("cart", cart);
         } else {
             cart = cartService.findByUsername(authentication.getName());
-            cartService.addArticle(cart.getId(), articleDto.get().getId());
+            cartService.addArticle(cart.getId(), articleDto.getId());
         }
         return REDIRECT_CATALOG_URL;
     }
@@ -97,7 +97,8 @@ public class CartController {
     }
 
     @PostMapping("/order")
-    public String makeOrder(Authentication authentication, @ModelAttribute("order") @Valid OrderDetailsDto dto, BindingResult result) {
+    public String makeOrder(Authentication authentication, @ModelAttribute("order") @Valid OrderDetailsDto dto,
+                            BindingResult result) {
 
         CartDto cart = cartService.findByUsername(authentication.getName());
         if (cart.getCartItems().isEmpty()) {

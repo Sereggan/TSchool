@@ -1,7 +1,6 @@
 package org.tsystems.tschool.controller;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +20,14 @@ import java.util.Objects;
 @Validated
 public class UserController {
 
-    @Autowired
-    UserService userService;
+    final UserService userService;
 
-    @Autowired
-    OrderService orderService;
+    final OrderService orderService;
+
+    public UserController(OrderService orderService, UserService userService) {
+        this.orderService = orderService;
+        this.userService = userService;
+    }
 
     @GetMapping()
     public String getUserInfoPage(Authentication authentication, Model model) {
@@ -39,7 +41,8 @@ public class UserController {
     }
 
     @PostMapping("/update/{username}")
-    public String updateUser(@PathVariable("username") String username, Authentication authentication, @Valid @ModelAttribute("user") UserDto userDto, BindingResult result) {
+    public String updateUser(@PathVariable("username") String username, Authentication authentication,
+                             @Valid @ModelAttribute("user") UserDto userDto, BindingResult result) {
         if (result.hasErrors()) {
             return "user/user-info-page";
         }
@@ -49,7 +52,8 @@ public class UserController {
     }
 
     @PostMapping("/update/password")
-    public String updateUserPassword(@RequestParam("password") @NotBlank @Size(min = 4, max = 20, message = "password's length should be between 4 and 20") String password, Authentication authentication) {
+    public String updateUserPassword(@RequestParam("password") @NotBlank @Size(min = 4, max = 20,
+            message = "password's length should be between 4 and 20") String password, Authentication authentication) {
         userService.updatePassword(authentication.getName(), password);
         return "redirect:/user";
     }

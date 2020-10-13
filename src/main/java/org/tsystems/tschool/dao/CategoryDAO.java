@@ -13,27 +13,27 @@ public class CategoryDAO {
     @PersistenceContext
     EntityManager entityManager;
 
-    public List<Category> findAll() {
+    public List<Category> findAll(){
         return entityManager.createQuery("select e from Category e", Category.class)
                 .getResultList();
     }
 
-    public Category findById(Long id) {
+    public Category findById(Long id){
         return entityManager.find(Category.class, id);
     }
 
-    public Category save(Category category) {
+    public Category save(Category category){
         entityManager.persist(category);
         return entityManager.find(Category.class, category.getId());
     }
 
-    public Category update(Category category) {
+    public Category update(Category category){
         entityManager.merge(category);
         return entityManager.find(Category.class, category.getId());
     }
 
-    public boolean remove(Category category) {
+    public boolean remove(Category category){
         entityManager.remove(category);
-        return entityManager.find(Category.class, category.getId()) == null;
+        return entityManager.find(Category.class, category.getId())==null;
     }
 }

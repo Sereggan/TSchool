@@ -14,10 +14,7 @@ import org.tsystems.tschool.mapper.CartDtoMapper;
 import org.tsystems.tschool.service.CartService;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -47,9 +44,10 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartDto addArticle(Long cartId, Long articleId) {
         Cart cart = cartDao.findById(cartId);
+
         Article article = articleDAO.findByIdWithLock(articleId);
         Float articlePrice = article.getPrice();
-        article.setQuantity(article.getQuantity() - 1);
+//        article.setQuantity(article.getQuantity() - 1);
         List<CartItem> items = new ArrayList<>(cart.getCartItems());
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getArticle().getId().equals(articleId)) {
@@ -67,6 +65,7 @@ public class CartServiceImpl implements CartService {
         cartItem.setPrice(articlePrice);
         cart.getCartItems().add(cartItem);
         cart.setTotalCost(cart.getTotalCost() + articlePrice);
+        article.setQuantity(article.getQuantity() - 1);
         return mapper.cartToDto(cart);
     }
 
