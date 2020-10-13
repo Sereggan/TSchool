@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.tsystems.tschool.dto.ArticleDto;
-import org.tsystems.tschool.exception.ArticleNotFoundException;
 import org.tsystems.tschool.service.ArticleService;
 
 import javax.validation.Valid;

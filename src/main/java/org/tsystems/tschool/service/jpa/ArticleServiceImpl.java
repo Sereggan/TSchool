@@ -8,13 +8,14 @@ import org.tsystems.tschool.dao.OrderDAO;
 import org.tsystems.tschool.dao.ValueDAO;
 import org.tsystems.tschool.dto.*;
 import org.tsystems.tschool.entity.Article;
-import org.tsystems.tschool.entity.OrderItem;
+import org.tsystems.tschool.entity.ArticleRatingDto;
 import org.tsystems.tschool.entity.Value;
-import org.tsystems.tschool.exception.ArticleNotFoundException;
+import org.tsystems.tschool.exception.ItemNotFoundException;
 import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.mapper.CatalogArticleDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
 
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -61,10 +62,13 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDto findById(Long id) {
-        Article article = articleDAO.findById(id);
-        if(article==null) {
-            throw new ArticleNotFoundException("Article doesnt exist");
+        Article article;
+        try {
+            article = articleDAO.findById(id);
+        }catch (NoResultException e){
+            throw new ItemNotFoundException("Article doesnt exist");
         }
+
         return mapper.articleToDto(article);
     }
 
@@ -86,12 +90,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleCategoriesDto getAllCategoriesAndValuesByArticleId(Long articleId) {
+    public ArticleCategoriesDto getAllCategoriesAndValuesByArticleId(Long id) {
         ArticleCategoriesDto categoriesDto = new ArticleCategoriesDto();
 
-        categoriesDto.setArticleId(articleId);
+        categoriesDto.setArticleId(id);
         List<ArticleCategoriesItemDto> articleCategoriesDto = new ArrayList<>();
-        Article article = articleDAO.findById(articleId);
+        Article article;
+        try {
+            article = articleDAO.findById(id);
+        }catch (NoResultException e){
+            throw new ItemNotFoundException("Article doesnt exist");
+        }
         Set<Value> valueList = article.getValues();
 
         article.getValues().forEach(value -> articleCategoriesDto.add(
@@ -120,8 +129,18 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDto addValue(Long articleId, Long valueId) {
-        Value value = valueDAO.findById(valueId);
-        Article article = articleDAO.findById(articleId);
+        Value value;
+        try {
+            value = valueDAO.findById(valueId);
+        }catch (NoResultException e){
+            throw new ItemNotFoundException("Value doesnt exist");
+        }
+        Article article;
+        try {
+            article = articleDAO.findById(articleId);
+        }catch (NoResultException e){
+            throw new ItemNotFoundException("Article doesnt exist");
+        }
         article.addValue(value);
         article.addCategory(value.getCategory());
         return mapper.articleToDto(articleDAO.save(article));
@@ -129,8 +148,18 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void deleteValue(Long articleId, Long valueId) {
-        Value value = valueDAO.findById(valueId);
-        Article article = articleDAO.findById(articleId);
+        Value value;
+        try {
+            value = valueDAO.findById(valueId);
+        }catch (NoResultException e){
+            throw new ItemNotFoundException("Value doesnt exist");
+        }
+        Article article;
+        try {
+            article = articleDAO.findById(articleId);
+        }catch (NoResultException e){
+            throw new ItemNotFoundException("Article doesnt exist");
+        }
         article.removeValue(value);
         boolean hasCategory = false;
         for (Value articleValue : article.getValues()) {
@@ -164,36 +193,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleRatingDto> getArticlesRating() {
-        List<OrderItem> orderItems = orderDAO.findAllItems();
-        List<ArticleRatingDto> dtos = new ArrayList<>();
-
-        for (int i = 0; i < orderItems.size(); i++) {
-            ArticleRatingDto ratingDto = new ArticleRatingDto();
-            ratingDto.setArticle(orderItems.get(i).getArticleTitle());
-            if (dtos.contains(ratingDto)) {
-                for (int j = 0; j < dtos.size(); j++) {
-                    if (dtos.get(j).getArticle().equals(ratingDto.getArticle())) {
-                        ArticleRatingDto current = dtos.get(j);
-                        current.setQuantity(orderItems.get(i).getQuantity() + current.getQuantity());
-                        current.setTotalIncome(current.getPrice() * current.getQuantity());
-                    }
-                }
-            } else {
-                ratingDto.setQuantity(orderItems.get(i).getQuantity());
-                ratingDto.setPrice(orderItems.get(i).getPrice());
-                ratingDto.setQuantity(orderItems.get(i).getQuantity());
-                ratingDto.setTotalIncome(orderItems.get(i).getPrice() * orderItems.get(i).getQuantity());
-                dtos.add(ratingDto);
-            }
-        }
-        Collections.sort(dtos);
-
-        List<ArticleRatingDto> result = new ArrayList<>();
-
-        for (int i = 0; i < dtos.size(); i++) {
-            if (i == 10) break;
-            else result.add(dtos.get(i));
-        }
-        return result;
+        return articleDAO.findBestSellers(10L);
     }
 }

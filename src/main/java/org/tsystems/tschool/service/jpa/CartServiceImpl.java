@@ -9,10 +9,12 @@ import org.tsystems.tschool.dao.UserDAO;
 import org.tsystems.tschool.dto.*;
 import org.tsystems.tschool.entity.*;
 import org.tsystems.tschool.enums.OrderStatus;
+import org.tsystems.tschool.exception.ItemNotFoundException;
 import org.tsystems.tschool.mapper.AddressDtoMapper;
 import org.tsystems.tschool.mapper.CartDtoMapper;
 import org.tsystems.tschool.service.CartService;
 
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -47,7 +49,8 @@ public class CartServiceImpl implements CartService {
 
         Article article = articleDAO.findByIdWithLock(articleId);
         Float articlePrice = article.getPrice();
-//        article.setQuantity(article.getQuantity() - 1);
+        article.setQuantity(article.getQuantity() - 1);
+
         List<CartItem> items = new ArrayList<>(cart.getCartItems());
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getArticle().getId().equals(articleId)) {
@@ -55,9 +58,11 @@ public class CartServiceImpl implements CartService {
                 item.setQuantity(item.getQuantity() + 1);
                 item.setPrice(article.getPrice() * item.getQuantity());
                 cart.setTotalCost(cart.getTotalCost() + article.getPrice());
+
                 return mapper.cartToDto(cart);
             }
         }
+
         CartItem cartItem = new CartItem();
         cartItem.setArticle(article);
         cartItem.setCart(cart);
@@ -65,7 +70,6 @@ public class CartServiceImpl implements CartService {
         cartItem.setPrice(articlePrice);
         cart.getCartItems().add(cartItem);
         cart.setTotalCost(cart.getTotalCost() + articlePrice);
-        article.setQuantity(article.getQuantity() - 1);
         return mapper.cartToDto(cart);
     }
 
@@ -116,9 +120,23 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public void clearSessionCart(CartDto cartDto) {
+        List<CartItemDto> items = new ArrayList<>(cartDto.getCartItems());
+        for(CartItemDto item: items){
+            Article article = articleDAO.findByIdWithLock(item.getArticleId());
+            article.setQuantity(item.getQuantity()+article.getQuantity());
+        }
+    }
+
+    @Override
     public CartDto addArticleInSession(CartDto cartDto, ArticleDto articleDto) {
 
-        Article article = articleDAO.findByIdWithLock(articleDto.getId());
+        Article article;
+        try {
+            article = articleDAO.findByIdWithLock(articleDto.getId());
+        }catch (NoResultException e){
+            throw new ItemNotFoundException("Article doesnt exist");
+        }
         article.setQuantity(article.getQuantity() - 1);
 
         for (CartItemDto item : cartDto.getCartItems()) {
@@ -143,7 +161,12 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartDto removeArticleInSession(CartDto cartDto, Long id) {
         List<CartItemDto> list = new ArrayList<>(cartDto.getCartItems());
-        Article article = articleDAO.findByIdWithLock(id);
+        Article article;
+        try {
+            article = articleDAO.findByIdWithLock(id);
+        }catch (NoResultException e){
+            throw new ItemNotFoundException("Article doesnt exist");
+        }
         article.setQuantity(article.getQuantity() + 1);
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getArticleId().equals(id)) {

@@ -1,21 +1,26 @@
-package org.tsystems.tschool.dto;
+package org.tsystems.tschool.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Setter
 @Getter
-public class ArticleRatingDto implements  Comparable<ArticleRatingDto>{
+@Entity
+public class ArticleRatingDto{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     private String article;
 
-    private Integer quantity;
-
     private Float price;
-
-    private Float totalIncome;
 
     @Override
     public boolean equals(Object o) {
@@ -28,10 +33,5 @@ public class ArticleRatingDto implements  Comparable<ArticleRatingDto>{
     @Override
     public int hashCode() {
         return Objects.hash(getArticle());
-    }
-
-    @Override
-    public int compareTo(ArticleRatingDto o) {
-        return o.getTotalIncome().compareTo(this.getTotalIncome());
     }
 }

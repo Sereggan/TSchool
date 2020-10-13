@@ -7,13 +7,15 @@ import org.springframework.stereotype.Component;
 import org.tsystems.tschool.dto.CartDto;
 import org.tsystems.tschool.dto.CartItemDto;
 import org.tsystems.tschool.entity.Article;
+import org.tsystems.tschool.entity.Article.ArticleBuilder;
 import org.tsystems.tschool.entity.Cart;
+import org.tsystems.tschool.entity.Cart.CartBuilder;
 import org.tsystems.tschool.entity.CartItem;
 import org.tsystems.tschool.entity.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-10-13T16:54:54+0300",
+    date = "2020-10-13T21:25:00+0300",
     comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 1.8.0_252 (Amazon.com Inc.)"
 )
 @Component
@@ -58,13 +60,13 @@ public class CartDtoMapperImpl implements CartDtoMapper {
             return null;
         }
 
-        Cart cart = new Cart();
+        CartBuilder cart = Cart.builder();
 
-        cart.setId( cartDto.getId() );
-        cart.setCartItems( cartItemDtoSetToCartItemSet( cartDto.getCartItems() ) );
-        cart.setTotalCost( cartDto.getTotalCost() );
+        cart.id( cartDto.getId() );
+        cart.cartItems( cartItemDtoSetToCartItemSet( cartDto.getCartItems() ) );
+        cart.totalCost( cartDto.getTotalCost() );
 
-        return cart;
+        return cart.build();
     }
 
     @Override
@@ -174,11 +176,11 @@ public class CartDtoMapperImpl implements CartDtoMapper {
             return null;
         }
 
-        Article article = new Article();
+        ArticleBuilder article = Article.builder();
 
-        article.setTitle( cartItemDto.getArticle() );
-        article.setPrice( cartItemDto.getPrice() );
+        article.title( cartItemDto.getArticle() );
+        article.price( cartItemDto.getPrice() );
 
-        return article;
+        return article.build();
     }
 }

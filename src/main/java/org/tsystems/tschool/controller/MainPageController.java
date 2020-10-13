@@ -12,11 +12,11 @@ import org.tsystems.tschool.service.CartService;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class IndexController {
+public class MainPageController {
 
     private final CartService cartService;
 
-    public IndexController(CartService cartService) {
+    public MainPageController(CartService cartService) {
         this.cartService = cartService;
     }
 
@@ -25,21 +25,18 @@ public class IndexController {
         CartDto cartDto;
 
         if (authentication != null) {
-            cartDto = cartService.findByUsername(authentication.getName());
+            CartDto cartSessionDto = (CartDto) session.getAttribute("cart");
 
-            if (!cartDto.getCartItems().isEmpty()) {
-                cartDto = (CartDto) session.getAttribute("cart");
-              //  if (!cartDto.getCartItems().isEmpty()) cartService.clearSessionCart(cartDto);
+            if(cartSessionDto!=null){
+                cartDto = cartService.findByUsername(authentication.getName());
 
-                return "index";
+                if (cartDto.getCartItems().isEmpty()) {
+                    cartService.addItemsToDatabase(cartSessionDto, authentication.getName());
+                } else {
+                    cartService.clearSessionCart(cartSessionDto);
+                }
+                session.setAttribute("cart", null);
             }
-            if (session.getAttribute("cart") == null) {
-                return "index";
-            }
-            cartDto = (CartDto) session.getAttribute("cart");
-
-            cartService.addItemsToDatabase(cartDto, authentication.getName());
-            session.setAttribute("cart", null);
         }
         return "index";
     }

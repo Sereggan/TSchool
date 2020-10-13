@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="marketdb@localhost" uuid="f281d3af-e81e-4856-9678-1b67a6de1c35">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/marketdb</jdbc-url>
-      <driver-properties>
-        <property name="serverTimezone" value="UTC" />
-      </driver-properties>
-    </data-source>
-    <data-source source="LOCAL" name="marketdb@localhost [2]" uuid="4be947b5-ed59-4e16-ac60-4b5db8c13f41">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/marketdb</jdbc-url>
-    </data-source>
     <data-source source="LOCAL" name="jdbc:mysql://localhost:3306/marketdb?useSSL=false&amp;serverTimezone=Europe/Moscow&amp;allowPublicKeyRetrieval=true" uuid="8e957d9f-edb2-423d-813e-25b1d99066ff">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>

@@ -17,8 +17,6 @@
                             <thead>
                             <tr>
                                 <th>Article</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
                                 <th>Total Income</th>
                             </tr>
                             </thead>
@@ -26,8 +24,6 @@
                             <tr th:each="article : ${articles}">
                                 <td th:text="${article.article}"></td>
                                 <td th:text="${article.price}"></td>
-                                <td th:text="${article.quantity}"></td>
-                                <td th:text="${article.totalIncome}"></td>
                             </tr>
                             </tbody>
                         </table>

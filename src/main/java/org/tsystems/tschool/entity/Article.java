@@ -18,7 +18,7 @@ import java.util.Set;
 @Builder
 @Entity(name = "Article")
 @Table(name = "article")
-public class Article implements Serializable {
+public class Article implements Serializable  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,6 +54,9 @@ public class Article implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "value_id")
     )
     private Set<Value> values = new HashSet<>();
+
+    @Version
+    private long version = 0L;
 
     public void addValue(Value value) {
         values.add(value);

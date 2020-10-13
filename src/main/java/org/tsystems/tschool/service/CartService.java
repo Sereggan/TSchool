@@ -21,4 +21,6 @@ public interface CartService {
     public CartDto removeArticle(Long cartId, Long id);
 
     public CartDto addItemsToDatabase(CartDto cartDto, String username);
+
+    public void clearSessionCart(CartDto cartDto);
 }
