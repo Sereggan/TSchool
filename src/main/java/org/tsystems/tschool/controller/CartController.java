@@ -46,10 +46,6 @@ public class CartController {
     @GetMapping("/buy/{id}")
     public String buy(@PathVariable Long id, Authentication authentication, HttpSession session) {
         ArticleDto articleDto = articleService.findById(id);
-        if (articleDto == null) {
-            return REDIRECT_CATALOG_URL;
-        }
-
         CartDto cart;
         if (authentication == null) {
             cart = createCartIfDoesntExist(session);
@@ -94,7 +90,6 @@ public class CartController {
     @PostMapping("/order")
     public String makeOrder(Authentication authentication, @ModelAttribute("order") @Valid OrderDetailsDto dto,
                             BindingResult result) {
-
         CartDto cart = cartService.findByUsername(authentication.getName());
         if (cart.getCartItems().isEmpty()) {
             return REDIRECT_CATALOG_URL;

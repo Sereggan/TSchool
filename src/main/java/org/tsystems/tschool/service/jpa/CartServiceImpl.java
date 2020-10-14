@@ -1,6 +1,9 @@
 package org.tsystems.tschool.service.jpa;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.mapstruct.factory.Mappers;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.tsystems.tschool.dao.ArticleDAO;
 import org.tsystems.tschool.dao.CartDAO;
@@ -36,6 +39,9 @@ public class CartServiceImpl implements CartService {
     private final AddressDtoMapper addressDtoMapper
             = Mappers.getMapper(AddressDtoMapper.class);
 
+    private static final Logger log = LogManager.getLogger(CartServiceImpl.class);
+
+
     public CartServiceImpl(CartDAO cartDao, UserDAO userDAO, ArticleDAO articleDAO, OrderDAO orderDAO) {
         this.cartDao = cartDao;
         this.userDAO = userDAO;
@@ -46,8 +52,13 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartDto addArticle(Long cartId, Long articleId) {
         Cart cart = cartDao.findById(cartId);
-
-        Article article = articleDAO.findByIdWithLock(articleId);
+        Article article;
+        try {
+            article = articleDAO.findByIdWithLock(articleId);
+        }catch (EmptyResultDataAccessException e){
+            log.info("Could not find article with such id: " + articleId);
+            throw new ItemNotFoundException("Article doesnt exist");
+        }
         Float articlePrice = article.getPrice();
         article.setQuantity(article.getQuantity() - 1);
 

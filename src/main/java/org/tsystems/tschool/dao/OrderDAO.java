@@ -1,6 +1,7 @@
 package org.tsystems.tschool.dao;
 
 import org.springframework.stereotype.Repository;
+import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Order;
 import org.tsystems.tschool.entity.OrderItem;
 
@@ -36,7 +37,9 @@ public class OrderDAO {
     }
 
     public Order findById(Long id){
-        return entityManager.find(Order.class, id);
+        return entityManager.createQuery("select e from Order e where e.id = ?1", Order.class)
+                .setParameter(1, id)
+                .getSingleResult();
     }
 
 

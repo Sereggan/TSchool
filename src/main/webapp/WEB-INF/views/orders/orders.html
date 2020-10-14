@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
-<!DOCTYPE html><html>
+<!DOCTYPE html>
+<html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 <div th:insert="templates/header :: navigation"></div>
-<div class="container my-2">
-    <div class="card">
-        <div class="card-body">
-            <div th:switch="${orders}" class="container my-6">
-                <div class="col-md-11">
-                    <h2 th:case="null">No Orders yet!</h2>
-                    <div th:case="*">
-                        <table class="table table-striped table-responsive-md">
-                            <thead>
-                            <tr>
+<div class="container">
 
-                                <th>Order id</th>
-                                <th>User id</th>
-                                <th>Delivery Method</th>
-                                <th>Address:</th>
-                                <th>Payment Status:</th>
-                                <th>Order status:</th>
-                                <th>Total price:</th>
-                                <th>Articles(quantity):price</th>
-                                <th>Update Order</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="order : ${orders}">
-                                <form action="#" th:action="@{/orders/{id}(id=${order.id})}"  th:object="${order}" method="post"
-                                      modelAttribute="order">
-                                    <td  th:text="${order.id}"></td>
-                                    <td  th:text="${order.userId}"></td>
-                                    <td  th:text="${order.deliveryMethod}"></td>
-                                    <td>
+            <div th:switch="${orders}">
+                <div class="col">
+                    <h2 th:case="null">No Orders yet!</h2>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Order id</th>
+                            <th>User id</th>
+                            <th>Delivery Method</th>
+                            <th>Address:</th>
+                            <th>Payment Status:</th>
+                            <th>Order status:</th>
+                            <th>Total price:</th>
+                            <th>Articles(quantity):price</th>
+                            <th>Update Order</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="order : ${orders}">
+                            <form action="#" th:action="@{/orders/{id}(id=${order.id})}" th:object="${order}"
+                                  method="post"
+                                  modelAttribute="order">
+                                <td th:text="${order.id}"></td>
+                                <td th:text="${order.userId}"></td>
+                                <td th:text="${order.deliveryMethod}"></td>
+                                <td>
                                     <ul class="list-group">
                                         <li th:text="${order.addressDto.country}" class="list-group-item"></li>
                                         <li th:text="${order.addressDto.city}" class="list-group-item"></li>
@@ -45,7 +45,7 @@
                                         <li th:text="${order.addressDto.postalCode}" class="list-group-item"></li>
                                     </ul>
                                 </td>
-                                <td >
+                                <td>
                                     <p th:text="${order.isPaid} ? 'Paid' : 'Unpaid'"></p>
                                     <select name="isPaid">
                                         <option th:value="${false}" th:text="'Unpaid'"></option>
@@ -56,29 +56,27 @@
                                     <p th:text="'Current status:' + ${order.orderStatus.displayValue}"></p>
                                     <select name="orderStatus">
                                         <option th:each="orderStatus : ${T(org.tsystems.tschool.enums.OrderStatus).values()}"
-                                                th:value="${orderStatus}" th:text="${orderStatus.displayValue}"></option>
+                                                th:value="${orderStatus}"
+                                                th:text="${orderStatus.displayValue}"></option>
                                     </select>
                                 </td>
                                 <td th:text="${order.price}"></td>
                                 <td>
                                     <ul th:each="item : ${order.orderItems}" class="list-group">
-                                        <li th:text="${item.article}+'('+${item.quantity} + ') ' + ${item.price}" class="list-group-item"></li>
+                                        <li th:text="${item.article}+'('+${item.quantity} + ') ' + ${item.price}"
+                                            class="list-group-item"></li>
                                     </ul>
                                 </td>
-                                    <td>
-                                        <input type="submit" class="btn btn-primary" value="Update Order">
-                                    </td>
-                                </form>
-                            </tr>
+                                <td>
+                                    <input type="submit" class="btn btn-primary" value="Update Order">
+                                </td>
+                            </form>
+                        </tr>
 
-                            </tbody>
-                        </table>
-                    </div>
-
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
-    </div>
 </div>
 
 </body>

@@ -1,5 +1,7 @@
 package org.tsystems.tschool.service.jpa;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.mapstruct.factory.Mappers;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,8 @@ public class ArticleServiceImpl implements ArticleService {
     private final CatalogArticleDtoMapper catalogArticleDtoMapper
             = Mappers.getMapper(CatalogArticleDtoMapper.class);
 
+    private static final Logger log = LogManager.getLogger(ArticleServiceImpl.class);
+
     public ArticleServiceImpl(ArticleDAO articleDAO, ValueDAO valueDAO, CategoryDAO categoryDAO, OrderDAO orderDAO) {
         this.articleDAO = articleDAO;
         this.valueDAO = valueDAO;
@@ -67,9 +71,9 @@ public class ArticleServiceImpl implements ArticleService {
         try {
             article = articleDAO.findById(id);
         }catch (EmptyResultDataAccessException e){
+            log.info("Could not find article with such id: " + id);
             throw new ItemNotFoundException("Article doesnt exist");
         }
-
         return mapper.articleToDto(article);
     }
 
@@ -99,7 +103,8 @@ public class ArticleServiceImpl implements ArticleService {
         Article article;
         try {
             article = articleDAO.findById(id);
-        }catch (NoResultException e){
+        }catch (EmptyResultDataAccessException e){
+            log.info("Could not find article with such id: " + id);
             throw new ItemNotFoundException("Article doesnt exist");
         }
         Set<Value> valueList = article.getValues();
@@ -133,13 +138,15 @@ public class ArticleServiceImpl implements ArticleService {
         Value value;
         try {
             value = valueDAO.findById(valueId);
-        }catch (NoResultException e){
+        }catch (EmptyResultDataAccessException e){
+            log.info("Could not find value with such id: " + valueId);
             throw new ItemNotFoundException("Value doesnt exist");
         }
         Article article;
         try {
             article = articleDAO.findById(articleId);
-        }catch (NoResultException e){
+        }catch (EmptyResultDataAccessException e){
+            log.info("Could not find article with such id: " + articleId);
             throw new ItemNotFoundException("Article doesnt exist");
         }
         article.addValue(value);
@@ -152,13 +159,15 @@ public class ArticleServiceImpl implements ArticleService {
         Value value;
         try {
             value = valueDAO.findById(valueId);
-        }catch (NoResultException e){
+        }catch (EmptyResultDataAccessException e){
+            log.info("Could not find value with such id: " + valueId);
             throw new ItemNotFoundException("Value doesnt exist");
         }
         Article article;
         try {
             article = articleDAO.findById(articleId);
-        }catch (NoResultException e){
+        }catch (EmptyResultDataAccessException e){
+            log.info("Could not find article with such id: " + articleId);
             throw new ItemNotFoundException("Article doesnt exist");
         }
         article.removeValue(value);

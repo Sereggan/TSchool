@@ -11,7 +11,5 @@ public interface OrderService {
 
     public List<OrderDto> findAllByUsername(String username);
 
-    public OrderDto update(OrderDto orderDto);
-
     public OrderDto updateStatus(OrderStatusDto orderStatusDto, Long id);
 }
