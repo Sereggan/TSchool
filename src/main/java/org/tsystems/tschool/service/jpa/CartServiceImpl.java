@@ -90,13 +90,13 @@ public class CartServiceImpl implements CartService {
         List<CartItem> items = new ArrayList<>(cart.getCartItems());
         Article article = articleDAO.findByIdWithLock(articleId);
         article.setQuantity(article.getQuantity() + 1);
+        cart.setTotalCost(cart.getTotalCost() - article.getPrice());
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getArticle().getId().equals(articleId)) {
                 CartItem item = items.get(i);
-                cart.setTotalCost(cart.getTotalCost() - article.getPrice());
                 if (item.getQuantity() == 1) {
+                    System.out.println(cart.getCartItems().contains(item));
                     cart.removeItem(item);
-
                     return mapper.cartToDto(cart);
                 }
                 Float price = item.getPrice() / item.getQuantity();

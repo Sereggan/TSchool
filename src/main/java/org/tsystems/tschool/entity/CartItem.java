@@ -40,13 +40,12 @@ public class CartItem implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CartItem)) return false;
-        CartItem cartItem = (CartItem) o;
-        return getCart().equals(cartItem.getCart()) &&
-                getArticle().equals(cartItem.getArticle());
+        CartItem item = (CartItem) o;
+        return getId().equals(item.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCart(), getArticle());
+        return Objects.hash(getId());
     }
 }

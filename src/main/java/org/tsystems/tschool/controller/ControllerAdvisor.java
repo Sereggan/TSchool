@@ -27,6 +27,6 @@ public class ControllerAdvisor {
     @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
     @ResponseStatus(value = HttpStatus.CONFLICT)
     public String lockingFailure() {
-        return "errors/articleConflict";
+        return "errors/lockException";
     }
 }

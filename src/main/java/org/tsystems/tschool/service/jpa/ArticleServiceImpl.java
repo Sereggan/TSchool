@@ -90,7 +90,10 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDto updateArticle(ArticleDto articleDto) {
-        Article article = articleDAO.update(mapper.dtoToArticle(articleDto));
+        Article article = articleDAO.findByIdWithLock(articleDto.getId());
+        article.setQuantity(articleDto.getQuantity());
+        article.setPrice(articleDto.getPrice());
+        article.setTitle(articleDto.getTitle());
         return mapper.articleToDto(article);
     }
 
