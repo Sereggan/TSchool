@@ -57,3 +57,5 @@ target/generated-sources/annotations/org/tsystems/tschool/mapper/OrderDtoMapperI
 target/generated-sources/annotations/org/tsystems/tschool/mapper/UserDtoMapperImpl.java
 target/TSchool/META-INF/MANIFEST.MF
 target/TSchool/WEB-INF/views/user/cart.html
+/target/
+/.idea/
