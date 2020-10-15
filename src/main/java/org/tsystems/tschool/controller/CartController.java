@@ -24,7 +24,7 @@ public class CartController {
     @Autowired
     CartService cartService;
 
-    private final static String REDIRECT_CATALOG_URL = "redirect:/catalog";
+    private static final String REDIRECT_CATALOG_URL = "redirect:/catalog";
 
     @GetMapping()
     public String getCart(Model model, Authentication authentication, HttpSession session) {

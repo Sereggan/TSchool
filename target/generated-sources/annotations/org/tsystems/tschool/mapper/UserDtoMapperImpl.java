@@ -1,7 +1,6 @@
 package org.tsystems.tschool.mapper;
 
 import java.sql.Date;
-import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
 import org.tsystems.tschool.dto.AddressDto;
 import org.tsystems.tschool.dto.UserDto;
@@ -9,11 +8,13 @@ import org.tsystems.tschool.entity.Address;
 import org.tsystems.tschool.entity.User;
 import org.tsystems.tschool.entity.User.UserBuilder;
 
+/*
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-10-15T15:06:07+0300",
-    comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 1.8.0_252 (Amazon.com Inc.)"
+    date = "2020-10-16T00:48:23+0300",
+    comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 13.0.1 (Oracle Corporation)"
 )
+*/
 @Component
 public class UserDtoMapperImpl implements UserDtoMapper {
 

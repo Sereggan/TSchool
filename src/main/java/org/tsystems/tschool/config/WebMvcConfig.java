@@ -1,6 +1,5 @@
 package org.tsystems.tschool.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -21,8 +20,11 @@ import org.thymeleaf.templatemode.TemplateMode;
 @ComponentScan(basePackages =  {"org.tsystems.tschool.controller"})
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Autowired
-    private ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
+
+    public WebMvcConfig(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
     @Bean
     public MethodValidationPostProcessor methodValidationPostProcessor() {

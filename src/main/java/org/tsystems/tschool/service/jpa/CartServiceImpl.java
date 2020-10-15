@@ -39,6 +39,8 @@ public class CartServiceImpl implements CartService {
     private final AddressDtoMapper addressDtoMapper
             = Mappers.getMapper(AddressDtoMapper.class);
 
+    private static final String ARTICLE_DOESNT_EXIST_MESSAGE = "Could not find article with such id: ";
+
     private static final Logger log = LogManager.getLogger(CartServiceImpl.class);
 
     public CartServiceImpl(CartDAO cartDao, UserDAO userDAO, ArticleDAO articleDAO, OrderDAO orderDAO) {
@@ -55,8 +57,8 @@ public class CartServiceImpl implements CartService {
         try {
             article = articleDAO.findByIdWithLock(articleId);
         }catch (EmptyResultDataAccessException e){
-            log.info("Could not find article with such id: " + articleId);
-            throw new ItemNotFoundException("Article doesnt exist");
+            log.info(ARTICLE_DOESNT_EXIST_MESSAGE+ articleId);
+            throw new ItemNotFoundException(ARTICLE_DOESNT_EXIST_MESSAGE);
         }
         Float articlePrice = article.getPrice();
         article.setQuantity(article.getQuantity() - 1);
@@ -144,7 +146,7 @@ public class CartServiceImpl implements CartService {
         try {
             article = articleDAO.findByIdWithLock(articleDto.getId());
         }catch (NoResultException e){
-            throw new ItemNotFoundException("Article doesnt exist");
+            throw new ItemNotFoundException(ARTICLE_DOESNT_EXIST_MESSAGE);
         }
         article.setQuantity(article.getQuantity() - 1);
 
@@ -174,7 +176,7 @@ public class CartServiceImpl implements CartService {
         try {
             article = articleDAO.findByIdWithLock(id);
         }catch (NoResultException e){
-            throw new ItemNotFoundException("Article doesnt exist");
+            throw new ItemNotFoundException(ARTICLE_DOESNT_EXIST_MESSAGE);
         }
         article.setQuantity(article.getQuantity() + 1);
         for (int i = 0; i < list.size(); i++) {

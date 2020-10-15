@@ -3,9 +3,7 @@ package org.tsystems.tschool.dao;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
-import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Cart;
-import org.tsystems.tschool.service.jpa.ArticleServiceImpl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
