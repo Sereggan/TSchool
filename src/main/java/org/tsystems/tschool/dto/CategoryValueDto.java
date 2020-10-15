@@ -6,6 +6,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Category and value data transfer object
+ * Class to access and control category
+ */
 @Getter
 @Setter
 public class CategoryValueDto {

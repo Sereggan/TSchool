@@ -7,6 +7,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Article data transfer object
+ * Class to access and control article
+ */
 @Setter
 @Getter
 public class ArticleDto implements Comparable<ArticleDto>{

@@ -3,6 +3,10 @@ package org.tsystems.tschool.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Address data transfer object
+ * Class to access and control user data
+ */
 @Getter
 @Setter
 public class AddressDto {

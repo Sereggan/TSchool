@@ -8,6 +8,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * The class representing address.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

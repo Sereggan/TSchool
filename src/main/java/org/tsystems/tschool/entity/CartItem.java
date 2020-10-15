@@ -7,6 +7,10 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Cart entity
+ * Represent user cart item
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

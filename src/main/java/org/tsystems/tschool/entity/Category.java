@@ -8,6 +8,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Category entity
+ * Represent articles category
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -36,10 +40,20 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = true)
     private Set<Value> values = new HashSet<>();
 
+    /**
+     * Add value.
+     *
+     * @param value the value
+     */
     public void addValue(Value value) {
         values.add(value);
     }
 
+    /**
+     * Remove value.
+     *
+     * @param value the value
+     */
     public void removeValue(Value value) {
         value.setCategory(null);
         values.remove(value);

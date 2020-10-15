@@ -8,9 +8,18 @@ import org.tsystems.tschool.entity.User;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+/**
+ * The type Pdf user details.
+ */
 public class PdfUserDetails implements UserDetails {
 
     private User user;
+
+    /**
+     * Instantiates a new Pdf user details.
+     *
+     * @param user the user
+     */
     public PdfUserDetails(User user) {
         this.user = user;
     }
@@ -20,6 +29,11 @@ public class PdfUserDetails implements UserDetails {
         return user.getRoles().stream().map(authority -> new SimpleGrantedAuthority(authority.getRole().toString())).collect(Collectors.toList());
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public Long getId() {
         return user.getId();
     }
@@ -52,6 +66,12 @@ public class PdfUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    /**
+     * Gets user details.
+     *
+     * @return the user details
+     */
     public User getUserDetails() {
         return user;
     }

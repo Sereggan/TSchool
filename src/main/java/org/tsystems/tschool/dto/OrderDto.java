@@ -10,6 +10,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Order data transfer object
+ * Class to access and control user data
+ */
 @Setter
 @Getter
 public class OrderDto {

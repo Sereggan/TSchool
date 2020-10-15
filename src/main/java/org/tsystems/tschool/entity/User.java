@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * User entity
+ * Represent user
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

@@ -11,6 +11,9 @@ import javax.persistence.Enumerated;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Order details dto.
+ */
 @Setter
 @Getter
 public class OrderDetailsDto {

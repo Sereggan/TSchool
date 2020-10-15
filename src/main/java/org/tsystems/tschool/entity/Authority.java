@@ -10,6 +10,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Authority entity
+ * Class to control user authorities
+ */
 @NoArgsConstructor
 @Setter
 @Getter

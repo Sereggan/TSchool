@@ -6,6 +6,10 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Cart item data transfer object
+ * Class to access and control user data
+ */
 @Setter
 @Getter
 public class CartItemDto implements Serializable {

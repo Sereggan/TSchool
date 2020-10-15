@@ -11,6 +11,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Cart data transfer object
+ * Class to access and control user data
+ */
 @Setter
 @Getter
 public class CartDto implements Serializable {

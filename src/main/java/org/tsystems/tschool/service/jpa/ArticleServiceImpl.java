@@ -11,17 +11,17 @@ import org.tsystems.tschool.dao.OrderDAO;
 import org.tsystems.tschool.dao.ValueDAO;
 import org.tsystems.tschool.dto.*;
 import org.tsystems.tschool.entity.Article;
-import org.tsystems.tschool.entity.ArticleRatingDto;
+import org.tsystems.tschool.entity.ArticleRating;
 import org.tsystems.tschool.entity.Value;
 import org.tsystems.tschool.exception.ItemNotFoundException;
 import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.mapper.CatalogArticleDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
 
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
+
 
 @Service
 @Transactional
@@ -205,7 +205,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleRatingDto> getArticlesRating() {
+    public List<ArticleRating> getArticlesRating() {
         return articleDAO.findBestSellers(10L);
     }
 }

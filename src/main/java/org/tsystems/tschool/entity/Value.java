@@ -7,6 +7,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Value entity
+ * Represent value in category
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -32,6 +36,11 @@ public class Value implements Serializable {
     @ManyToMany(mappedBy = "values")
     private Set<Article> articles = new HashSet<>();
 
+    /**
+     * Remove article.
+     *
+     * @param article the article
+     */
     public void removeArticle(Article article) {
         articles.remove(article);
         article.getValues().remove(this);

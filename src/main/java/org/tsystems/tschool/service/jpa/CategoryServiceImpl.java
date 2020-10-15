@@ -32,7 +32,6 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryDtoMapper mapper
             = Mappers.getMapper(CategoryDtoMapper.class);
 
-
     public CategoryServiceImpl(CategoryDAO categoryDAO, ValueDAO valueDAO, ArticleDAO articleDAO) {
         this.categoryDAO = categoryDAO;
         this.valueDAO = valueDAO;

@@ -11,6 +11,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * The class representing Article
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -58,19 +61,39 @@ public class Article implements Serializable  {
     @Version
     private long version = 0L;
 
+    /**
+     * Adds value to values
+     *
+     * @param value the value
+     */
     public void addValue(Value value) {
         values.add(value);
     }
 
+    /**
+     * Adds category to categories
+     *
+     * @param category the category
+     */
     public void addCategory(Category category) {
         categories.add(category);
     }
 
+    /**
+     * Removes value from values
+     *
+     * @param value the value
+     */
     public void removeValue(Value value) {
         values.remove(value);
         value.getArticles().remove(this);
     }
 
+    /**
+     * Removes category from categories
+     *
+     * @param category the category
+     */
     public void removeCategory(Category category) {
         categories.remove(category);
         category.getArticleSet().remove(this);

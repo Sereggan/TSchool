@@ -10,7 +10,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-
+/**
+ * User data transfer object
+ * Class to access and control user data
+ */
 @Getter
 @Setter
 public class UserDto {

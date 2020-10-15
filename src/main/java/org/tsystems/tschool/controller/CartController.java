@@ -1,16 +1,13 @@
 package org.tsystems.tschool.controller;
 
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.dto.CartDto;
 import org.tsystems.tschool.dto.OrderDetailsDto;
-import org.tsystems.tschool.mapper.CartDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
 import org.tsystems.tschool.service.CartService;
 
@@ -29,9 +26,6 @@ public class CartController {
 
     private final static String REDIRECT_CATALOG_URL = "redirect:/catalog";
 
-    private final CartDtoMapper mapper
-            = Mappers.getMapper(CartDtoMapper.class);
-
     @GetMapping()
     public String getCart(Model model, Authentication authentication, HttpSession session) {
         CartDto cart;
@@ -41,7 +35,6 @@ public class CartController {
         model.addAttribute("cart", cart);
         return "user/cart";
     }
-
 
     @GetMapping("/buy/{id}")
     public String buy(@PathVariable Long id, Authentication authentication, HttpSession session) {
@@ -88,8 +81,7 @@ public class CartController {
     }
 
     @PostMapping("/order")
-    public String makeOrder(Authentication authentication, @ModelAttribute("order") @Valid OrderDetailsDto dto,
-                            BindingResult result) {
+    public String makeOrder(Authentication authentication, @ModelAttribute("order") @Valid OrderDetailsDto dto) {
         CartDto cart = cartService.findByUsername(authentication.getName());
         if (cart.getCartItems().isEmpty()) {
             return REDIRECT_CATALOG_URL;

@@ -10,6 +10,10 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * Order entity
+ * Represent user's order
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -81,6 +85,11 @@ public class Order implements Serializable {
                 getOrderStatus(), getPrice());
     }
 
+    /**
+     * Add order item.
+     *
+     * @param orderItem the order item
+     */
     public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
     }

@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Catalog data transfer object
+ * Class to access and control catalog
+ */
 @Setter
 @Getter
 public class CatalogDto {

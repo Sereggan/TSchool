@@ -41,7 +41,6 @@ public class CartServiceImpl implements CartService {
 
     private static final Logger log = LogManager.getLogger(CartServiceImpl.class);
 
-
     public CartServiceImpl(CartDAO cartDao, UserDAO userDAO, ArticleDAO articleDAO, OrderDAO orderDAO) {
         this.cartDao = cartDao;
         this.userDAO = userDAO;
@@ -95,7 +94,6 @@ public class CartServiceImpl implements CartService {
             if (items.get(i).getArticle().getId().equals(articleId)) {
                 CartItem item = items.get(i);
                 if (item.getQuantity() == 1) {
-                    System.out.println(cart.getCartItems().contains(item));
                     cart.removeItem(item);
                     return mapper.cartToDto(cart);
                 }

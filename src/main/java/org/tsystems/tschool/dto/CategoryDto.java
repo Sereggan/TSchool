@@ -8,6 +8,10 @@ import org.tsystems.tschool.entity.Value;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Category data transfer object
+ * Class to access and control category
+ */
 @Setter
 @Getter
 public class CategoryDto {

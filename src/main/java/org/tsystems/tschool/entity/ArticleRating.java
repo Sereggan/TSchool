@@ -9,10 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Objects;
 
+/**
+ * Represents rating of article
+ */
 @Setter
 @Getter
 @Entity
-public class ArticleRatingDto{
+public class ArticleRating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,8 +28,8 @@ public class ArticleRatingDto{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ArticleRatingDto)) return false;
-        ArticleRatingDto ratingDto = (ArticleRatingDto) o;
+        if (!(o instanceof ArticleRating)) return false;
+        ArticleRating ratingDto = (ArticleRating) o;
         return getArticle().equals(ratingDto.getArticle());
     }
 

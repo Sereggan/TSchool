@@ -10,6 +10,10 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Cart entity
+ * Represent user cart
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -36,10 +40,20 @@ public class Cart implements Serializable {
     @Column(name = "cart_totalcost")
     private Float totalCost;
 
+    /**
+     * Add item.
+     *
+     * @param item the item
+     */
     public void addItem(CartItem item) {
         cartItems.add(item);
     }
 
+    /**
+     * Remove item.
+     *
+     * @param item the item
+     */
     public void removeItem(CartItem item) {
         cartItems.remove(item);
     }

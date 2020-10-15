@@ -8,6 +8,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Catalog and article data transfer object
+ * Class to access and control catalog
+ */
 @Setter
 @Getter
 public class CatalogArticleDto implements Comparable<CatalogArticleDto>{

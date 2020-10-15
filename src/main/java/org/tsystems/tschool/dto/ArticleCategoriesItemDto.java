@@ -6,6 +6,10 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Articles and categories data transfer object
+ * Class to access and control article
+ */
 @Setter
 @Getter
 @AllArgsConstructor
