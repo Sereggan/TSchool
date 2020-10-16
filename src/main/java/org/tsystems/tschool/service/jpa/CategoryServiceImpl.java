@@ -81,7 +81,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void addValue(CategoryValueDto categoryValueDto) {
-        valueDAO.addValue(Value.builder().value(categoryValueDto.getValue()).build(), categoryValueDto.getCategoryId());
+        valueDAO.addValue(Value.builder().title(categoryValueDto.getTitle()).build(), categoryValueDto.getCategoryId());
     }
 
     @Override

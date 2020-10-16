@@ -27,7 +27,7 @@ public class Value implements Serializable {
     private Long id;
 
     @Column(name = "value")
-    private String value;
+    private String title;
 
     @ManyToOne()
     @JoinColumn(name = "category_id", referencedColumnName = "id")

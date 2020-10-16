@@ -36,14 +36,14 @@ public class ValueDAO {
         Category category = entityManager.find(Category.class, categoryId);
         value.setCategory(category);
         try {
-            return entityManager.createQuery("select e from Value e where e.value = ?1 and e.category = ?2", Value.class)
-                    .setParameter(1, value.getValue())
+            return entityManager.createQuery("select e from Value e where e.title = ?1 and e.category = ?2", Value.class)
+                    .setParameter(1, value.getTitle())
                     .setParameter(2, value.getCategory())
                     .getSingleResult();
         } catch (NoResultException e) {
             entityManager.persist(value);
-            return entityManager.createQuery("select e from Value e where e.value = ?1 and e.category = ?2", Value.class)
-                    .setParameter(1, value.getValue())
+            return entityManager.createQuery("select e from Value e where e.title = ?1 and e.category = ?2", Value.class)
+                    .setParameter(1, value.getTitle())
                     .setParameter(2, value.getCategory())
                     .getSingleResult();
         }

@@ -2,6 +2,7 @@ package org.tsystems.tschool.mapper;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
 import org.tsystems.tschool.dto.CartDto;
 import org.tsystems.tschool.dto.CartItemDto;
@@ -12,13 +13,11 @@ import org.tsystems.tschool.entity.Cart.CartBuilder;
 import org.tsystems.tschool.entity.CartItem;
 import org.tsystems.tschool.entity.User;
 
-/*
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-10-16T00:48:24+0300",
-    comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 13.0.1 (Oracle Corporation)"
+    date = "2020-10-16T19:52:42+0300",
+    comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 1.8.0_252 (Amazon.com Inc.)"
 )
-*/
 @Component
 public class CartDtoMapperImpl implements CartDtoMapper {
 

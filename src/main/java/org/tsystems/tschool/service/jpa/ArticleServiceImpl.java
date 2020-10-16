@@ -118,7 +118,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         article.getValues().forEach(value -> articleCategoriesDto.add(
                 new ArticleCategoriesItemDto(value.getId(), value.getCategory().getId(),
-                        value.getValue(), value.getCategory().getTitle())));
+                        value.getTitle(), value.getCategory().getTitle())));
 
         categoriesDto.setCurrent(articleCategoriesDto);
         List<Value> allValues = valueDAO.findAll();
@@ -134,7 +134,7 @@ public class ArticleServiceImpl implements ArticleService {
         filteredValues.stream().forEach(value -> articleCategoriesDtoOther.add(
                 new ArticleCategoriesItemDto(
                         value.getId(), value.getCategory().getId(),
-                        value.getValue(), value.getCategory().getTitle())));
+                        value.getTitle(), value.getCategory().getTitle())));
         categoriesDto.setOther(articleCategoriesDtoOther);
 
         return categoriesDto;

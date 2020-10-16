@@ -13,7 +13,7 @@ public class CatalogValueDto {
 
     private Long id;
 
-    private String value;
+    private String title;
 
     private String category;
 }

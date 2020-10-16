@@ -17,6 +17,6 @@ public class CategoryValueDto {
     @NotNull(message = "Category Id cant be null")
     private Long categoryId;
 
-    @NotEmpty(message = "Value cant be empty")
-    private String value;
+    @NotEmpty(message = "Title of value cant be empty")
+    private String title;
 }

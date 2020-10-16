@@ -18,9 +18,9 @@
                   modelAttribute="categoryValueDto">
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="value" class="col-form-label">Value</label>
+                        <label for="Title" class="col-form-label">Title of value:</label>
                         <input type="hidden" th:value="${categoryDto.id}" name="categoryId"/>
-                        <input type="text" th:field="*{value}" class="form-control" id="value" placeholder="Value" required> <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}" class="text-danger"></span>
+                        <input type="text" th:field="*{title}" class="form-control" id="title" placeholder="Title" required> <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-8">
                         <input type="submit" class="btn btn-primary" value="Add Value">
@@ -43,7 +43,7 @@
                             <tbody>
                             <tr th:each="value : ${categoryDto.values}">
                                 <td th:text="${value.id}"></td>
-                                <td th:text="${value.value}"></td>
+                                <td th:text="${value.title}"></td>
                                 <td><a th:href="@{/categories/values/delete/{id}(id=${value.id})}" class="btn btn-danger">Delete Value</a>
                                 </td>
 

@@ -33,7 +33,7 @@
                                 <td th:text="${article.quantity}"></td>
                                 <td>
                                     <ul th:each="value : ${article.values}" class="list-group">
-                                        <li th:text="${value.category}+' : '+${value.value}" class="list-group-item"></li>
+                                        <li th:text="${value.category}+' : '+${value.title}" class="list-group-item"></li>
                                     </ul>
                                 </td>
                                 <td><a th:href="@{/cart/buy/{id}(id=${article.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i>Buy Article</a></td>

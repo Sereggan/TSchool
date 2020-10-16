@@ -3,6 +3,7 @@ package org.tsystems.tschool.mapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
 import org.tsystems.tschool.dto.CatalogArticleDto;
 import org.tsystems.tschool.dto.CatalogValueDto;
@@ -10,13 +11,11 @@ import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Category;
 import org.tsystems.tschool.entity.Value;
 
-/*
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-10-16T00:48:24+0300",
-    comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 13.0.1 (Oracle Corporation)"
+    date = "2020-10-16T19:52:42+0300",
+    comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 1.8.0_252 (Amazon.com Inc.)"
 )
-*/
 @Component
 public class CatalogArticleDtoMapperImpl implements CatalogArticleDtoMapper {
 
@@ -47,7 +46,7 @@ public class CatalogArticleDtoMapperImpl implements CatalogArticleDtoMapper {
 
         catalogValueDto.setCategory( valueCategoryTitle( value ) );
         catalogValueDto.setId( value.getId() );
-        catalogValueDto.setValue( value.getValue() );
+        catalogValueDto.setTitle( value.getTitle() );
 
         return catalogValueDto;
     }

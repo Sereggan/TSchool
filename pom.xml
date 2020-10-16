@@ -175,19 +175,6 @@
     </dependency>
   </dependencies>
 
-  <profiles>
-    <profile>
-      <id>sonar</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <!-- Optional URL to server. Default value is http://localhost:9000 -->
-        <sonar.host.url>http://localhost:9000</sonar.host.url>
-      </properties>
-    </profile>
-  </profiles>
-
   <build>
     <finalName>TSchool</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
