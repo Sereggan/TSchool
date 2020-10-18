@@ -16,6 +16,8 @@ public class ArticleController {
     private ArticleService articleService;
     private static final String REDIRECT = "redirect:";
     private static final String ARTICLES_URL = "/articles";
+    private static final String ARTICLES_PATH = "articles";
+
 
     public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
@@ -29,13 +31,13 @@ public class ArticleController {
 
     @GetMapping("/add-article-page")
     public String getAddArticlePage(ArticleDto articleDto) {
-        return ARTICLES_URL + "/add-article-page";
+        return ARTICLES_PATH + "/add-article-page";
     }
 
     @PostMapping("/add")
     public String addArticle(@ModelAttribute("articleDto") @Valid ArticleDto articleDto, BindingResult result) {
         if (result.hasErrors()) {
-            return ARTICLES_URL + "/add-article-page";
+            return ARTICLES_PATH + "/add-article-page";
         }
 
         articleService.saveArticle(articleDto);

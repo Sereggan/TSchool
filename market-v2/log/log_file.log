@@ -1,1 +1,25 @@
 2020-10-18 01:44:35 INFO  ArticleServiceImpl:78 - Could not find article with such id: 3691
+2020-10-18 20:12:17 INFO  ArticleServiceImpl:78 - Could not find article with such id: 1
+2020-10-18 20:14:03 INFO  ArticleServiceImpl:78 - Could not find article with such id: 1
+2020-10-18 21:15:25 INFO  ArticleServiceImpl:91 - Could not find article with such id: 490
+2020-10-18 21:18:28 INFO  ArticleServiceImpl:79 - Could not find article with such id: 2
+2020-10-18 21:37:59 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-18 21:38:29 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-18 21:38:35 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-18 21:38:43 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-18 21:41:32 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-18 21:42:12 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
+2020-10-18 21:42:12 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-18 21:42:12 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1
+2020-10-18 21:46:29 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
+2020-10-18 21:46:29 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-18 21:46:29 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1
+2020-10-18 23:36:45 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
+2020-10-18 23:36:45 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-18 23:36:45 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1
+2020-10-18 23:38:39 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
+2020-10-18 23:38:39 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-18 23:38:39 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1
+2020-10-19 00:35:41 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
+2020-10-19 00:35:41 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-19 00:35:41 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1

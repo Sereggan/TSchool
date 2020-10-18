@@ -7,6 +7,7 @@ import org.tsystems.tschool.entity.Category;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Set;
@@ -67,8 +68,10 @@ public class ArticleDAO {
      * @return the boolean if success
      */
     public boolean removeById(Long id) {
-        Article articleToRemove = entityManager.find(Article.class, id);
-        entityManager.remove(articleToRemove);
+        Article article = entityManager.createQuery("select e from Article e where e.id = ?1", Article.class)
+                .setParameter(1, id)
+                .getSingleResult();
+        entityManager.remove(article);
         return entityManager.find(Article.class, id) == null;
     }
 
@@ -88,7 +91,7 @@ public class ArticleDAO {
      * @param article the article
      * @return the article
      */
-    public Article save(Article article) {
+    public Article save(Article article) throws NonUniqueResultException{
         entityManager.persist(article);
         return entityManager.createQuery("select e from Article e where e.title = ?1", Article.class)
                 .setParameter(1, article.getTitle())

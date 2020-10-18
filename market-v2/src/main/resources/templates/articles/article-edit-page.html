@@ -19,7 +19,9 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="title" class="col-form-label">Title</label>
-                            <input type="text" th:field="*{title}" class="form-control" required id="title"
+                            <input type="hidden" th:value="${articleDto.isActive}" name="isActive"/>
+
+                            <input type="text" th:field="*{title}" class="form-control" required id="title" required
                                    placeholder="Title"> <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
                                                               class="text-danger"></span>
                         </div>

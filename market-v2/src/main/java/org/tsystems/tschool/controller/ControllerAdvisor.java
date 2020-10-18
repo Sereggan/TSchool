@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.tsystems.tschool.exception.ArticleAlreadyExistException;
 import org.tsystems.tschool.exception.ItemNotFoundException;
 
 @ControllerAdvice
@@ -28,5 +29,11 @@ public class ControllerAdvisor {
     @ResponseStatus(value = HttpStatus.CONFLICT)
     public String lockingFailure() {
         return "errors/lockException";
+    }
+
+    @ExceptionHandler(ArticleAlreadyExistException.class)
+    @ResponseStatus(value = HttpStatus.CONFLICT)
+    public String createFailure() {
+        return "errors/alreadyExists";
     }
 }

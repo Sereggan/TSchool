@@ -1,5 +1,6 @@
 package org.tsystems.tschool.service.jpa;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.mapstruct.factory.Mappers;
@@ -13,11 +14,13 @@ import org.tsystems.tschool.dto.*;
 import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.ArticleRating;
 import org.tsystems.tschool.entity.Value;
+import org.tsystems.tschool.exception.ArticleAlreadyExistException;
 import org.tsystems.tschool.exception.ItemNotFoundException;
 import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.mapper.CatalogArticleDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
 
+import javax.persistence.NonUniqueResultException;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -83,12 +86,25 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public boolean removeArticleById(Long id) {
-        return articleDAO.removeById(id);
+        Boolean isDeleted = false;
+       try {
+           isDeleted = articleDAO.removeById(id);
+        }catch (EmptyResultDataAccessException e) {
+            log.info(ID_NOT_FOUND_MESSAGE + id);
+            throw new ItemNotFoundException(ARTICLE_DOESNT_EXIST_MESSAGE);
+        }
+       return isDeleted;
     }
 
     @Override
     public ArticleDto saveArticle(ArticleDto articleDto) {
-        Article article = articleDAO.save(mapper.dtoToArticle(articleDto));
+        Article article;
+        try {
+            article = articleDAO.save(mapper.dtoToArticle(articleDto));
+        }catch (NonUniqueResultException e){
+            log.info("Created existing article");
+            throw new ArticleAlreadyExistException();
+        }
         return mapper.articleToDto(article);
     }
 

@@ -1,7 +1,7 @@
 package org.tsystems.tschool.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -11,6 +11,9 @@ import java.util.Objects;
  * Article data transfer object
  * Class to access and control article
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Setter
 @Getter
 public class ArticleDto implements Comparable<ArticleDto> {
