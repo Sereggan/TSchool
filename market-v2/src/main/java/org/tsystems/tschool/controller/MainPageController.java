@@ -22,15 +22,8 @@ public class MainPageController {
 
         if (authentication != null) {
             CartDto cartSessionDto = (CartDto) session.getAttribute("cart");
-
             if (cartSessionDto != null) {
-                CartDto cartDto = cartService.findByUsername(authentication.getName());
-
-                if (cartDto.getCartItems().isEmpty()) {
-                    cartService.addItemsToDatabase(cartSessionDto, authentication.getName());
-                } else {
-                    cartService.clearSessionCart(cartSessionDto);
-                }
+                cartService.addItemsToDatabase(cartSessionDto, authentication.getName());
                 session.setAttribute("cart", null);
             }
         }

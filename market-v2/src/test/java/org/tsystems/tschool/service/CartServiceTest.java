@@ -1,6 +1,7 @@
 package org.tsystems.tschool.service;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +17,7 @@ import org.tsystems.tschool.dto.CartItemDto;
 import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Cart;
 import org.tsystems.tschool.entity.CartItem;
+import org.tsystems.tschool.entity.User;
 import org.tsystems.tschool.service.jpa.CartServiceImpl;
 
 import java.util.HashSet;
@@ -125,25 +127,101 @@ class CartServiceTest {
         assertFalse(cartDto.getCartItems().contains(cartItemDto));
     }
 
+    @DisplayName("Find existing cart by username")
     @Test
     void findByUsername() {
+        when(cartDao.findByUsername("name")).thenReturn(cart);
+        CartDto cartDto = cartService.findByUsername("name");
+        assertEquals(cart.getId(), cartDto.getId());
     }
 
+    @DisplayName("Create new cart")
+    @Test
+    void findByUsernameWithNull() {
+        when(cartDao.findByUsername("name")).thenReturn(null);
+        when(userDAO.getUserByUsername("name")).thenReturn(User.builder().email("test").username("name").build());
+        when(cartDao.save(any(Cart.class))).thenReturn(cart);
+        CartDto cartDto = cartService.findByUsername("name");
+        assertNotNull(cartDto);
+    }
+
+    @Disabled
     @Test
     void createOrder() {
     }
 
+    @DisplayName("Remove article from cart")
     @Test
     void removeArticle() {
+        CartItem cartItem = CartItem.builder().cart(cart).article(article).id(1L).quantity(4).price(100F).build();
+        cart.getCartItems().add(cartItem);
+        when(cartDao.findById(any(Long.class))).thenReturn(cart);
+        when(articleDAO.findByIdWithLock(any(Long.class))).thenReturn(article);
+        cartService.removeArticle(1L, 1L);
+        assertEquals(3, cartItem.getQuantity());
+        assertEquals(5, article.getQuantity());
     }
 
+    @DisplayName("Remove last article from cart")
+    @Test
+    void removeLastArticle() {
+        CartItem cartItem = CartItem.builder().cart(cart).article(article).id(1L).quantity(1).price(100F).build();
+        cart.getCartItems().add(cartItem);
+        when(cartDao.findById(any(Long.class))).thenReturn(cart);
+        when(articleDAO.findByIdWithLock(any(Long.class))).thenReturn(article);
+        cartService.removeArticle(1L, 1L);
+        assertEquals(0, cart.getCartItems().size());
+        assertEquals(5, article.getQuantity());
+    }
+
+    @DisplayName("Add items to database with empty cart in database")
     @Test
     void addItemsToDatabase() {
+        CartItemDto cartItemDto = CartItemDto.builder().article(article.getTitle()).id(1L).articleId(1L)
+                .quantity(2).price(100F).build();
+        CartDto cartDto = CartDto.builder().totalCost(0F).cartItems(new HashSet<>()).build();
+        cartDto.getCartItems().add(cartItemDto);
+        when(cartDao.findByUsername(any(String.class))).thenReturn(cart);
+        when(articleDAO.findById(any(Long.class))).thenReturn(article);
+        CartDto newCartDto = cartService.addItemsToDatabase(cartDto, "name");
+        assertNotNull(cart.getCartItems());
+        assertEquals(cartDto.getCartItems(), newCartDto.getCartItems());
+        assertEquals(4, article.getQuantity());
     }
+
+    @DisplayName("Add items to database with empty cart in database and Empty cartDtoItems")
+    @Test
+    void addItemsToDatabaseWithEmptyDto() {
+        CartDto cartDto = CartDto.builder().totalCost(0F).cartItems(new HashSet<>()).build();
+        when(cartDao.findByUsername(any(String.class))).thenReturn(cart);
+        CartDto newCartDto = cartService.addItemsToDatabase(cartDto, "name");
+        assertNotNull(cart.getCartItems());
+        assertEquals(cartDto.getCartItems(), newCartDto.getCartItems());
+        assertEquals(4, article.getQuantity());
+    }
+
+    @DisplayName("Add items to database with not empty cart in database")
+    @Test
+    void addItemsToDatabaseWithNull() {
+        CartItemDto cartItemDto = CartItemDto.builder().article(article.getTitle()).id(1L).articleId(1L)
+                .quantity(2).price(100F).build();
+        CartDto cartDto = CartDto.builder().totalCost(0F).cartItems(new HashSet<>()).build();
+        cartDto.getCartItems().add(cartItemDto);
+        when(cartDao.findByUsername(any(String.class))).thenReturn(cart);
+        when(articleDAO.findById(any(Long.class))).thenReturn(article);
+        CartDto newCartDto = cartService.addItemsToDatabase(cartDto, "name");
+        assertNotNull(cart.getCartItems());
+        assertEquals(cartDto.getCartItems(), newCartDto.getCartItems());
+        assertEquals(4, article.getQuantity());
+    }
+
+
 
     @DisplayName("Test clearSessionCart")
     @Test
     void clearSessionCart() {
+        CartItem cartItem = CartItem.builder().cart(cart).article(article).id(1L).quantity(1).price(100F).build();
+        cart.getCartItems().add(cartItem);
         CartDto cartDto = CartDto.builder().totalCost(0F).cartItems(new HashSet<>()).build();
         cartDto.getCartItems().add(CartItemDto.builder().article(article.getTitle()).id(1L).articleId(1L)
                 .quantity(2).price(100F).build());

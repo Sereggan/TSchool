@@ -112,6 +112,10 @@ public class CartServiceImpl implements CartService {
     public CartDto addItemsToDatabase(CartDto cartDto, String username) {
 
         Cart cart = cartDao.findByUsername(username);
+        if(!cart.getCartItems().isEmpty()){
+            clearSessionCart(cartDto);
+            return mapper.cartToDto(cart);
+        }
 
         cart.setTotalCost(cartDto.getTotalCost());
         List<CartItemDto> cartItemDtos = new ArrayList<>(cartDto.getCartItems());
