@@ -20,10 +20,10 @@ public interface CartService {
      * Add article in session to cart
      *
      * @param cartDto    the cart dto
-     * @param articleDto the article dto
+     * @param articleId  article id
      * @return the cart transfer object
      */
-    public CartDto addArticleInSession(CartDto cartDto, ArticleDto articleDto);
+    public CartDto addArticleInSession(CartDto cartDto, Long articleId);
 
     /**
      * Remove article from cart in session

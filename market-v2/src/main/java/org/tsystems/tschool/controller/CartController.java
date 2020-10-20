@@ -38,15 +38,14 @@ public class CartController {
 
     @GetMapping("/buy/{id}")
     public String buy(@PathVariable Long id, Authentication authentication, HttpSession session) {
-        ArticleDto articleDto = articleService.findById(id);
         CartDto cart;
         if (authentication == null) {
             cart = createCartIfDoesntExist(session);
-            cart = cartService.addArticleInSession(cart, articleDto);
+            cart = cartService.addArticleInSession(cart, id);
             session.setAttribute("cart", cart);
         } else {
             cart = cartService.findByUsername(authentication.getName());
-            cartService.addArticle(cart.getId(), articleDto.getId());
+            cartService.addArticle(cart.getId(), id);
         }
         return REDIRECT_CATALOG_URL;
     }

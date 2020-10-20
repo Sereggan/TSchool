@@ -13,6 +13,7 @@ import java.util.Objects;
  */
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
 @Setter
 @Entity(name = "Cart_item")
@@ -45,11 +46,11 @@ public class CartItem implements Serializable {
         if (this == o) return true;
         if (!(o instanceof CartItem)) return false;
         CartItem item = (CartItem) o;
-        return getId().equals(item.getId());
+        return getArticle().equals(item.getArticle());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getArticle());
     }
 }

@@ -1,5 +1,7 @@
 package org.tsystems.tschool.dao;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.tsystems.tschool.entity.User;
@@ -22,6 +24,8 @@ public class UserDAO {
     @PersistenceContext
     EntityManager entityManager;
 
+    private static final Logger log = LogManager.getLogger(CartDAO.class);
+
     /**
      * Gets user by username.
      *
@@ -34,6 +38,7 @@ public class UserDAO {
                     .setParameter(1, username)
                     .getSingleResult();
         } catch (NoResultException e) {
+            log.info("Could not find User with username: " + username);
             return null;
         }
     }

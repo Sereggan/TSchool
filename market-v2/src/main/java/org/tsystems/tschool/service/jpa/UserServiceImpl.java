@@ -18,23 +18,22 @@ public class UserServiceImpl implements UserService {
 
     final UserDAO userDAO;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    final PasswordEncoder passwordEncoder;
 
     private final UserDtoMapper mapper
             = Mappers.getMapper(UserDtoMapper.class);
 
-    public UserServiceImpl(UserDAO userDAO) {
+    public UserServiceImpl(UserDAO userDAO, PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserDto getUserByUsername(String username) {
         User user = userDAO.getUserByUsername(username);
-        if (user == null) return null;
+        if (user == null) return UserDto.builder().build();
         return mapper.userToDto(user);
     }
-
 
     @Override
     public UserDto updateUser(UserDto userDto) {
@@ -54,5 +53,6 @@ public class UserServiceImpl implements UserService {
         String encodedPassword = passwordEncoder.encode(password);
         user.setPassword(encodedPassword);
         userDAO.update(user);
+
     }
 }

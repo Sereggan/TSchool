@@ -1,5 +1,6 @@
 package org.tsystems.tschool.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.util.Set;
  * Class to control user authorities
  */
 @NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
 @Entity

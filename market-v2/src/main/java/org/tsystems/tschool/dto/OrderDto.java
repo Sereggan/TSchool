@@ -1,6 +1,8 @@
 package org.tsystems.tschool.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.tsystems.tschool.enums.DeliveryMethod;
 import org.tsystems.tschool.enums.OrderStatus;
@@ -14,6 +16,8 @@ import java.util.List;
  * Order data transfer object
  * Class to access and control user data
  */
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 public class OrderDto {

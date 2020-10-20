@@ -70,7 +70,6 @@ public class CartServiceImpl implements CartService {
                 item.setQuantity(item.getQuantity() + 1);
                 item.setPrice(article.getPrice() * item.getQuantity());
                 cart.setTotalCost(cart.getTotalCost() + article.getPrice());
-
                 return mapper.cartToDto(cart);
             }
         }
@@ -140,31 +139,30 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartDto addArticleInSession(CartDto cartDto, ArticleDto articleDto) {
+    public CartDto addArticleInSession(CartDto cartDto, Long articleId) {
 
         Article article;
         try {
-            article = articleDAO.findByIdWithLock(articleDto.getId());
+            article = articleDAO.findByIdWithLock(articleId);
         } catch (NoResultException e) {
             throw new ItemNotFoundException(ARTICLE_DOESNT_EXIST_MESSAGE);
         }
         article.setQuantity(article.getQuantity() - 1);
 
         for (CartItemDto item : cartDto.getCartItems()) {
-            if (item.getArticleId().equals(articleDto.getId())) {
+            if (item.getArticleId().equals(articleId)) {
                 item.setQuantity(item.getQuantity() + 1);
-                item.setPrice(item.getQuantity() * articleDto.getPrice());
-                cartDto.setTotalCost(cartDto.getTotalCost() + articleDto.getPrice());
+                cartDto.setTotalCost(cartDto.getTotalCost() + article.getPrice());
                 return cartDto;
             }
         }
         CartItemDto cartItemDto = new CartItemDto();
-        cartItemDto.setArticle(articleDto.getTitle());
-        cartItemDto.setArticleId(articleDto.getId());
+        cartItemDto.setArticle(article.getTitle());
+        cartItemDto.setArticleId(article.getId());
         cartItemDto.setQuantity(1);
-        cartItemDto.setPrice(articleDto.getPrice() * cartItemDto.getQuantity());
+        cartItemDto.setPrice(article.getPrice());
         cartDto.getCartItems().add(cartItemDto);
-        cartDto.setTotalCost(cartDto.getTotalCost() + articleDto.getPrice());
+        cartDto.setTotalCost(cartDto.getTotalCost() + article.getPrice());
 
         return cartDto;
     }

@@ -1,7 +1,6 @@
 package org.tsystems.tschool.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -15,6 +14,9 @@ import java.util.Date;
  * User data transfer object
  * Class to access and control user data
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Getter
 @Setter
 public class UserDto {

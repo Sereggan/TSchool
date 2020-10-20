@@ -1,7 +1,6 @@
 package org.tsystems.tschool.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -10,6 +9,9 @@ import java.util.Objects;
  * Cart item data transfer object
  * Class to access and control user data
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Setter
 @Getter
 public class CartItemDto implements Serializable {

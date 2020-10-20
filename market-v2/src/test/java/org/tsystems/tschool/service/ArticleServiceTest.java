@@ -87,7 +87,6 @@ class ArticleServiceTest {
     @Test
     void findByIdCatchException() {
         when(articleDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
-        ;
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
             articleService.findById(1L);
         });
@@ -106,7 +105,7 @@ class ArticleServiceTest {
     void removeArticleCatchException() {
         final Long id = 2L;
         when(articleDAO.findById(id)).thenThrow(EmptyResultDataAccessException.class);
-        ;
+
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
             articleService.findById(id);
         });
@@ -175,13 +174,12 @@ class ArticleServiceTest {
     void getCatalog() {
         when(articleDAO.findAll()).thenReturn(articleList);
         CatalogDto catalogDto = articleService.getCatalog();
-        assertEquals(2,catalogDto.getCatalogArticleDto().size());
+        assertEquals(2, catalogDto.getCatalogArticleDto().size());
     }
 
     @Test
     @DisplayName("Test get rating")
     void getArticlesRating() {
-
         when(articleDAO.findBestSellers(any(Long.class))).thenReturn(Arrays.asList(ArticleRating.builder().id(1L).build()));
         assertEquals(1, articleService.getArticlesRating().size());
     }

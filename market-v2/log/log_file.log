@@ -23,3 +23,12 @@
 2020-10-19 00:35:41 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
 2020-10-19 00:35:41 INFO  ArticleServiceImpl:105 - Created existing article
 2020-10-19 00:35:41 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1
+2020-10-19 17:01:10 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
+2020-10-19 17:01:10 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-19 17:01:10 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1
+2020-10-19 17:29:54 INFO  CartDAO:41 - Could not find User with username: Serg=ey
+2020-10-19 17:30:01 INFO  CartDAO:41 - Could not find User with username: 1111
+2020-10-20 04:02:39 INFO  CartDAO:51 - Could not find a Cart by username:Kirill
+2020-10-20 04:28:57 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
+2020-10-20 04:28:57 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-20 04:28:57 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1
