@@ -140,7 +140,7 @@ class ArticleServiceTest {
     }
 
     @Test
-    @Disabled
+    @Disabled(value = "Will make in future")
     void getAllCategoriesAndValuesByArticleId() {
     }
 

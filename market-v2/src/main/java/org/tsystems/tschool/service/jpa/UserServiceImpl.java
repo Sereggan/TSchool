@@ -1,7 +1,6 @@
 package org.tsystems.tschool.service.jpa;
 
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.tsystems.tschool.dao.UserDAO;

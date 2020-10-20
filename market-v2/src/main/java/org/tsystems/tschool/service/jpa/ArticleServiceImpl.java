@@ -1,6 +1,5 @@
 package org.tsystems.tschool.service.jpa;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.mapstruct.factory.Mappers;
@@ -87,13 +86,13 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public boolean removeArticleById(Long id) {
         Boolean isDeleted = false;
-       try {
-           isDeleted = articleDAO.removeById(id);
-        }catch (EmptyResultDataAccessException e) {
+        try {
+            isDeleted = articleDAO.removeById(id);
+        } catch (EmptyResultDataAccessException e) {
             log.info(ID_NOT_FOUND_MESSAGE + id);
             throw new ItemNotFoundException(ARTICLE_DOESNT_EXIST_MESSAGE);
         }
-       return isDeleted;
+        return isDeleted;
     }
 
     @Override
@@ -101,7 +100,7 @@ public class ArticleServiceImpl implements ArticleService {
         Article article;
         try {
             article = articleDAO.save(mapper.dtoToArticle(articleDto));
-        }catch (NonUniqueResultException e){
+        } catch (NonUniqueResultException e) {
             log.info("Created existing article");
             throw new ArticleAlreadyExistException();
         }

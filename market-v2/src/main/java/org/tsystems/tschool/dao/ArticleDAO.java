@@ -19,6 +19,7 @@ import java.util.Set;
 @Repository
 public class ArticleDAO {
 
+    private static final String SELECT_ARTICLE_BY_ID = "select e from Article e where e.id = ?1";
     /**
      * The Entity manager.
      */
@@ -42,7 +43,7 @@ public class ArticleDAO {
      * @return the article
      */
     public Article findById(Long id) {
-        return entityManager.createQuery("select e from Article e where e.id = ?1", Article.class)
+        return entityManager.createQuery(SELECT_ARTICLE_BY_ID, Article.class)
                 .setParameter(1, id)
                 .getSingleResult();
     }
@@ -54,7 +55,7 @@ public class ArticleDAO {
      * @return the article
      */
     public Article findByIdWithLock(Long id) {
-        Article article = entityManager.createQuery("select e from Article e where e.id = ?1", Article.class)
+        Article article = entityManager.createQuery(SELECT_ARTICLE_BY_ID, Article.class)
                 .setParameter(1, id)
                 .getSingleResult();
         entityManager.lock(article, LockModeType.PESSIMISTIC_FORCE_INCREMENT);
@@ -68,7 +69,7 @@ public class ArticleDAO {
      * @return the boolean if success
      */
     public boolean removeById(Long id) {
-        Article article = entityManager.createQuery("select e from Article e where e.id = ?1", Article.class)
+        Article article = entityManager.createQuery(SELECT_ARTICLE_BY_ID, Article.class)
                 .setParameter(1, id)
                 .getSingleResult();
         entityManager.remove(article);
@@ -91,7 +92,7 @@ public class ArticleDAO {
      * @param article the article
      * @return the article
      */
-    public Article save(Article article) throws NonUniqueResultException{
+    public Article save(Article article) {
         entityManager.persist(article);
         return entityManager.createQuery("select e from Article e where e.title = ?1", Article.class)
                 .setParameter(1, article.getTitle())

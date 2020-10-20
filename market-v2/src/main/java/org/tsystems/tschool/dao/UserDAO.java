@@ -24,7 +24,7 @@ public class UserDAO {
     @PersistenceContext
     EntityManager entityManager;
 
-    private static final Logger log = LogManager.getLogger(CartDAO.class);
+    private static final Logger log = LogManager.getLogger(UserDAO.class);
 
     /**
      * Gets user by username.
