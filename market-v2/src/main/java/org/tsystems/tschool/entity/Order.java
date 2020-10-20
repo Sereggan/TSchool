@@ -16,6 +16,7 @@ import java.util.*;
  */
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
 @Setter
 @Entity(name = "Order")

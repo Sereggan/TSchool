@@ -1,9 +1,7 @@
 package org.tsystems.tschool.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -13,6 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
 @Setter
 public class CategoryValueDto {

@@ -32,3 +32,6 @@
 2020-10-20 04:28:57 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
 2020-10-20 04:28:57 INFO  ArticleServiceImpl:105 - Created existing article
 2020-10-20 04:28:57 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1
+2020-10-20 22:10:01 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
+2020-10-20 22:10:01 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-20 22:10:01 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1

@@ -1,9 +1,7 @@
 package org.tsystems.tschool.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import javax.validation.constraints.NotEmpty;
 import org.tsystems.tschool.entity.Value;
 
@@ -16,6 +14,7 @@ import java.util.Set;
  */
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Setter
 @Getter
 public class CategoryDto {

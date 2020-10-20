@@ -53,8 +53,8 @@
                                 <td th:text="${order.isPaid} ? 'Paid' : 'Unpaid'"></td>
                                 <td th:switch="${order.orderStatus}">
                                     <span th:case="${T(org.tsystems.tschool.enums.OrderStatus).STATUS_AWAITING_SHIPMENT}">Awaiting shipment</span>
-                                    <span th:case="${T(org.tsystems.tschool.enums.OrderStatus).STATUS_SHIPPED}">By card</span>
-                                    <span th:case="${T(org.tsystems.tschool.enums.OrderStatus).STATUS_DELIVERED}">By card</span>
+                                    <span th:case="${T(org.tsystems.tschool.enums.OrderStatus).STATUS_SHIPPED}">Shipped</span>
+                                    <span th:case="${T(org.tsystems.tschool.enums.OrderStatus).STATUS_DELIVERED}">Delivered</span>
                                 </td>
                                 <td th:text="${order.price}"></td>
                                 <td>

@@ -1,9 +1,6 @@
 package org.tsystems.tschool.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.tsystems.tschool.enums.OrderStatus;
 
 /**
@@ -12,6 +9,7 @@ import org.tsystems.tschool.enums.OrderStatus;
  */
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Setter
 @Getter
 public class OrderStatusDto {
