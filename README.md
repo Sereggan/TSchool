@@ -1,3 +1,3 @@
 # TSchool
 T-Systems Task  
-![Coverage](http://localhost:9000/api/project_badges/measure?project=org.tsystems%3Atschool&metric=coverage)
+<a href="https://codeclimate.com/github/SonarSource/sonarqube/test_coverage"><img src="https://api.codeclimate.com/v1/badges/f69211327b19e11e4c6f/test_coverage" /></a>
