@@ -3,7 +3,7 @@ package org.tsystems.tschool.service;
 import org.tsystems.tschool.dto.UserDto;
 
 /**
- * The interface User service.
+ * The interface User to access and control User business logic.
  */
 public interface UserService {
 

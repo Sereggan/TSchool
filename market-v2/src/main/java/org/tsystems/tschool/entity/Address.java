@@ -8,6 +8,7 @@ import java.io.Serializable;
 /**
  * The class representing address.
  */
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

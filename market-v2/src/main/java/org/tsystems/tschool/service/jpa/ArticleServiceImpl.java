@@ -24,7 +24,9 @@ import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * {@inheritDoc}
+ */
 @Service
 @Transactional
 public class ArticleServiceImpl implements ArticleService {

@@ -6,7 +6,7 @@ import org.tsystems.tschool.dto.OrderStatusDto;
 import java.util.List;
 
 /**
- * The interface Order service.
+ * The interface Order to access and control Order business logic.
  */
 public interface OrderService {
 

@@ -84,8 +84,8 @@ class ArticleServiceTest {
         List<ArticleDto> articles = articleService.findAll();
         int counter = 0;
         for (ArticleDto articleDto : articles) {
-            if(articleDto.getIsActive().equals(true)) {
-                counter+=1;
+            if (articleDto.getIsActive().equals(true)) {
+                counter += 1;
             }
         }
         assertEquals(2, counter);
@@ -162,6 +162,16 @@ class ArticleServiceTest {
     void getAllCategoriesAndValuesByArticleId() {
     }
 
+
+    @DisplayName("Test catch Exception when article doesnt exist")
+    @Test
+    void getAllCategoriesAndValuesByArticleIdCatchException() {
+        when(articleDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
+        Assertions.assertThrows(ItemNotFoundException.class, () -> {
+            articleService.getAllCategoriesAndValuesByArticleId(1L);
+        });
+    }
+
     @Test
     @DisplayName("Test add value to article")
     void addValue() {
@@ -212,7 +222,7 @@ class ArticleServiceTest {
         when(articleDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
         when(valueDAO.findById(1L)).thenReturn(value);
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
-            articleService.addValue(1L, 1L);
+            articleService.deleteValue(1L, 1L);
         });
     }
 
@@ -221,7 +231,7 @@ class ArticleServiceTest {
     void deleteValueValueDoesntExist() {
         when(valueDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
-            articleService.addValue(1L, 1L);
+            articleService.deleteValue(1L, 1L);
         });
     }
 

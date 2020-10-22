@@ -8,7 +8,7 @@ import org.tsystems.tschool.dto.CatalogDto;
 import java.util.List;
 
 /**
- * The interface Article service.
+ * The interface Article to access and control Articles business logic.
  */
 public interface ArticleService {
 

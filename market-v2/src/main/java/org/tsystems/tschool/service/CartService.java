@@ -3,7 +3,7 @@ package org.tsystems.tschool.service;
 import org.tsystems.tschool.dto.*;
 
 /**
- * The interface Cart service.
+ * The interface Category to access and control Cart business logic.
  */
 public interface CartService {
 

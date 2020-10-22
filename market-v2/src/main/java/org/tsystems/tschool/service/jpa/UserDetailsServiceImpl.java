@@ -10,7 +10,10 @@ import org.tsystems.tschool.dao.UserDAO;
 import org.tsystems.tschool.dto.MyUserPrincipal;
 import org.tsystems.tschool.entity.User;
 
-@Service("userDetailsService")
+/**
+ * {@inheritDoc}
+ */
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired

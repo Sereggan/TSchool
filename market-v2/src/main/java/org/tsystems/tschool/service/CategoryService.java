@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The interface Category service.
+ * The interface Category to access and control Category business logic.
  */
 public interface CategoryService {
 

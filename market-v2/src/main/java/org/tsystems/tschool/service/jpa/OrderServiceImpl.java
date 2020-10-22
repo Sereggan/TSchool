@@ -18,6 +18,9 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * {@inheritDoc}
+ */
 @Transactional
 @Service
 public class OrderServiceImpl implements OrderService {

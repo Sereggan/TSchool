@@ -21,6 +21,9 @@ import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.*;
 
+/**
+ * {@inheritDoc}
+ */
 @Service
 @Transactional
 public class CartServiceImpl implements CartService {

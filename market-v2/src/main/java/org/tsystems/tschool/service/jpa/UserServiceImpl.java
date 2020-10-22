@@ -11,6 +11,9 @@ import org.tsystems.tschool.service.UserService;
 
 import javax.transaction.Transactional;
 
+/**
+ * {@inheritDoc}
+ */
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
