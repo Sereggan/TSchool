@@ -17,13 +17,16 @@ import javax.validation.Valid;
 @RequestMapping("/cart")
 public class CartController {
 
-    @Autowired
-    ArticleService articleService;
+    final ArticleService articleService;
 
-    @Autowired
-    CartService cartService;
+    final CartService cartService;
 
     private static final String REDIRECT_CATALOG_URL = "redirect:/catalog";
+
+    public CartController(ArticleService articleService, CartService cartService) {
+        this.articleService = articleService;
+        this.cartService = cartService;
+    }
 
     @GetMapping()
     public String getCart(Model model, Authentication authentication, HttpSession session) {

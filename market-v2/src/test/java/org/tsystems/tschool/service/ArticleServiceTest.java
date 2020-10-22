@@ -10,10 +10,7 @@ import org.tsystems.tschool.dao.ArticleDAO;
 import org.tsystems.tschool.dao.ValueDAO;
 import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.dto.CatalogDto;
-import org.tsystems.tschool.entity.Article;
-import org.tsystems.tschool.entity.ArticleRating;
-import org.tsystems.tschool.entity.Category;
-import org.tsystems.tschool.entity.Value;
+import org.tsystems.tschool.entity.*;
 import org.tsystems.tschool.exception.ArticleAlreadyExistException;
 import org.tsystems.tschool.exception.ItemNotFoundException;
 import org.tsystems.tschool.service.jpa.ArticleServiceImpl;
@@ -75,6 +72,27 @@ class ArticleServiceTest {
         assertEquals(0, articles.size());
     }
 
+    @DisplayName("Test findAll with NotNull Cart Items")
+    @Test
+    void findAllWithNotNullCartItems() {
+        HashSet<CartItem> cartItems = new HashSet<>();
+        cartItems.add(CartItem.builder().id(1L).build());
+        article = Article.builder().id(1L).price(100F).title("Article 3").categories(new HashSet<>())
+                .cartItem(cartItems).quantity(10).build();
+        articleList.add(article);
+        when(articleDAO.findAll()).thenReturn(articleList);
+        List<ArticleDto> articles = articleService.findAll();
+        int counter = 0;
+        for (ArticleDto articleDto : articles) {
+            if(articleDto.getIsActive().equals(true)) {
+                counter+=1;
+            }
+        }
+        assertEquals(2, counter);
+        assertEquals(3, articles.size());
+    }
+
+
     @DisplayName("Find existing article by id")
     @Test
     void findById() {
@@ -104,10 +122,10 @@ class ArticleServiceTest {
     @Test
     void removeArticleCatchException() {
         final Long id = 2L;
-        when(articleDAO.findById(id)).thenThrow(EmptyResultDataAccessException.class);
+        when(articleDAO.removeById(id)).thenThrow(EmptyResultDataAccessException.class);
 
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
-            articleService.findById(id);
+            articleService.removeArticleById(id);
         });
     }
 
@@ -123,7 +141,7 @@ class ArticleServiceTest {
     @Test
     void saveArticleCatchException() {
         when(articleDAO.save(article)).thenThrow(NonUniqueResultException.class);
-        ;
+
         Assertions.assertThrows(ArticleAlreadyExistException.class, () -> {
             articleService.saveArticle(articleDto);
         });
@@ -145,14 +163,33 @@ class ArticleServiceTest {
     }
 
     @Test
-    @DisplayName("Check add value to article")
+    @DisplayName("Test add value to article")
     void addValue() {
         Set<Value> valueSet = new HashSet<>();
         article.setValues(valueSet);
         when(articleDAO.findById(1L)).thenReturn(article);
         when(valueDAO.findById(1L)).thenReturn(value);
-        ArticleDto updatedArticle = articleService.addValue(1L, 1L);
+        articleService.addValue(1L, 1L);
         assertTrue(article.getValues().contains(value));
+    }
+
+    @Test
+    @DisplayName("Test catch Exception when article doesnt exist")
+    void addValueArticleNotFound() {
+        when(articleDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
+        when(valueDAO.findById(1L)).thenReturn(value);
+        Assertions.assertThrows(ItemNotFoundException.class, () -> {
+            articleService.addValue(1L, 1L);
+        });
+    }
+
+    @Test
+    @DisplayName("Test catch Exception when value doesnt exist")
+    void addValueValueNotFound() {
+        when(valueDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
+        Assertions.assertThrows(ItemNotFoundException.class, () -> {
+            articleService.addValue(1L, 1L);
+        });
     }
 
     @Test
@@ -169,9 +206,30 @@ class ArticleServiceTest {
         assertFalse(article.getValues().contains(value));
     }
 
+    @DisplayName("Test catch Exception when article doesnt exist")
+    @Test
+    void deleteValueArticleDoesntExist() {
+        when(articleDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
+        when(valueDAO.findById(1L)).thenReturn(value);
+        Assertions.assertThrows(ItemNotFoundException.class, () -> {
+            articleService.addValue(1L, 1L);
+        });
+    }
+
+    @DisplayName("Test catch Exception when value doesnt exist")
+    @Test
+    void deleteValueValueDoesntExist() {
+        when(valueDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
+        Assertions.assertThrows(ItemNotFoundException.class, () -> {
+            articleService.addValue(1L, 1L);
+        });
+    }
+
     @Test
     @DisplayName("Test get catalog")
     void getCatalog() {
+        articleList.add(Article.builder().id(1L).price(100F).title("Article 3").categories(new HashSet<>())
+                .cartItem(new HashSet<>()).quantity(0).build());
         when(articleDAO.findAll()).thenReturn(articleList);
         CatalogDto catalogDto = articleService.getCatalog();
         assertEquals(2, catalogDto.getCatalogArticleDto().size());

@@ -7,7 +7,6 @@ import org.tsystems.tschool.entity.Category;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Set;
@@ -114,7 +113,7 @@ public class ArticleDAO {
      * Find best sellers articles
      *
      * @param limit the limit
-     * @return the rating of articles
+     * @return the list representing rating of articles
      */
     public List<ArticleRating> findBestSellers(Long limit) {
         return entityManager.createNativeQuery("SELECT id, order_article_title as article, " +

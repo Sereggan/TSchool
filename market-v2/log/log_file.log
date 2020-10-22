@@ -35,3 +35,44 @@
 2020-10-20 22:10:01 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
 2020-10-20 22:10:01 INFO  ArticleServiceImpl:105 - Created existing article
 2020-10-20 22:10:01 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1
+2020-10-20 23:16:03 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
+2020-10-20 23:16:03 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-20 23:16:03 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1
+2020-10-20 23:25:00 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
+2020-10-20 23:25:00 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-20 23:25:00 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1
+2020-10-20 23:27:22 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
+2020-10-20 23:27:22 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-20 23:27:22 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1
+2020-10-20 23:30:55 INFO  ArticleServiceImpl:81 - Could not find article with such id: 2
+2020-10-20 23:30:55 INFO  ArticleServiceImpl:105 - Created existing article
+2020-10-20 23:30:55 INFO  ArticleServiceImpl:81 - Could not find article with such id: 1
+2020-10-21 20:58:31 INFO  ArticleServiceImpl:80 - Could not find article with such id: 2
+2020-10-21 20:58:31 INFO  ArticleServiceImpl:104 - Created existing article
+2020-10-21 20:58:31 INFO  ArticleServiceImpl:80 - Could not find article with such id: 1
+2020-10-21 21:05:47 INFO  ArticleServiceImpl:80 - Could not find article with such id: 2
+2020-10-21 21:05:47 INFO  ArticleServiceImpl:104 - Created existing article
+2020-10-21 21:05:47 INFO  ArticleServiceImpl:80 - Could not find article with such id: 1
+2020-10-22 21:47:06 INFO  ArticleServiceImpl:82 - Could not find article with such id: 2
+2020-10-22 21:47:18 INFO  ArticleServiceImpl:82 - Could not find article with such id: 2
+2020-10-22 21:47:25 INFO  ArticleServiceImpl:82 - Could not find article with such id: 2
+2020-10-22 21:47:45 INFO  ArticleServiceImpl:82 - Could not find article with such id: 2
+2020-10-22 21:50:06 INFO  ArticleServiceImpl:94 - Could not find article with such id: 2
+2020-10-22 21:50:31 INFO  ArticleServiceImpl:94 - Could not find article with such id: 2
+2020-10-22 21:54:53 INFO  ArticleServiceImpl:173 - Could not find article with such id: 1
+2020-10-22 21:55:08 INFO  ArticleServiceImpl:173 - Could not find article with such id: 1
+2020-10-22 21:55:56 INFO  ArticleServiceImpl:166 - Could not find article with such id: 1
+2020-10-22 21:56:05 INFO  ArticleServiceImpl:173 - Could not find article with such id: 1
+2020-10-22 21:56:14 INFO  ArticleServiceImpl:166 - Could not find article with such id: 1
+2020-10-22 21:56:45 INFO  ArticleServiceImpl:166 - Could not find article with such id: 1
+2020-10-22 21:58:34 INFO  ArticleServiceImpl:173 - Could not find article with such id: 1
+2020-10-22 21:58:42 INFO  ArticleServiceImpl:166 - Could not find article with such id: 1
+2020-10-22 22:57:58 INFO  OrderServiceImpl:64 - Could not find order with such id: 1
+2020-10-22 23:16:08 INFO  ArticleServiceImpl:173 - Could not find article with such id: 1
+2020-10-22 23:16:08 INFO  ArticleServiceImpl:94 - Could not find article with such id: 2
+2020-10-22 23:16:08 INFO  ArticleServiceImpl:106 - Created existing article
+2020-10-22 23:16:08 INFO  ArticleServiceImpl:166 - Could not find article with such id: 1
+2020-10-22 23:16:08 INFO  ArticleServiceImpl:166 - Could not find article with such id: 1
+2020-10-22 23:16:08 INFO  ArticleServiceImpl:173 - Could not find article with such id: 1
+2020-10-22 23:16:08 INFO  ArticleServiceImpl:82 - Could not find article with such id: 1
+2020-10-22 23:16:09 INFO  OrderServiceImpl:64 - Could not find order with such id: 1

@@ -30,13 +30,13 @@ public class ArticleController {
 
     @GetMapping("/add-article-page")
     public String getAddArticlePage(ArticleDto articleDto) {
-        return ARTICLES_URL + "/add-article-page";
+        return ARTICLES_URL + "/addArticlePage";
     }
 
     @PostMapping("/add")
     public String addArticle(@ModelAttribute("articleDto") @Valid ArticleDto articleDto, BindingResult result) {
         if (result.hasErrors()) {
-            return ARTICLES_URL + "/add-article-page";
+            return ARTICLES_URL + "/addArticlePage";
         }
 
         articleService.saveArticle(articleDto);
@@ -47,14 +47,14 @@ public class ArticleController {
     public String getInfoArticlePage(@PathVariable Long id, Model model) {
         ArticleDto articleDto = articleService.findById(id);
         model.addAttribute("articleDto", articleDto);
-        return "articles/article-edit-page";
+        return "editArticlePage";
     }
 
     @PostMapping("/edit/{id}")
     public String editArticle(@PathVariable Long id, @ModelAttribute("articleDto") ArticleDto articleDto,
                               BindingResult result) {
         if (result.hasErrors()) {
-            return ARTICLES_URL + "/article-edit-page";
+            return ARTICLES_URL + "/editArticlePage";
         }
         articleService.updateArticle(articleDto);
         return REDIRECT + ARTICLES_URL;
@@ -69,7 +69,6 @@ public class ArticleController {
     @GetMapping("/values/{id}/add/{valueId}")
     public String addCategory(@PathVariable(name = "id") Long articleId, @PathVariable(name = "valueId") Long valueID) {
         articleService.addValue(articleId, valueID);
-
         return REDIRECT + "/articles/values/{id}";
     }
 
@@ -90,6 +89,6 @@ public class ArticleController {
     @GetMapping("/rating")
     public String getTopArticles(Model model) {
         model.addAttribute("articles", articleService.getArticlesRating());
-        return ARTICLES_URL + "/top-articles";
+        return ARTICLES_URL + "/articlesRating";
     }
 }

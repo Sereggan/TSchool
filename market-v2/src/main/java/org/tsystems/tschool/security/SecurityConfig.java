@@ -26,14 +26,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/categories/**").hasRole(ROLE_EMPLOYEE)
                 .antMatchers("/articles/**").hasRole(ROLE_EMPLOYEE)
                 .antMatchers("/user/**").hasRole(ROLE_CLIENT)
-                .antMatchers("/").permitAll()
                 .antMatchers("/cart").permitAll()
-                .antMatchers("/cart/order").hasRole(ROLE_CLIENT)
-                .antMatchers("/cart/convert").hasRole(ROLE_CLIENT)
+                .antMatchers("/cart/**").hasRole(ROLE_CLIENT)
+//                .antMatchers("/cart/convert").hasRole(ROLE_CLIENT)
                 .antMatchers("/catalog").permitAll()
                 .and().formLogin().defaultSuccessUrl("/")
                 .permitAll()

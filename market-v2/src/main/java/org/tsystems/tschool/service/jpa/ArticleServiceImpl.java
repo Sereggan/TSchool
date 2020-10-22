@@ -61,9 +61,7 @@ public class ArticleServiceImpl implements ArticleService {
         List<ArticleDto> articleDtos = articleDAO.findAll().stream()
                 .map(item -> {
                     ArticleDto articleDto = mapper.articleToDto(item);
-                    if (item.getCartItem().isEmpty()) {
-                        articleDto.setIsActive(true);
-                    }
+                    articleDto.setIsActive(item.getCartItem().isEmpty());
                     return articleDto;
                 })
                 .collect(Collectors.toList());
@@ -85,7 +83,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public boolean removeArticleById(Long id) {
-        Boolean isDeleted = false;
+        boolean isDeleted = false;
         try {
             isDeleted = articleDAO.removeById(id);
         } catch (EmptyResultDataAccessException e) {
@@ -193,13 +191,14 @@ public class ArticleServiceImpl implements ArticleService {
             throw new ItemNotFoundException(ARTICLE_DOESNT_EXIST_MESSAGE);
         }
         article.removeValue(value);
-        boolean hasCategory = false;
+        boolean hasCategory = false; // Boolean to check if Article contains any other values of this category
         for (Value articleValue : article.getValues()) {
             if (articleValue.getCategory().getTitle().equals(value.getCategory().getTitle())) {
                 hasCategory = true;
             }
         }
-        if (!hasCategory) article.removeCategory(value.getCategory());
+        if (!hasCategory) article.removeCategory(value.getCategory());  // Delete category if article doesnt contains
+        // values of this category
 
         articleDAO.save(article);
     }

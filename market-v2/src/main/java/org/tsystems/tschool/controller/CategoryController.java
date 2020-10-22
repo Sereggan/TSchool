@@ -19,8 +19,8 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    private String redirect = "redirect:";
-    private String categories = "/categories";
+    private static final String REDIRECT = "redirect:";
+    private static final String CATEGORIES_URL = "/categories";
 
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
@@ -34,16 +34,16 @@ public class CategoryController {
 
     @GetMapping("/add-category-page")
     public String getAddCategoryPage(CategoryDto categoryDto) {
-        return "categories/add-category-page";
+        return "categories/addCategoryPage";
     }
 
     @PostMapping("/add")
     public String addCategory(@ModelAttribute("categoryDto") @Valid CategoryDto categoryDto, BindingResult result) {
         if (result.hasErrors()) {
-            return "categories/add-category-page";
+            return "categories/addCategoryPage";
         }
         categoryService.saveCategory(categoryDto);
-        return redirect + categories;
+        return REDIRECT + CATEGORIES_URL;
     }
 
     @GetMapping("/edit/{id}")
@@ -51,9 +51,9 @@ public class CategoryController {
         Optional<CategoryDto> category = categoryService.findById(id);
         if (category.isPresent()) {
             model.addAttribute("categoryDto", category.get());
-            return "categories/edit-category-page";
+            return "categories/editCategoryPage";
         } else {
-            return redirect + categories;
+            return REDIRECT + CATEGORIES_URL;
         }
     }
 
@@ -61,19 +61,19 @@ public class CategoryController {
     public String editCategory(@PathVariable Long id, @ModelAttribute("categoryDto") @Valid CategoryDto categoryDto,
                                BindingResult result) {
         if (result.hasErrors()) {
-            return "categories/edit-category-page";
+            return "categories/editCategoryPage";
         }
         if (!categoryService.findById(id).isPresent()) {
-            return redirect + categories;
+            return REDIRECT + CATEGORIES_URL;
         }
         categoryService.updateCategory(categoryDto);
-        return redirect + categories;
+        return REDIRECT + CATEGORIES_URL;
     }
 
     @GetMapping("/delete/{id}")
     public String deleteCategoryById(@PathVariable Long id) {
         categoryService.removeCategoryById(id);
-        return redirect + categories;
+        return REDIRECT + CATEGORIES_URL;
     }
 
     @GetMapping("/values/{id}")
@@ -84,7 +84,7 @@ public class CategoryController {
             model.addAttribute("categoryDto", category.get());
             return "categories/category-values-page";
         } else {
-            return redirect + categories;
+            return REDIRECT + CATEGORIES_URL;
         }
     }
 
@@ -93,15 +93,15 @@ public class CategoryController {
                                @ModelAttribute("categoryValueDto") @Valid CategoryValueDto categoryValueDto,
                                BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            return redirect + "/categories/values/{id}";
+            return REDIRECT + "/categories/values/{id}";
         }
         categoryService.addValue(categoryValueDto);
-        return redirect + "/categories/values/{id}";
+        return REDIRECT + "/categories/values/{id}";
     }
 
     @GetMapping("/values/delete/{id}")
     public String deleteValueById(@PathVariable Long id) {
         categoryService.removeValue(id);
-        return redirect + categories;
+        return REDIRECT + CATEGORIES_URL;
     }
 }
