@@ -6,14 +6,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.tsystems.tschool.dao.UserDAO;
 import org.tsystems.tschool.entity.User;
-import org.tsystems.tschool.exception.ItemNotFoundException;
-
-import javax.persistence.NoResultException;
+import org.tsystems.tschool.service.jpa.UserDetailsServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -25,7 +22,7 @@ class MyUserDetailsServiceTest {
     UserDAO userDAO;
 
     @InjectMocks
-    MyUserDetailsService userDetailsService;
+    UserDetailsServiceImpl userDetailsService;
 
     @Test
     void loadUserByUsername() {

@@ -8,17 +8,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.tsystems.tschool.dao.ArticleDAO;
 import org.tsystems.tschool.dao.OrderDAO;
 import org.tsystems.tschool.dao.UserDAO;
-import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.dto.OrderDto;
 import org.tsystems.tschool.dto.OrderStatusDto;
 import org.tsystems.tschool.entity.Order;
 import org.tsystems.tschool.entity.User;
 import org.tsystems.tschool.enums.OrderStatus;
 import org.tsystems.tschool.exception.ItemNotFoundException;
-import org.tsystems.tschool.service.jpa.ArticleServiceImpl;
 import org.tsystems.tschool.service.jpa.OrderServiceImpl;
 
 import java.util.ArrayList;
@@ -78,7 +75,7 @@ class OrderServiceTest {
     void CatchException() {
         when(orderDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
-            orderService.updateStatus(OrderStatusDto.builder().build(), 1L);
+            orderService.updateStatus(any(OrderStatusDto.class),1L);
         });
     }
 }

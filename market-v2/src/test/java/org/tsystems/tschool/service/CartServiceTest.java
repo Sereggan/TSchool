@@ -1,13 +1,11 @@
 package org.tsystems.tschool.service;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.tsystems.tschool.dao.ArticleDAO;
 import org.tsystems.tschool.dao.CartDAO;
 import org.tsystems.tschool.dao.OrderDAO;
@@ -18,8 +16,11 @@ import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Cart;
 import org.tsystems.tschool.entity.CartItem;
 import org.tsystems.tschool.entity.User;
+import org.tsystems.tschool.exception.ArticleAlreadyExistException;
+import org.tsystems.tschool.exception.ItemNotFoundException;
 import org.tsystems.tschool.service.jpa.CartServiceImpl;
 
+import javax.persistence.NonUniqueResultException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -64,6 +65,15 @@ class CartServiceTest {
         assertTrue(cartDto.getCartItems().contains(CartItemDto.builder().articleId(1L).build()));
     }
 
+    @DisplayName("Catch ItemNotFoundException in cart")
+    @Test
+    void addNewArticleCatchException() {
+        when(articleDAO.findByIdWithLock(any(Long.class))).thenThrow(EmptyResultDataAccessException.class);
+        Assertions.assertThrows(ItemNotFoundException.class, () -> {
+            cartService.addArticle(1L, 1L);
+        });
+    }
+
     @DisplayName("Add existing Article to Cart")
     @Test
     void addExistingArticle() {
@@ -72,6 +82,7 @@ class CartServiceTest {
         when(cartDao.findById(any(Long.class))).thenReturn(cart);
         when(articleDAO.findByIdWithLock(any(Long.class))).thenReturn(article);
         cartService.addArticle(1L, 1L);
+        assertEquals(3, article.getQuantity());
         assertEquals(2, cartItem.getQuantity());
     }
 
@@ -216,7 +227,6 @@ class CartServiceTest {
     }
 
 
-
     @DisplayName("Test clearSessionCart")
     @Test
     void clearSessionCart() {
@@ -235,7 +245,7 @@ class CartServiceTest {
     @Test
     void clearSessionCartWithEmptyItems() {
         CartDto cartDto = CartDto.builder().totalCost(0F).cartItems(new HashSet<>()).build();
-        assertDoesNotThrow( ()-> {
+        assertDoesNotThrow(() -> {
             cartService.clearSessionCart(cartDto);
         });
     }

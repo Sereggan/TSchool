@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.tsystems.tschool.service.MyUserDetailsService;
+import org.tsystems.tschool.service.jpa.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -19,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String ROLE_EMPLOYEE = "EMPLOYEE";
     private static final String ROLE_CLIENT = "CLIENT";
 
-    public SecurityConfig(MyUserDetailsService userDetailsService) {
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
