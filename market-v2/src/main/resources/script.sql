@@ -65,7 +65,7 @@ CREATE TABLE `users`
 LOCK TABLES `users` WRITE;
 INSERT INTO `users`
 VALUES (1, '1', '1', 1, '1', 1, '1', '1999-04-30', 'user@user.ru', 'Nikolaychuk',
-        '$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.AQubh4a', 'Sergey'),
+        '$2a$10$LOqePml/koRGsk2YAIOFI.1YNKZg7EsQ5BAIuYP1nWOyYRl21dlne', 'Sergey'),
        (2, '1', '1', 1, '1', 1, '1', '1999-04-30', 'admin@admin.ru', 'Unschikov',
-        '$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.AQubh4a', 'Kirill');
+        '$2a$10$LOqePml/koRGsk2YAIOFI.1YNKZg7EsQ5BAIuYP1nWOyYRl21dlne', 'Kirill');
 UNLOCK TABLES;

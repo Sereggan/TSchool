@@ -115,7 +115,10 @@ public class CartServiceImpl implements CartService {
     public CartDto addItemsToDatabase(CartDto cartDto, String username) {
 
         Cart cart = cartDao.findByUsername(username);
-        if(!cart.getCartItems().isEmpty()){
+        if (cart == null) {
+            cart = createNewCart(username);
+        }
+        if (!cart.getCartItems().isEmpty()) {
             clearSessionCart(cartDto);
             return mapper.cartToDto(cart);
         }
@@ -204,13 +207,19 @@ public class CartServiceImpl implements CartService {
     public CartDto findByUsername(String name) {
         Cart cart = cartDao.findByUsername(name);
         if (cart == null) {
-            User user = userDAO.getUserByUsername(name);
-            cart = new Cart();
-            cart.setUser(user);
-            cart.setTotalCost(0F);
-            cart = cartDao.save(cart);
+            cart = createNewCart(name);
         }
         return mapper.cartToDto(cart);
+    }
+
+    private Cart createNewCart(String userName) {
+        User user = userDAO.getUserByUsername(userName);
+        Cart cart = new Cart();
+        cart.setUser(user);
+        cart.setTotalCost(0F);
+        cart.setCartItems(new HashSet<>());
+        cart = cartDao.save(cart);
+        return cart;
     }
 
     // Converts Cart to Order when user makes order
