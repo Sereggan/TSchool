@@ -12,10 +12,8 @@ import org.tsystems.tschool.dao.CategoryDAO;
 import org.tsystems.tschool.dao.ValueDAO;
 import org.tsystems.tschool.dto.CategoryDto;
 import org.tsystems.tschool.dto.CategoryValueDto;
-import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Category;
 import org.tsystems.tschool.entity.Value;
-import org.tsystems.tschool.service.jpa.CartServiceImpl;
 import org.tsystems.tschool.service.jpa.CategoryServiceImpl;
 
 import java.util.*;

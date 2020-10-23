@@ -1,6 +1,5 @@
 package org.tsystems.tschool.service;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,15 +7,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.tsystems.tschool.dao.UserDAO;
-import org.tsystems.tschool.dao.ValueDAO;
 import org.tsystems.tschool.dto.UserDto;
 import org.tsystems.tschool.entity.Address;
 import org.tsystems.tschool.entity.User;
-import org.tsystems.tschool.exception.ItemNotFoundException;
-import org.tsystems.tschool.service.jpa.ArticleServiceImpl;
 import org.tsystems.tschool.service.jpa.UserServiceImpl;
 
 import javax.persistence.NoResultException;
@@ -34,9 +28,6 @@ class UserServiceTest {
 
     @Mock
     UserDAO userDAO;
-
-    @Mock
-    private PasswordEncoder passwordEncoder;
 
     @InjectMocks
     UserServiceImpl userService;
@@ -72,16 +63,16 @@ class UserServiceTest {
         UserDto userDto = UserDto.builder().id(1L).username("name").build();
         when(userDAO.getUserByUsername(userDto.getUsername())).thenReturn(user);
         UserDto updatedUser = userService.updateUser(userDto);
-        assertEquals(user.getUsername(),updatedUser.getUsername());
-        assertEquals(user.getEmail(),updatedUser.getEmail());
-        assertEquals(user.getBirthday(),updatedUser.getBirthday());
+        assertEquals(user.getUsername(), updatedUser.getUsername());
+        assertEquals(user.getEmail(), updatedUser.getEmail());
+        assertEquals(user.getBirthday(), updatedUser.getBirthday());
     }
 
     @Test
     @DisplayName("Test updatePassword")
     void updatePassword() {
         when(userDAO.getUserByUsername(any(String.class))).thenReturn(user);
-        userService.updatePassword("name","pass");
+        userService.updatePassword("name", "pass");
         verify(userDAO).update(any(User.class));
     }
 }

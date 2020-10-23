@@ -16,13 +16,10 @@ import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Cart;
 import org.tsystems.tschool.entity.CartItem;
 import org.tsystems.tschool.entity.User;
-import org.tsystems.tschool.exception.ArticleAlreadyExistException;
 import org.tsystems.tschool.exception.ItemNotFoundException;
 import org.tsystems.tschool.service.jpa.CartServiceImpl;
 
-import javax.persistence.NonUniqueResultException;
 import java.util.HashSet;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

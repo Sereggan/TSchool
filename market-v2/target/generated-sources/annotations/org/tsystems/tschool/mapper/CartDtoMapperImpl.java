@@ -18,8 +18,8 @@ import org.tsystems.tschool.entity.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-10-23T03:38:54+0300",
-    comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 14.0.2 (Oracle Corporation)"
+    date = "2020-10-23T15:46:04+0300",
+    comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 1.8.0_252 (Amazon.com Inc.)"
 )
 @Component
 public class CartDtoMapperImpl implements CartDtoMapper {
