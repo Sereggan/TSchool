@@ -22,10 +22,10 @@ public class MainPageController {
 
         if (authentication != null) {
             CartDto cartSessionDto = (CartDto) session.getAttribute("cart");
-            if (cartSessionDto != null) {
-                cartService.addItemsToDatabase(cartSessionDto, authentication.getName());
-                session.setAttribute("cart", null);
-            }
+
+            cartService.addItemsToDatabase(cartSessionDto, authentication.getName());
+            session.setAttribute("cart", null);
+
         }
         return "index";
     }

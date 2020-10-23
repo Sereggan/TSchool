@@ -40,17 +40,12 @@ public class CartDAO {
      * Find by username cart.
      *
      * @param username the username
-     * @return the cart
+     * @return the cart or throw NoResultException if cart doesnt exist
      */
-    public Cart findByUsername(String username) {
-        try {
-            return entityManager.createQuery("select e from Cart e where e.user.username = ?1", Cart.class)
-                    .setParameter(1, username)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            log.info("Could not find a Cart by username:" + username);
-            return null;
-        }
+    public Cart findByUsername(String username) throws NoResultException{
+        return entityManager.createQuery("select e from Cart e where e.user.username = ?1", Cart.class)
+                .setParameter(1, username)
+                .getSingleResult();
     }
 
     /**

@@ -113,11 +113,18 @@ public class CartServiceImpl implements CartService {
     // Moves cart from session to database after authorization
     @Override
     public CartDto addItemsToDatabase(CartDto cartDto, String username) {
-
-        Cart cart = cartDao.findByUsername(username);
-        if (cart == null) {
+        Cart cart;
+        try {
+            cart = cartDao.findByUsername(username);
+        } catch (NoResultException e) {
+            log.info("Could not find a Cart by username:" + username);
             cart = createNewCart(username);
         }
+
+        if (cartDto == null) {
+            return mapper.cartToDto(cart);
+        }
+
         if (!cart.getCartItems().isEmpty()) {
             clearSessionCart(cartDto);
             return mapper.cartToDto(cart);
@@ -204,10 +211,13 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartDto findByUsername(String name) {
-        Cart cart = cartDao.findByUsername(name);
-        if (cart == null) {
-            cart = createNewCart(name);
+    public CartDto findByUsername(String username) {
+        Cart cart;
+        try {
+            cart = cartDao.findByUsername(username);
+        } catch (NoResultException e) {
+            log.info("Could not find a Cart by username:" + username);
+            cart = createNewCart(username);
         }
         return mapper.cartToDto(cart);
     }
