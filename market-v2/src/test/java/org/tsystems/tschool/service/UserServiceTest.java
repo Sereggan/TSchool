@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.tsystems.tschool.dao.UserDAO;
 import org.tsystems.tschool.dto.UserDto;
 import org.tsystems.tschool.entity.Address;
@@ -28,6 +29,9 @@ class UserServiceTest {
 
     @Mock
     UserDAO userDAO;
+
+    @Mock
+    PasswordEncoder passwordEncoder;
 
     @InjectMocks
     UserServiceImpl userService;
@@ -71,7 +75,7 @@ class UserServiceTest {
     @Test
     @DisplayName("Test updatePassword")
     void updatePassword() {
-        when(userDAO.getUserByUsername(any(String.class))).thenReturn(user);
+        when(userDAO.getUserByUsername("name")).thenReturn(user);
         userService.updatePassword("name", "pass");
         verify(userDAO).update(any(User.class));
     }

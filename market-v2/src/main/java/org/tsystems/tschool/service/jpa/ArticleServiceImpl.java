@@ -109,7 +109,13 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDto updateArticle(ArticleDto articleDto) {
-        Article article = articleDAO.findByIdWithLock(articleDto.getId());
+        Article article;
+        try {
+            article = articleDAO.findByIdWithLock(articleDto.getId());
+        } catch (EmptyResultDataAccessException e) {
+            log.info(ID_NOT_FOUND_MESSAGE + articleDto.getId());
+            throw new ItemNotFoundException(ARTICLE_DOESNT_EXIST_MESSAGE);
+        }
         article.setQuantity(articleDto.getQuantity());
         article.setPrice(articleDto.getPrice());
         article.setTitle(articleDto.getTitle());

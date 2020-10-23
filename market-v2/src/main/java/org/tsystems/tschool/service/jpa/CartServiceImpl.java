@@ -91,7 +91,13 @@ public class CartServiceImpl implements CartService {
     public CartDto removeArticle(Long cartId, Long articleId) {
         Cart cart = cartDao.findById(cartId);
         List<CartItem> items = new ArrayList<>(cart.getCartItems());
-        Article article = articleDAO.findByIdWithLock(articleId);
+        Article article;
+        try {
+            article = articleDAO.findByIdWithLock(articleId);
+        } catch (EmptyResultDataAccessException e) {
+            log.info(ARTICLE_DOESNT_EXIST_MESSAGE + articleId);
+            throw new ItemNotFoundException(ARTICLE_DOESNT_EXIST_MESSAGE);
+        }
         article.setQuantity(article.getQuantity() + 1);
         cart.setTotalCost(cart.getTotalCost() - article.getPrice());
         for (int i = 0; i < items.size(); i++) {
@@ -112,7 +118,7 @@ public class CartServiceImpl implements CartService {
 
     // Moves cart from session to database after authorization
     @Override
-    public CartDto addItemsToDatabase(CartDto cartDto, String username) {
+    public CartDto moveItemsFromSessionToDatabase(CartDto cartDto, String username) {
         Cart cart;
         try {
             cart = cartDao.findByUsername(username);

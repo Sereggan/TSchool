@@ -13,8 +13,8 @@ import org.tsystems.tschool.entity.User.UserBuilder;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-10-23T15:46:04+0300",
-    comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 1.8.0_252 (Amazon.com Inc.)"
+    date = "2020-10-23T21:27:20+0300",
+    comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 13.0.1 (Oracle Corporation)"
 )
 @Component
 public class UserDtoMapperImpl implements UserDtoMapper {

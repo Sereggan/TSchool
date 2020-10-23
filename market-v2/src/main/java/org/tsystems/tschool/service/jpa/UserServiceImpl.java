@@ -55,6 +55,5 @@ public class UserServiceImpl implements UserService {
         String encodedPassword = passwordEncoder.encode(password);
         user.setPassword(encodedPassword);
         userDAO.update(user);
-
     }
 }

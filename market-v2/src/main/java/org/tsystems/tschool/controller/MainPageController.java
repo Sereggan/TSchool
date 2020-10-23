@@ -23,7 +23,7 @@ public class MainPageController {
         if (authentication != null) {
             CartDto cartSessionDto = (CartDto) session.getAttribute("cart");
 
-            cartService.addItemsToDatabase(cartSessionDto, authentication.getName());
+            cartService.moveItemsFromSessionToDatabase(cartSessionDto, authentication.getName());
             session.setAttribute("cart", null);
 
         }

@@ -47,7 +47,7 @@ public class ArticleController {
     public String getInfoArticlePage(@PathVariable Long id, Model model) {
         ArticleDto articleDto = articleService.findById(id);
         model.addAttribute("articleDto", articleDto);
-        return "editArticlePage";
+        return "articles/editArticlePage";
     }
 
     @PostMapping("/edit/{id}")

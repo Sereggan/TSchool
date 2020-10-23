@@ -66,7 +66,7 @@ public interface CartService {
      * @param username the username
      * @return the cart transfer object
      */
-    public CartDto addItemsToDatabase(CartDto cartDto, String username);
+    public CartDto moveItemsFromSessionToDatabase(CartDto cartDto, String username);
 
     /**
      * Clear cart in session.
