@@ -221,7 +221,7 @@ public class CartServiceImpl implements CartService {
         Cart cart;
         try {
             cart = cartDao.findByUsername(username);
-        } catch (NoResultException e) {
+        } catch (EmptyResultDataAccessException e) {
             log.info("Could not find a Cart by username:" + username);
             cart = createNewCart(username);
         }

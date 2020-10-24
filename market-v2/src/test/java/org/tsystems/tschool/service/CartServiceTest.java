@@ -156,7 +156,7 @@ class CartServiceTest {
     @DisplayName("Create new cart")
     @Test
     void findByUsernameWithNull() {
-        when(cartDao.findByUsername("name")).thenThrow(NoResultException.class);
+        when(cartDao.findByUsername("name")).thenThrow(EmptyResultDataAccessException.class);
         when(userDAO.getUserByUsername("name")).thenReturn(User.builder().email("test").username("name").build());
         when(cartDao.save(any(Cart.class))).thenReturn(cart);
         CartDto cartDto = cartService.findByUsername("name");

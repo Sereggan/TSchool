@@ -22,8 +22,6 @@ public class CartDAO {
     @PersistenceContext
     EntityManager entityManager;
 
-    private static final Logger log = LogManager.getLogger(CartDAO.class);
-
     /**
      * Find by id cart.
      *
@@ -42,7 +40,7 @@ public class CartDAO {
      * @param username the username
      * @return the cart or throw NoResultException if cart doesnt exist
      */
-    public Cart findByUsername(String username) throws NoResultException{
+    public Cart findByUsername(String username) {
         return entityManager.createQuery("select e from Cart e where e.user.username = ?1", Cart.class)
                 .setParameter(1, username)
                 .getSingleResult();
