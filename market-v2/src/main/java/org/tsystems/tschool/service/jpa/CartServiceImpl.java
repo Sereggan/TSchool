@@ -22,7 +22,7 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 /**
- * {@inheritDoc}
+ * Implementation of CartService interface
  */
 @Service
 @Transactional
@@ -53,6 +53,9 @@ public class CartServiceImpl implements CartService {
         this.orderDAO = orderDAO;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CartDto addArticle(Long cartId, Long articleId) {
         Cart cart = cartDao.findById(cartId);
@@ -87,6 +90,9 @@ public class CartServiceImpl implements CartService {
         return mapper.cartToDto(cart);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CartDto removeArticle(Long cartId, Long articleId) {
         Cart cart = cartDao.findById(cartId);
@@ -116,15 +122,18 @@ public class CartServiceImpl implements CartService {
         return mapper.cartToDto(cart);
     }
 
-    // Moves cart from session to database after authorization
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CartDto moveItemsFromSessionToDatabase(CartDto cartDto, String username) {
         Cart cart;
         try {
             cart = cartDao.findByUsername(username);
-        } catch (NoResultException e) {
+        } catch (EmptyResultDataAccessException e) {
             log.info("Could not find a Cart by username:" + username);
             cart = createNewCart(username);
+            log.info("Created new cart for:" + cart.getUser().getUsername() + " with id : " + cart.getUser().getId());
         }
 
         if (cartDto == null) {
@@ -152,6 +161,9 @@ public class CartServiceImpl implements CartService {
         return mapper.cartToDto(cart);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void clearSessionCart(CartDto cartDto) {
         List<CartItemDto> items = new ArrayList<>(cartDto.getCartItems());
@@ -161,6 +173,9 @@ public class CartServiceImpl implements CartService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CartDto addArticleInSession(CartDto cartDto, Long articleId) {
 
@@ -190,6 +205,9 @@ public class CartServiceImpl implements CartService {
         return cartDto;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CartDto removeArticleInSession(CartDto cartDto, Long id) {
         List<CartItemDto> list = new ArrayList<>(cartDto.getCartItems());
@@ -216,6 +234,9 @@ public class CartServiceImpl implements CartService {
         return cartDto;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CartDto findByUsername(String username) {
         Cart cart;
@@ -228,8 +249,14 @@ public class CartServiceImpl implements CartService {
         return mapper.cartToDto(cart);
     }
 
-    private Cart createNewCart(String userName) {
-        User user = userDAO.getUserByUsername(userName);
+
+    /**
+     * @param username
+     * Creates Cart for user
+     * @return Cart
+     */
+    private Cart createNewCart(String username) {
+        User user = userDAO.getUserByUsername(username);
         Cart cart = new Cart();
         cart.setUser(user);
         cart.setTotalCost(0F);
@@ -238,7 +265,9 @@ public class CartServiceImpl implements CartService {
         return cart;
     }
 
-    // Converts Cart to Order when user makes order
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void createOrder(CartDto cartDto, OrderDetailsDto orderDetailsDto) {
         Order order = new Order();

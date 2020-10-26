@@ -1,12 +1,9 @@
 package org.tsystems.tschool.dao;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.tsystems.tschool.entity.Cart;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**

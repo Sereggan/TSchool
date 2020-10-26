@@ -12,7 +12,7 @@ import org.tsystems.tschool.service.UserService;
 import javax.transaction.Transactional;
 
 /**
- * {@inheritDoc}
+ * Implementation of UserService interface
  */
 @Service
 @Transactional
@@ -30,6 +30,9 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UserDto getUserByUsername(String username) {
         User user = userDAO.getUserByUsername(username);
@@ -37,6 +40,9 @@ public class UserServiceImpl implements UserService {
         return mapper.userToDto(user);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UserDto updateUser(UserDto userDto) {
         User user = userDAO.getUserByUsername(userDto.getUsername());
@@ -49,6 +55,9 @@ public class UserServiceImpl implements UserService {
         return mapper.userToDto(user);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updatePassword(String username, String password) {
         User user = userDAO.getUserByUsername(username);

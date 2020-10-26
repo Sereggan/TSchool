@@ -13,6 +13,9 @@ import org.tsystems.tschool.service.MyUserDetailsService;
  * Created by Sergey Nikolaychuk on 23.10.2020
  */
 
+/**
+ * Implementation of MyUserDetailsService interface
+ */
 @Service("UserDetailsService")
 public class UserDetailsServiceImpl implements MyUserDetailsService {
 
@@ -22,6 +25,9 @@ public class UserDetailsServiceImpl implements MyUserDetailsService {
         this.userDAO = userDAO;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) {

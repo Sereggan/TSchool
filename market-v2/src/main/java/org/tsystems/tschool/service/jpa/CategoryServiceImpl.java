@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * {@inheritDoc}
+ * Implementation of CategoryService interface
  */
 @Service
 @Transactional
@@ -41,7 +41,9 @@ public class CategoryServiceImpl implements CategoryService {
         this.articleDAO = articleDAO;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<CategoryDto> findAll() {
         return categoryDAO.findAll().stream()
@@ -49,11 +51,17 @@ public class CategoryServiceImpl implements CategoryService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<CategoryDto> findById(Long id) {
         return Optional.ofNullable(mapper.categoryToDto(categoryDAO.findById(id)));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean removeCategoryById(Long id) {
         Category category = categoryDAO.findById(id);
@@ -70,23 +78,35 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryDAO.remove(category);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CategoryDto saveCategory(CategoryDto categoryDto) {
         Category category = categoryDAO.save(mapper.dtoToCategory(categoryDto));
         return mapper.categoryToDto(category);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CategoryDto updateCategory(CategoryDto categoryDto) {
         Category category = categoryDAO.update(mapper.dtoToCategory(categoryDto));
         return mapper.categoryToDto(category);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addValue(CategoryValueDto categoryValueDto) {
         valueDAO.addValue(Value.builder().title(categoryValueDto.getTitle()).build(), categoryValueDto.getCategoryId());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removeValue(Long valueId) {
         valueDAO.removeValueFromCategory(valueId);

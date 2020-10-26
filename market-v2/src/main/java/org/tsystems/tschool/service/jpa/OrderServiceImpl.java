@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@inheritDoc}
+ * Implementation of OrderService interface
  */
 @Transactional
 @Service
@@ -41,6 +41,9 @@ public class OrderServiceImpl implements OrderService {
         this.userDAO = userDAO;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<OrderDto> findAll() {
         List<OrderDto> orderDtos = new ArrayList<>();
@@ -49,6 +52,9 @@ public class OrderServiceImpl implements OrderService {
         return orderDtos;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<OrderDto> findAllByUsername(String username) {
         List<Order> orders
@@ -58,6 +64,9 @@ public class OrderServiceImpl implements OrderService {
         return orderDtos;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public OrderDto updateStatus(OrderStatusDto orderStatusDto, Long id) {
         Order order;

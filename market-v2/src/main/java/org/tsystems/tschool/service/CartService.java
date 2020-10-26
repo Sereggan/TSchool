@@ -21,6 +21,7 @@ public interface CartService {
      *
      * @param cartDto    the cart dto
      * @param articleId  article id
+     * Moves cart from session to database after authorization
      * @return the cart transfer object
      */
     public CartDto addArticleInSession(CartDto cartDto, Long articleId);
@@ -44,7 +45,7 @@ public interface CartService {
 
     /**
      * Create order.
-     *
+     * Converts Cart to Order when user makes order
      * @param cartDto         the cart transfer object
      * @param orderDetailsDto the order details transfer object
      */

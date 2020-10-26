@@ -25,7 +25,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * {@inheritDoc}
+ * Implementation of ArticleService interface
  */
 @Service
 @Transactional
@@ -58,6 +58,9 @@ public class ArticleServiceImpl implements ArticleService {
         this.orderDAO = orderDAO;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<ArticleDto> findAll() {
         List<ArticleDto> articleDtos = articleDAO.findAll().stream()
@@ -71,6 +74,9 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDtos;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ArticleDto findById(Long id) {
         Article article;
@@ -83,6 +89,9 @@ public class ArticleServiceImpl implements ArticleService {
         return mapper.articleToDto(article);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean removeArticleById(Long id) {
         boolean isDeleted = false;
@@ -95,6 +104,9 @@ public class ArticleServiceImpl implements ArticleService {
         return isDeleted;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ArticleDto saveArticle(ArticleDto articleDto) {
         Article article;
@@ -107,6 +119,9 @@ public class ArticleServiceImpl implements ArticleService {
         return mapper.articleToDto(article);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ArticleDto updateArticle(ArticleDto articleDto) {
         Article article;
@@ -122,6 +137,9 @@ public class ArticleServiceImpl implements ArticleService {
         return mapper.articleToDto(article);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ArticleCategoriesDto getAllCategoriesAndValuesByArticleId(Long id) {
         ArticleCategoriesDto categoriesDto = new ArticleCategoriesDto();
@@ -161,6 +179,9 @@ public class ArticleServiceImpl implements ArticleService {
         return categoriesDto;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ArticleDto addValue(Long articleId, Long valueId) {
         Value value;
@@ -182,6 +203,9 @@ public class ArticleServiceImpl implements ArticleService {
         return mapper.articleToDto(articleDAO.save(article));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteValue(Long articleId, Long valueId) {
         Value value;
@@ -211,6 +235,9 @@ public class ArticleServiceImpl implements ArticleService {
         articleDAO.save(article);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CatalogDto getCatalog() {
         List<Article> articles = articleDAO.findAll();
@@ -230,6 +257,9 @@ public class ArticleServiceImpl implements ArticleService {
         return catalogDto;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<ArticleRating> getArticlesRating() {
         return articleDAO.findBestSellers(10L);
