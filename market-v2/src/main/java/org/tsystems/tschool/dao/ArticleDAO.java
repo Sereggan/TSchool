@@ -123,4 +123,10 @@ public class ArticleDAO {
                 .setParameter(1, limit)
                 .getResultList();
     }
+
+    public List<Article> findMostExpensive(int limit){
+        return entityManager.createQuery("select e from Article e order by e.price desc", Article.class)
+                .setMaxResults(limit)
+                .getResultList();
+    }
 }

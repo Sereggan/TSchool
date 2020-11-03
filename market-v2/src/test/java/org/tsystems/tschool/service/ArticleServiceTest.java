@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.apache.log4j.Logger;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.tsystems.tschool.dao.ArticleDAO;
@@ -13,6 +14,7 @@ import org.tsystems.tschool.dto.CatalogDto;
 import org.tsystems.tschool.entity.*;
 import org.tsystems.tschool.exception.ArticleAlreadyExistException;
 import org.tsystems.tschool.exception.ItemNotFoundException;
+import org.tsystems.tschool.jms.JmsProducer;
 import org.tsystems.tschool.service.jpa.ArticleServiceImpl;
 
 import javax.persistence.NonUniqueResultException;
@@ -25,13 +27,16 @@ import static org.mockito.Mockito.*;
 class ArticleServiceTest {
 
     @Mock
-    ArticleDAO articleDAO;
+    private ArticleDAO articleDAO;
 
     @Mock
-    ValueDAO valueDAO;
+    private ValueDAO valueDAO;
+
+    @Mock
+    private JmsProducer jmsProducer;
 
     @InjectMocks
-    ArticleServiceImpl articleService;
+    private ArticleServiceImpl articleService;
 
     private List<Article> articleList = new ArrayList<>();
 

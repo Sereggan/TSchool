@@ -5,6 +5,7 @@ import lombok.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Objects;
 @Builder
 @Setter
 @Getter
-public class ArticleDto implements Comparable<ArticleDto> {
+public class ArticleDto implements Comparable<ArticleDto>, Serializable {
 
     private Long id;
 

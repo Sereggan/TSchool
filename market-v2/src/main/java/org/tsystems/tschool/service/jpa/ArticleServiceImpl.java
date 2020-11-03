@@ -15,6 +15,7 @@ import org.tsystems.tschool.entity.ArticleRating;
 import org.tsystems.tschool.entity.Value;
 import org.tsystems.tschool.exception.ArticleAlreadyExistException;
 import org.tsystems.tschool.exception.ItemNotFoundException;
+import org.tsystems.tschool.jms.JmsProducer;
 import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.mapper.CatalogArticleDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
@@ -39,6 +40,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     final OrderDAO orderDAO;
 
+    final JmsProducer jmsProducer;
+
     private final ArticleDtoMapper mapper
             = Mappers.getMapper(ArticleDtoMapper.class);
 
@@ -51,11 +54,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     private static final String ARTICLE_DOESNT_EXIST_MESSAGE = "Could not find article with such id: ";
 
-    public ArticleServiceImpl(ArticleDAO articleDAO, ValueDAO valueDAO, CategoryDAO categoryDAO, OrderDAO orderDAO) {
+    public ArticleServiceImpl(ArticleDAO articleDAO, ValueDAO valueDAO, CategoryDAO categoryDAO, OrderDAO orderDAO, JmsProducer jmsProducer) {
         this.articleDAO = articleDAO;
         this.valueDAO = valueDAO;
         this.categoryDAO = categoryDAO;
         this.orderDAO = orderDAO;
+        this.jmsProducer = jmsProducer;
     }
 
     /**
@@ -101,6 +105,7 @@ public class ArticleServiceImpl implements ArticleService {
             log.info(ID_NOT_FOUND_MESSAGE + id);
             throw new ItemNotFoundException(ARTICLE_DOESNT_EXIST_MESSAGE);
         }
+        jmsProducer.sendMessage();
         return isDeleted;
     }
 
@@ -116,7 +121,18 @@ public class ArticleServiceImpl implements ArticleService {
             log.info("Created existing article");
             throw new ArticleAlreadyExistException();
         }
+        jmsProducer.sendMessage();
         return mapper.articleToDto(article);
+    }
+
+    public List<ArticleDto> getTopArticles(int limit) {
+        List<Article> articles = articleDAO.findMostExpensive(limit);
+        List<ArticleDto> articleDtos = new ArrayList<>();
+        for (int i = 0; i < articles.size(); i++) {
+            Article article = articles.get(i);
+            articleDtos.add(mapper.articleToDto(article));
+        }
+        return articleDtos;
     }
 
     /**

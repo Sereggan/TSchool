@@ -89,5 +89,8 @@ public interface ArticleService {
      * @return the articles rating
      */
     public List<ArticleRating> getArticlesRating();
+
+    public List<ArticleDto> getTopArticles(int limit);
+
 }
 

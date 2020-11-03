@@ -9,8 +9,8 @@ import org.tsystems.tschool.entity.Article.ArticleBuilder;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-10-23T22:23:11+0300",
-    comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 13.0.1 (Oracle Corporation)"
+    date = "2020-11-03T23:19:31+0300",
+    comments = "version: 1.4.0.CR1, compiler: javac, environment: Java 13.0.2 (Oracle Corporation)"
 )
 @Component
 public class ArticleDtoMapperImpl implements ArticleDtoMapper {
