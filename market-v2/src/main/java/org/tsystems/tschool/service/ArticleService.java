@@ -13,14 +13,14 @@ import java.util.List;
 public interface ArticleService {
 
     /**
-     * Find all list.
+     * Find all articles.
      *
-     * @return the list of Articles
+     * @return the list of all Articles
      */
     public List<ArticleDto> findAll();
 
     /**
-     * Find by id article.
+     * Find article by id.
      *
      * @param id of article
      * @return the article dto
@@ -69,7 +69,7 @@ public interface ArticleService {
     public ArticleDto addValue(Long articleId, Long valueId);
 
     /**
-     * Delete value.
+     * Delete value from article.
      *
      * @param articleId the article id
      * @param valueId   the value id
@@ -84,13 +84,18 @@ public interface ArticleService {
     public CatalogDto getCatalog();
 
     /**
-     * Gets articles rating.
+     * Gets articles rating by total income
      *
      * @return the articles rating
      */
     public List<ArticleRating> getArticlesRating();
 
-    public List<ArticleDto> getTopArticles(int limit);
+    /**
+     * Gets articles rating by price
+     *
+     * @return the articles list
+     */
+    public List<ArticleDto> getTopArticles();
 
 }
 

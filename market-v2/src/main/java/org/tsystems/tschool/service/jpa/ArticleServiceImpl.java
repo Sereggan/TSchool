@@ -4,6 +4,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.mapstruct.factory.Mappers;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 import org.tsystems.tschool.dao.ArticleDAO;
 import org.tsystems.tschool.dao.CategoryDAO;
@@ -20,7 +21,6 @@ import org.tsystems.tschool.mapper.ArticleDtoMapper;
 import org.tsystems.tschool.mapper.CatalogArticleDtoMapper;
 import org.tsystems.tschool.service.ArticleService;
 
-import javax.persistence.NonUniqueResultException;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -42,6 +42,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     final JmsProducer jmsProducer;
 
+    private static final int TOP_ARTICLES_LIMIT = 5;
+
     private final ArticleDtoMapper mapper
             = Mappers.getMapper(ArticleDtoMapper.class);
 
@@ -54,7 +56,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     private static final String ARTICLE_DOESNT_EXIST_MESSAGE = "Could not find article with such id: ";
 
-    public ArticleServiceImpl(ArticleDAO articleDAO, ValueDAO valueDAO, CategoryDAO categoryDAO, OrderDAO orderDAO, JmsProducer jmsProducer) {
+    public ArticleServiceImpl(ArticleDAO articleDAO, ValueDAO valueDAO, CategoryDAO categoryDAO,
+                              OrderDAO orderDAO, JmsProducer jmsProducer) {
         this.articleDAO = articleDAO;
         this.valueDAO = valueDAO;
         this.categoryDAO = categoryDAO;
@@ -105,7 +108,6 @@ public class ArticleServiceImpl implements ArticleService {
             log.info(ID_NOT_FOUND_MESSAGE + id);
             throw new ItemNotFoundException(ARTICLE_DOESNT_EXIST_MESSAGE);
         }
-        jmsProducer.sendMessage();
         return isDeleted;
     }
 
@@ -117,16 +119,32 @@ public class ArticleServiceImpl implements ArticleService {
         Article article;
         try {
             article = articleDAO.save(mapper.dtoToArticle(articleDto));
-        } catch (NonUniqueResultException e) {
+        } catch (IncorrectResultSizeDataAccessException e) {
             log.info("Created existing article");
             throw new ArticleAlreadyExistException();
         }
-        jmsProducer.sendMessage();
+
+        if(isTopUpdated(article)) {
+            jmsProducer.sendMessage("Top updated");
+        }
         return mapper.articleToDto(article);
     }
 
-    public List<ArticleDto> getTopArticles(int limit) {
-        List<Article> articles = articleDAO.findMostExpensive(limit);
+
+    /**
+     * @param article
+     * @return true if top updated
+     */
+    private boolean isTopUpdated(Article article){
+        List<Article> articles = articleDAO.findMostExpensive(TOP_ARTICLES_LIMIT);
+        return articles.contains(article);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public List<ArticleDto> getTopArticles() {
+        List<Article> articles = articleDAO.findMostExpensive(TOP_ARTICLES_LIMIT);
         List<ArticleDto> articleDtos = new ArrayList<>();
         for (int i = 0; i < articles.size(); i++) {
             Article article = articles.get(i);
@@ -150,6 +168,9 @@ public class ArticleServiceImpl implements ArticleService {
         article.setQuantity(articleDto.getQuantity());
         article.setPrice(articleDto.getPrice());
         article.setTitle(articleDto.getTitle());
+        if(isTopUpdated(article)) {
+            jmsProducer.sendMessage("Top updated");
+        }
         return mapper.articleToDto(article);
     }
 

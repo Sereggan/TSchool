@@ -7,7 +7,6 @@ import org.tsystems.tschool.entity.Category;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Set;
@@ -92,7 +91,7 @@ public class ArticleDAO {
      * @param article the article
      * @return the article
      */
-    public Article save(Article article) throws NonUniqueResultException {
+    public Article save(Article article) {
         entityManager.persist(article);
         return entityManager.createQuery("select e from Article e where e.title = ?1", Article.class)
                 .setParameter(1, article.getTitle())
@@ -124,7 +123,7 @@ public class ArticleDAO {
                 .getResultList();
     }
 
-    public List<Article> findMostExpensive(int limit){
+    public List<Article> findMostExpensive(int limit) {
         return entityManager.createQuery("select e from Article e order by e.price desc", Article.class)
                 .setMaxResults(limit)
                 .getResultList();

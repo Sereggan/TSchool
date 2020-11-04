@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.apache.log4j.Logger;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.tsystems.tschool.dao.ArticleDAO;
 import org.tsystems.tschool.dao.ValueDAO;
 import org.tsystems.tschool.dto.ArticleDto;
@@ -40,8 +41,6 @@ class ArticleServiceTest {
 
     private List<Article> articleList = new ArrayList<>();
 
-    private List<ArticleDto> articleDtoList = new ArrayList<>();
-
     private Article article;
 
     private ArticleDto articleDto;
@@ -63,15 +62,15 @@ class ArticleServiceTest {
 
     @DisplayName("Test findAll by size of list")
     @Test
-    void findAllBySize() {
+    void findAll_should_return_list() {
         when(articleDAO.findAll()).thenReturn(articleList);
         List<ArticleDto> articles = articleService.findAll();
         assertEquals(2, articles.size());
     }
 
-    @DisplayName("Test findAll with empty list")
+    @DisplayName("FindAll with empty list")
     @Test
-    void findAllEmptyList() {
+    void findAll_should_return_empty_list() {
         when(articleDAO.findAll()).thenReturn(new ArrayList<>());
         List<ArticleDto> articles = articleService.findAll();
         assertEquals(0, articles.size());
@@ -79,7 +78,7 @@ class ArticleServiceTest {
 
     @DisplayName("Test findAll with NotNull Cart Items")
     @Test
-    void findAllWithNotNullCartItems() {
+    void findAll_should_add_item_to_cart() {
         HashSet<CartItem> cartItems = new HashSet<>();
         cartItems.add(CartItem.builder().id(1L).build());
         article = Article.builder().id(1L).price(100F).title("Article 3").categories(new HashSet<>())
@@ -98,7 +97,7 @@ class ArticleServiceTest {
     }
 
 
-    @DisplayName("Find existing article by id")
+    @DisplayName("findById of existing article")
     @Test
     void findById() {
         when(articleDAO.findById(1L)).thenReturn(article);
@@ -106,16 +105,16 @@ class ArticleServiceTest {
         assertEquals(articleService.findById(1L), articleDto);
     }
 
-    @DisplayName("Catch EmptyResultDataAccessException")
+    @DisplayName("findById, Catch EmptyResultDataAccessException")
     @Test
-    void findByIdCatchException() {
+    void findById_should_catch_exception() {
         when(articleDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
             articleService.findById(1L);
         });
     }
 
-    @DisplayName("Delete by id")
+    @DisplayName("Delete article by id")
     @Test
     void removeArticleById() {
         final Long id = 1L;
@@ -123,9 +122,9 @@ class ArticleServiceTest {
         verify(articleDAO, times(1)).removeById(id);
     }
 
-    @DisplayName("Catch EmptyResultDataAccessException")
+    @DisplayName("removeArticle, Catch EmptyResultDataAccessException")
     @Test
-    void removeArticleCatchException() {
+    void removeArticle_should_catch_exception() {
         final Long id = 2L;
         when(articleDAO.removeById(id)).thenThrow(EmptyResultDataAccessException.class);
 
@@ -142,10 +141,10 @@ class ArticleServiceTest {
         assertEquals(articleDto, savedArticle);
     }
 
-    @DisplayName("Catch ArticleAlreadyExistException exception")
+    @DisplayName("saveArticle, Catch ArticleAlreadyExistException exception")
     @Test
-    void saveArticleCatchException() {
-        when(articleDAO.save(article)).thenThrow(NonUniqueResultException.class);
+    void saveArticle_should_catch_exception() {
+        when(articleDAO.save(article)).thenThrow(IncorrectResultSizeDataAccessException.class);
 
         Assertions.assertThrows(ArticleAlreadyExistException.class, () -> {
             articleService.saveArticle(articleDto);
@@ -170,7 +169,7 @@ class ArticleServiceTest {
 
     @DisplayName("Test catch Exception when article doesnt exist")
     @Test
-    void getAllCategoriesAndValuesByArticleIdCatchException() {
+    void getAllCategoriesAndValuesByArticleId_should_catch_exception() {
         when(articleDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
             articleService.getAllCategoriesAndValuesByArticleId(1L);
@@ -178,7 +177,7 @@ class ArticleServiceTest {
     }
 
     @Test
-    @DisplayName("Test add value to article")
+    @DisplayName("addValue to article")
     void addValue() {
         Set<Value> valueSet = new HashSet<>();
         article.setValues(valueSet);
@@ -189,8 +188,8 @@ class ArticleServiceTest {
     }
 
     @Test
-    @DisplayName("Test catch Exception when article doesnt exist")
-    void addValueArticleNotFound() {
+    @DisplayName("addValue, should catch Exception when article doesnt exist")
+    void addValue_invalid_article_should_catch_exception() {
         when(articleDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
         when(valueDAO.findById(1L)).thenReturn(value);
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
@@ -200,7 +199,7 @@ class ArticleServiceTest {
 
     @Test
     @DisplayName("Test catch Exception when value doesnt exist")
-    void addValueValueNotFound() {
+    void addValue_invalid_value_should_catch_exception() {
         when(valueDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
             articleService.addValue(1L, 1L);
@@ -221,9 +220,9 @@ class ArticleServiceTest {
         assertFalse(article.getValues().contains(value));
     }
 
-    @DisplayName("Test catch Exception when article doesnt exist")
+    @DisplayName("deleteValue, Article doesnt exist, should cathch exception")
     @Test
-    void deleteValueArticleDoesntExist() {
+    void deleteValue_article_doesnt_exist_should_catch_exception() {
         when(articleDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
         when(valueDAO.findById(1L)).thenReturn(value);
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
@@ -231,7 +230,7 @@ class ArticleServiceTest {
         });
     }
 
-    @DisplayName("Test catch Exception when value doesnt exist")
+    @DisplayName("deleteValue, should catch Exception when value doesnt exist")
     @Test
     void deleteValueValueDoesntExist() {
         when(valueDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
@@ -241,7 +240,7 @@ class ArticleServiceTest {
     }
 
     @Test
-    @DisplayName("Test get catalog")
+    @DisplayName("getCatalog")
     void getCatalog() {
         articleList.add(Article.builder().id(1L).price(100F).title("Article 3").categories(new HashSet<>())
                 .cartItem(new HashSet<>()).quantity(0).build());
@@ -251,7 +250,7 @@ class ArticleServiceTest {
     }
 
     @Test
-    @DisplayName("Test get rating")
+    @DisplayName("getArticlesRating")
     void getArticlesRating() {
         when(articleDAO.findBestSellers(any(Long.class))).thenReturn(Arrays.asList(ArticleRating.builder().id(1L).build()));
         assertEquals(1, articleService.getArticlesRating().size());

@@ -16,10 +16,10 @@ public interface UserService {
     public UserDto getUserByUsername(String username);
 
     /**
-     * Update user user transfer object.
+     * Update user transfer object.
      *
-     * @param userDto the user dto
-     * @return the user dto
+     * @param userDto the user transfer object
+     * @return the user transfer object
      */
     public UserDto updateUser(UserDto userDto);
 

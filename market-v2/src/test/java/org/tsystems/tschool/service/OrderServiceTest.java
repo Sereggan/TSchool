@@ -29,13 +29,13 @@ import static org.mockito.Mockito.when;
 class OrderServiceTest {
 
     @Mock
-    OrderDAO orderDAO;
+    private OrderDAO orderDAO;
 
     @Mock
-    UserDAO userDao;
+    private UserDAO userDao;
 
     @InjectMocks
-    OrderServiceImpl orderService;
+    private OrderServiceImpl orderService;
 
     private List<Order> orders;
 

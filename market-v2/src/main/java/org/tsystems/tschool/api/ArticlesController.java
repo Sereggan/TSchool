@@ -22,8 +22,7 @@ public class ArticlesController {
     }
 
     @GetMapping("/getTopArticles")
-    public List<ArticleDto> getTopArticles(){
-        return articleService.getTopArticles(5);
+    public List<ArticleDto> getTopArticles() {
+        return articleService.getTopArticles();
     }
-
 }

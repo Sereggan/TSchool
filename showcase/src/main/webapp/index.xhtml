@@ -2,51 +2,49 @@
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jstl/core">
 <h:head>
-    <h:link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-            integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-            crossorigin="anonymous"/>
-    <link rel="stylesheet" type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"/>
-    <title>Articles Board</title>
+    <title>Articles List</title>
 </h:head>
-<h:body style="background: #A4D349">
+<h:body style="background: #A5D2B9">
 
     <div style="margin-left: 20px">
-        <h1>Schedule for Today:</h1>
+        <h1>Most Expensive articles:</h1>
     </div>
     <p:dataTable value="#{articlesRepository.articles}" var="article" id="articlesTable"
                  class="table-style"
-                 rows="3">
+                 rows="5">
         <tbody>
-        <p:column styleClass="centeredColumnContent" sortBy="#{article.title}">
+        <p:column styleClass="centeredColumnContent">
             <f:facet name="header">Title</f:facet>
             #{article.title}
         </p:column>
-        <p:column styleClass="centeredColumnContent" sortBy="#{article.price}">
+        <p:column styleClass="centeredColumnContent">
             <f:facet name="header">Price</f:facet>
             #{article.price}
         </p:column>
-        <p:column styleClass="centeredColumnContent" sortBy="#{article.quantity}">
+        <p:column styleClass="centeredColumnContent">
             <f:facet name="header">Quantity</f:facet>
             #{article.quantity}
         </p:column>
         </tbody>
-
-
+        <tfoot>
+        <f:facet name="footer">
+            <c:if test="#{empty articlesRepository.articles}">
+                <h3>Could not connect to server. Try again later</h3>
+            </c:if>
+        </f:facet>
+        </tfoot>
     </p:dataTable>
 </h:body>
-    <h:form>
-        <f:websocket channel="push">
-            <f:ajax event="pushed" render="articlesTable"/>
-        </f:websocket>
-    </h:form>
+<h:form>
+    <f:websocket channel="push">
+        <f:ajax event="pushed" render="articlesTable"/>
+    </f:websocket>
+</h:form>
 </html>

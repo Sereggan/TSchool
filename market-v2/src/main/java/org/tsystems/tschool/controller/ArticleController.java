@@ -17,7 +17,6 @@ public class ArticleController {
     private static final String REDIRECT = "redirect:";
     private static final String ARTICLES_URL = "/articles";
 
-
     public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
     }

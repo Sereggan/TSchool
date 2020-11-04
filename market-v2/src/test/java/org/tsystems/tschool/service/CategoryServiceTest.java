@@ -35,7 +35,7 @@ class CategoryServiceTest {
     private ArticleDAO articleDAO;
 
     @InjectMocks
-    CategoryServiceImpl categoryService;
+    private CategoryServiceImpl categoryService;
 
     private Category category;
 
@@ -62,7 +62,7 @@ class CategoryServiceTest {
         assertNotNull(result);
     }
 
-    @DisplayName("Find by existing id")
+    @DisplayName("findById")
     @Test
     void findById() {
         when(categoryDAO.findById(any(Long.class))).thenReturn(category);
@@ -70,7 +70,7 @@ class CategoryServiceTest {
         assertNotNull(result);
     }
 
-    @DisplayName("Find by wrong id")
+    @DisplayName("findById")
     @Test
     void findByWrongId() {
         when(categoryDAO.findById(any(Long.class))).thenReturn(category);

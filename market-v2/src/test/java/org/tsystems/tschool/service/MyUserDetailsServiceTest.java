@@ -19,10 +19,10 @@ import static org.mockito.Mockito.when;
 class MyUserDetailsServiceTest {
 
     @Mock
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @InjectMocks
-    UserDetailsServiceImpl userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     @Test
     void loadUserByUsername() {

@@ -25,11 +25,9 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    final
-    OrderDAO orderDAO;
+    private final OrderDAO orderDAO;
 
-    final
-    UserDAO userDAO;
+    private final UserDAO userDAO;
 
     private final OrderDtoMapper orderDtoMapper
             = Mappers.getMapper(OrderDtoMapper.class);

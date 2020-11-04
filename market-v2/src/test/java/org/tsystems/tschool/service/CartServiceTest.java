@@ -30,19 +30,19 @@ import static org.mockito.Mockito.*;
 class CartServiceTest {
 
     @Mock
-    CartDAO cartDao;
+    private CartDAO cartDao;
 
     @Mock
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Mock
-    ArticleDAO articleDAO;
+    private ArticleDAO articleDAO;
 
     @Mock
-    OrderDAO orderDAO;
+    private OrderDAO orderDAO;
 
     @InjectMocks
-    CartServiceImpl cartService;
+    private CartServiceImpl cartService;
 
     private Cart cart;
 
@@ -54,7 +54,7 @@ class CartServiceTest {
         article = Article.builder().id(1L).price(100F).quantity(4).title("Title 1").build();
     }
 
-    @DisplayName("Add new Article to Cart")
+    @DisplayName("addNewArticle")
     @Test
     void addNewArticle() {
         when(cartDao.findById(any(Long.class))).thenReturn(cart);
@@ -63,9 +63,9 @@ class CartServiceTest {
         assertTrue(cartDto.getCartItems().contains(CartItemDto.builder().articleId(1L).build()));
     }
 
-    @DisplayName("Catch ItemNotFoundException in cart")
+    @DisplayName("addNewArticle, should Catch ItemNotFoundException")
     @Test
-    void addNewArticleCatchException() {
+    void addNewArticle_should_catch_exception() {
         when(articleDAO.findByIdWithLock(any(Long.class))).thenThrow(EmptyResultDataAccessException.class);
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
             cartService.addArticle(1L, 1L);
@@ -84,7 +84,7 @@ class CartServiceTest {
         assertEquals(2, cartItem.getQuantity());
     }
 
-    @DisplayName("Add new Article to Cart in session")
+    @DisplayName("addArticleInSession, add new Article to Cart in session")
     @Test
     void addNewArticleInSession() {
         CartDto cartDto = CartDto.builder().totalCost(0F).cartItems(new HashSet<>()).build();
@@ -94,7 +94,7 @@ class CartServiceTest {
         assertEquals(1, cartDto.getCartItems().size());
     }
 
-    @DisplayName("Add existing Article to Cart")
+    @DisplayName("addArticleInSession, add existing Article to Cart")
     @Test
     void addExistingArticleInSession() {
         CartItemDto cartItemDto = CartItemDto.builder().article(article.getTitle()).id(1L).articleId(1L)
@@ -108,16 +108,16 @@ class CartServiceTest {
         assertTrue(cartDto.getCartItems().contains(cartItemDto));
     }
 
-    @DisplayName("Add new Article to Cart Catch exception")
+    @DisplayName("addArticleInSession, add new Article to Cart Catch exception")
     @Test
-    void addNewArticleInSessionCatchException() {
+    void addNewArticleInSession_should_catch_exception() {
         when(articleDAO.findByIdWithLock(1L)).thenThrow(NoResultException.class);
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
             cartService.addArticleInSession(CartDto.builder().build(), 1L);
         });
     }
 
-    @DisplayName("Remove Not last Article from cart in session")
+    @DisplayName("removeArticleInSession")
     @Test
     void removeArticleInSession() {
         CartItemDto cartItemDto = CartItemDto.builder().article(article.getTitle()).id(1L).articleId(1L)
@@ -131,7 +131,7 @@ class CartServiceTest {
         assertTrue(cartDto.getCartItems().contains(cartItemDto));
     }
 
-    @DisplayName("Remove  last Article from cart in session")
+    @DisplayName("removeArticleInSession, last article")
     @Test
     void removeLastArticleInSession() {
         CartItemDto cartItemDto = CartItemDto.builder().article(article.getTitle()).id(1L).articleId(1L)
@@ -145,7 +145,7 @@ class CartServiceTest {
         assertFalse(cartDto.getCartItems().contains(cartItemDto));
     }
 
-    @DisplayName("Find existing cart by username")
+    @DisplayName("findByUsername, cart exists")
     @Test
     void findByUsername() {
         when(cartDao.findByUsername("name")).thenReturn(cart);
@@ -153,7 +153,7 @@ class CartServiceTest {
         assertEquals(cart.getId(), cartDto.getId());
     }
 
-    @DisplayName("Create new cart")
+    @DisplayName("findByUsername, new cart")
     @Test
     void findByUsernameWithNull() {
         when(cartDao.findByUsername("name")).thenThrow(EmptyResultDataAccessException.class);
@@ -168,7 +168,7 @@ class CartServiceTest {
     void createOrder() {
     }
 
-    @DisplayName("Remove article from cart")
+    @DisplayName("removeArticle")
     @Test
     void removeArticle() {
         CartItem cartItem = CartItem.builder().cart(cart).article(article).id(1L).quantity(4).price(100F).build();
@@ -180,7 +180,7 @@ class CartServiceTest {
         assertEquals(5, article.getQuantity());
     }
 
-    @DisplayName("Remove last article from cart")
+    @DisplayName("removeArticle, last article")
     @Test
     void removeLastArticle() {
         CartItem cartItem = CartItem.builder().cart(cart).article(article).id(1L).quantity(1).price(100F).build();

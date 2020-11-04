@@ -18,9 +18,9 @@ import javax.transaction.Transactional;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    final UserDAO userDAO;
+    private final UserDAO userDAO;
 
-    final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     private final UserDtoMapper mapper
             = Mappers.getMapper(UserDtoMapper.class);

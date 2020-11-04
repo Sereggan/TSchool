@@ -28,13 +28,13 @@ import java.util.*;
 @Transactional
 public class CartServiceImpl implements CartService {
 
-    final CartDAO cartDao;
+    private final CartDAO cartDao;
 
-    final UserDAO userDAO;
+    private final UserDAO userDAO;
 
-    final ArticleDAO articleDAO;
+    private final ArticleDAO articleDAO;
 
-    final OrderDAO orderDAO;
+    private final OrderDAO orderDAO;
 
     private final CartDtoMapper mapper
             = Mappers.getMapper(CartDtoMapper.class);
@@ -251,8 +251,7 @@ public class CartServiceImpl implements CartService {
 
 
     /**
-     * @param username
-     * Creates Cart for user
+     * @param username Creates Cart for user
      * @return Cart
      */
     private Cart createNewCart(String username) {

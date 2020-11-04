@@ -1,14 +1,11 @@
 package org.tsystems.service;
 
 import com.google.gson.Gson;
-import okhttp3.Request;
 import org.tsystems.data.Article;
 import org.tsystems.mdb.TopicMDB;
 
 import javax.annotation.ManagedBean;
-import javax.jms.TextMessage;
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.URI;
 
 import java.net.http.HttpClient;
@@ -23,7 +20,7 @@ import java.util.logging.Logger;
  */
 
 @ManagedBean
-public class ArticleServiceImpl implements ArticleService, Serializable {
+public class ArticleServiceImpl implements ArticleService {
 
     private static final String URL = "http://localhost:8081/api";
 
@@ -40,17 +37,21 @@ public class ArticleServiceImpl implements ArticleService, Serializable {
                 .uri(URI.create(URL + "/getTopArticles"))
                 .build();
 
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Thread.currentThread().interrupt();
+        }
+
         HttpResponse<String> response = null;
         try {
             response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             List<Article> articles = new Gson().fromJson(response.body(), ArrayList.class);
-            LOGGER.info("Articles size: " + articles.size());
+            LOGGER.info("Received articles from app1");
             return articles;
         } catch (IOException e) {
             LOGGER.info("Couldn't connect to server:");
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            LOGGER.info("ArticleServiceImpl IOException");
             e.printStackTrace();
         } catch (Exception e) {
             LOGGER.info("ArticleServiceImpl Exception");

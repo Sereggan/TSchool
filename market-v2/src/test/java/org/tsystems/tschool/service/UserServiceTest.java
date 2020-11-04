@@ -28,20 +28,20 @@ class UserServiceTest {
     private User user;
 
     @Mock
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Mock
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @InjectMocks
-    UserServiceImpl userService;
+    private UserServiceImpl userService;
 
     @BeforeEach
     void setUp() {
         user = User.builder().id(1L).email("user@user.ru").username("username").build();
     }
 
-    @DisplayName("Test getUser by valid username")
+    @DisplayName("getUserByUsername")
     @Test
     void getUserByUsername() {
         when(userDAO.getUserByUsername("username")).thenReturn(user);
@@ -50,16 +50,16 @@ class UserServiceTest {
         assertEquals(user.getEmail(), userDto.getEmail());
     }
 
-    @DisplayName("Test getUser by invalid username")
+    @DisplayName("getUserByUsername, invalid username")
     @Test
-    void getUserByInvalidUsername() {
+    void getUserByUsername_invalid_username() {
         lenient().when(userDAO.getUserByUsername(any(String.class))).thenThrow(NoResultException.class);
 
         UserDto userDto = userService.getUserByUsername(any(String.class));
         assertNotNull(userDto);
     }
 
-    @DisplayName("Test updateUser")
+    @DisplayName("updateUser")
     @Test
     void updateUser() {
         user.setAddress(Address.builder().build());
@@ -73,7 +73,7 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Test updatePassword")
+    @DisplayName("updatePassword")
     void updatePassword() {
         when(userDAO.getUserByUsername("name")).thenReturn(user);
         userService.updatePassword("name", "pass");
