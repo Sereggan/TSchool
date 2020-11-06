@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
  * Implementation of CategoryService interface
  */
 @Service
-@Transactional
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryDAO categoryDAO;
@@ -62,6 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public boolean removeCategoryById(Long id) {
         Category category = categoryDAO.findById(id);
@@ -81,6 +81,7 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public CategoryDto saveCategory(CategoryDto categoryDto) {
         Category category = categoryDAO.save(mapper.dtoToCategory(categoryDto));
@@ -90,6 +91,7 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public CategoryDto updateCategory(CategoryDto categoryDto) {
         Category category = categoryDAO.update(mapper.dtoToCategory(categoryDto));
@@ -99,6 +101,7 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public void addValue(CategoryValueDto categoryValueDto) {
         valueDAO.addValue(Value.builder().title(categoryValueDto.getTitle()).build(), categoryValueDto.getCategoryId());
@@ -107,6 +110,7 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public void removeValue(Long valueId) {
         valueDAO.removeValueFromCategory(valueId);

@@ -21,7 +21,6 @@ import java.util.List;
 /**
  * Implementation of OrderService interface
  */
-@Transactional
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -65,6 +64,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public OrderDto updateStatus(OrderStatusDto orderStatusDto, Long id) {
         Order order;

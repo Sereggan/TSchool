@@ -34,11 +34,4 @@ public interface UserService {
      * @param password the password
      */
     public void updatePassword(String username, String password);
-
-    /**
-     * Find all users.
-     *
-     * @return the list of all Users
-     */
-    public List<UserItemDto> findAll();
 }

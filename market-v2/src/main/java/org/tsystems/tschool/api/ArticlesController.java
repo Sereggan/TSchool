@@ -1,9 +1,6 @@
 package org.tsystems.tschool.api;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.service.ArticleService;
 
@@ -12,8 +9,9 @@ import java.util.List;
 /**
  * Created by Sergey Nikolaychuk on 02.11.2020
  */
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController()
-@RequestMapping("/api")
+@RequestMapping("/api/articles")
 public class ArticlesController {
 
     private ArticleService articleService;
@@ -22,8 +20,22 @@ public class ArticlesController {
         this.articleService = articleService;
     }
 
-    @GetMapping("/getTopArticles")
+    @GetMapping("/topArticles")
     public List<ArticleDto> getTopArticles() {
         return articleService.getTopArticles();
+    }
+
+//    @GetMapping
+//    public List<ArticleDto> getAllArticles() {
+//        return articleService.findAll();
+//    }
+
+    @GetMapping
+    public List<ArticleDto> getAllArticlesWithParams(@RequestParam(defaultValue = "0") Float minPrice,
+                                                     @RequestParam(defaultValue = "1000000") Float maxPrice,
+                                                     @RequestParam(defaultValue = "1") Integer minQuantity,
+                                                     @RequestParam(defaultValue = "1000000") Integer maxQuantity,
+                                                     @RequestParam(defaultValue = "") String title) {
+        return articleService.findAllFiltered(title,minPrice,maxPrice,minQuantity,maxQuantity);
     }
 }

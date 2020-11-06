@@ -1,5 +1,6 @@
 package org.tsystems.tschool.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.tsystems.tschool.entity.Authority;
@@ -31,12 +32,11 @@ public class UserItemDto {
     @NotEmpty(message = "LastName cant be empty")
     private String lastName;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birthday;
-
     @Email
     @NotEmpty(message = "Email cant be empty")
     private String email;
 
-    private Set<Authority> roles = new HashSet<>();
+    @NotEmpty
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 }

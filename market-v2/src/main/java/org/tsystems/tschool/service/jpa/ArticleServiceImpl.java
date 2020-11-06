@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
  * Implementation of ArticleService interface
  */
 @Service
-@Transactional
 public class ArticleServiceImpl implements ArticleService {
 
     final ArticleDAO articleDAO;
@@ -99,6 +98,7 @@ public class ArticleServiceImpl implements ArticleService {
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public boolean removeArticleById(Long id) {
         boolean isDeleted = false;
@@ -119,12 +119,13 @@ public class ArticleServiceImpl implements ArticleService {
         Article article;
         try {
             article = articleDAO.save(mapper.dtoToArticle(articleDto));
+            articleDAO.flush();
         } catch (IncorrectResultSizeDataAccessException e) {
             log.info("Created existing article");
             throw new ArticleAlreadyExistException();
         }
 
-        if(isTopUpdated(article)) {
+        if (isTopUpdated(article)) {
             jmsProducer.sendMessage("Top updated");
         }
         return mapper.articleToDto(article);
@@ -135,7 +136,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @param article
      * @return true if top updated
      */
-    private boolean isTopUpdated(Article article){
+    private boolean isTopUpdated(Article article) {
         List<Article> articles = articleDAO.findMostExpensive(TOP_ARTICLES_LIMIT);
         return articles.contains(article);
     }
@@ -153,9 +154,22 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDtos;
     }
 
+    @Override
+    public List<ArticleDto> findAllFiltered(String title, Float minPrice, Float maxPrice,
+                                            Integer minQuantity, Integer maxQuantity) {
+        List<Article> articles = articleDAO.findAllFiltered(title, minPrice, maxPrice, minQuantity, maxQuantity);
+        List<ArticleDto> articleDtos = new ArrayList<>();
+        for (Article article : articles) {
+            articleDtos.add(ArticleDto.builder().id(article.getId()).price(article.getPrice()).title(article.getTitle())
+                    .isActive(true).quantity(article.getQuantity()).build());
+        }
+        return articleDtos;
+    }
+
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public ArticleDto updateArticle(ArticleDto articleDto) {
         Article article;
@@ -168,7 +182,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setQuantity(articleDto.getQuantity());
         article.setPrice(articleDto.getPrice());
         article.setTitle(articleDto.getTitle());
-        if(isTopUpdated(article)) {
+        if (isTopUpdated(article)) {
             jmsProducer.sendMessage("Top updated");
         }
         return mapper.articleToDto(article);
@@ -219,16 +233,17 @@ public class ArticleServiceImpl implements ArticleService {
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public ArticleDto addValue(Long articleId, Long valueId) {
         Value value;
+        Article article;
         try {
             value = valueDAO.findById(valueId);
         } catch (EmptyResultDataAccessException e) {
             log.info(ID_NOT_FOUND_MESSAGE + valueId);
             throw new ItemNotFoundException("Value doesnt exist");
         }
-        Article article;
         try {
             article = articleDAO.findById(articleId);
         } catch (EmptyResultDataAccessException e) {
@@ -243,16 +258,17 @@ public class ArticleServiceImpl implements ArticleService {
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public void deleteValue(Long articleId, Long valueId) {
         Value value;
+        Article article;
         try {
             value = valueDAO.findById(valueId);
         } catch (EmptyResultDataAccessException e) {
             log.info("Could not find value with such id: " + valueId);
             throw new ItemNotFoundException("Value doesnt exist");
         }
-        Article article;
         try {
             article = articleDAO.findById(articleId);
         } catch (EmptyResultDataAccessException e) {
@@ -266,7 +282,7 @@ public class ArticleServiceImpl implements ArticleService {
                 hasCategory = true;
             }
         }
-        if (!hasCategory) article.removeCategory(value.getCategory());  // Delete category if article doesnt contains
+        if (!hasCategory) article.removeCategory(value.getCategory());  // Delete category if article doesnt contain
         // values of this category
 
         articleDAO.save(article);

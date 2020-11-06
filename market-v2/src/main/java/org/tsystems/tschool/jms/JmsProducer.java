@@ -14,7 +14,7 @@ public class JmsProducer {
 
     private final JmsTemplate jmsTemplate;
 
-    private static final String topic = "testTopic";
+    private static final String topic = "articleTopic";
 
     public JmsProducer(JmsTemplate jmsTemplate) {
         this.jmsTemplate = jmsTemplate;

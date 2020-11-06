@@ -97,5 +97,7 @@ public interface ArticleService {
      */
     public List<ArticleDto> getTopArticles();
 
+    public List<ArticleDto> findAllFiltered(String title, Float minPrice, Float maxPrice,
+                                            Integer minQuantity, Integer maxQuantity);
 }
 

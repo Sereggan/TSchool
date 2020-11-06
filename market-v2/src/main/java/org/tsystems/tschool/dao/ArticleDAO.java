@@ -1,6 +1,7 @@
 package org.tsystems.tschool.dao;
 
 import org.springframework.stereotype.Repository;
+import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.entity.ArticleRating;
 import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Category;
@@ -8,6 +9,7 @@ import org.tsystems.tschool.entity.Category;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ import java.util.Set;
  * Article class data access object
  * Class to access and control article data
  */
+@Transactional
 @Repository
 public class ArticleDAO {
 
@@ -126,6 +129,22 @@ public class ArticleDAO {
     public List<Article> findMostExpensive(int limit) {
         return entityManager.createQuery("select e from Article e order by e.price desc", Article.class)
                 .setMaxResults(limit)
+                .getResultList();
+    }
+
+    public void flush(){
+        entityManager.flush();
+    }
+
+    public List<Article> findAllFiltered(String title, Float minPrice, Float maxPrice,
+                                            Integer minQuantity, Integer maxQuantity) {
+        return entityManager.createQuery("select e from Article e where e.price>?1 and e.price<?2 and e.quantity>?3" +
+                " and e.quantity<?4 and e.title like ?5 order by e.price desc", Article.class)
+                .setParameter(1,minPrice)
+                .setParameter(2,maxPrice)
+                .setParameter(3,minQuantity)
+                .setParameter(4,maxQuantity)
+                .setParameter(5,"%"+title+"%")
                 .getResultList();
     }
 }
