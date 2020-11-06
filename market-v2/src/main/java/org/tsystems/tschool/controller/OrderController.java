@@ -1,6 +1,5 @@
 package org.tsystems.tschool.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,8 +11,11 @@ import org.tsystems.tschool.service.OrderService;
 @RequestMapping("/orders")
 public class OrderController {
 
-    @Autowired
-    OrderService orderService;
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @GetMapping()
     public String getAllOrdersPage(Model model) {
@@ -22,8 +24,8 @@ public class OrderController {
     }
 
     @PostMapping("/{id}")
-    public String updateOrder(@PathVariable Long id, @ModelAttribute("order") OrderStatusDto orderStatusDto,
-                              BindingResult result) {
+    public String updateOrderStatus(@PathVariable Long id, @ModelAttribute("order") OrderStatusDto orderStatusDto,
+                                    BindingResult result) {
         if (result.hasErrors()) {
             return "orders/orders";
         }

@@ -4,11 +4,13 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * User class data access object
@@ -73,5 +75,10 @@ public class UserDAO {
     public User save(User user) {
         entityManager.persist(user);
         return entityManager.find(User.class, user.getId());
+    }
+
+    public List<User> findAll() {
+        return entityManager.createQuery("select e from User e", User.class)
+                .getResultList();
     }
 }

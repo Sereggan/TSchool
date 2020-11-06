@@ -11,5 +11,9 @@ public enum AuthorityType {
     /**
      * Role client authority type.
      */
-    ROLE_CLIENT
+    ROLE_CLIENT,
+    /**
+     * Role admin authority type.
+     */
+    ROLE_ADMIN
 }

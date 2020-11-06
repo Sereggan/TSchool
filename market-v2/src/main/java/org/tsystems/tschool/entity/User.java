@@ -58,7 +58,6 @@ public class User implements Serializable {
     @AttributeOverride(name = "street", column = @Column(name = "user_street"))
     @AttributeOverride(name = "house", column = @Column(name = "user_house"))
     @AttributeOverride(name = "flat", column = @Column(name = "user_flat"))
-
     private Address address;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)

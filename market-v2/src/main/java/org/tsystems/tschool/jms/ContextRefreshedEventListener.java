@@ -24,7 +24,11 @@ public class ContextRefreshedEventListener implements ApplicationListener<Contex
      */
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        log.info("Sending message to topic on app start");
-        jmsProducer.sendMessage("App1 launched");
+        try {
+            log.info("Sending message to topic on app start");
+            jmsProducer.sendMessage("App1 launched");
+        } catch (Exception e) {
+            log.info("Failed sending message broker on startup");
+        }
     }
 }

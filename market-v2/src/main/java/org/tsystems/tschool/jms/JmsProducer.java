@@ -25,7 +25,7 @@ public class JmsProducer {
             log.info("Attempting Send message to Topic: " + topic);
             jmsTemplate.convertAndSend(topic, message);
         } catch (Exception e) {
-            log.error("Received Exception sending Message: ", e);
+            log.error("Received Exception while sending Message: ", e);
         }
     }
 }

@@ -19,6 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String ROLE_EMPLOYEE = "EMPLOYEE";
     private static final String ROLE_CLIENT = "CLIENT";
+    private static final String ROLE_ADMIN = "ADMIN";
 
     public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -26,14 +27,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.csrf().disable().authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/categories/**").hasRole(ROLE_EMPLOYEE)
                 .antMatchers("/articles/**").hasRole(ROLE_EMPLOYEE)
+                .antMatchers("/orders").hasRole(ROLE_EMPLOYEE)
                 .antMatchers("/user/**").hasRole(ROLE_CLIENT)
                 .antMatchers("/cart").permitAll()
                 .antMatchers("/cart/convert").hasRole(ROLE_CLIENT)
+                .antMatchers("/admin/**").hasRole(ROLE_ADMIN)
                 .antMatchers("/catalog").permitAll()
                 .and().formLogin().defaultSuccessUrl("/")
                 .permitAll()
@@ -41,8 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().permitAll().logoutSuccessUrl("/")// logout for everyone
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("/access-denied")
-                .and().csrf().disable();
+                .accessDeniedPage("/access-denied");
+
     }
 
     @Bean
