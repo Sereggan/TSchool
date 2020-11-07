@@ -5,18 +5,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.tsystems.tschool.dao.UserDAO;
 import org.tsystems.tschool.dto.UserDto;
-import org.tsystems.tschool.dto.UserItemDto;
-import org.tsystems.tschool.entity.Authority;
 import org.tsystems.tschool.entity.User;
-import org.tsystems.tschool.enums.AuthorityType;
 import org.tsystems.tschool.mapper.UserDtoMapper;
 import org.tsystems.tschool.service.UserService;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Implementation of UserService interface

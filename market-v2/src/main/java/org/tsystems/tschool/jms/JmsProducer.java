@@ -14,7 +14,7 @@ public class JmsProducer {
 
     private final JmsTemplate jmsTemplate;
 
-    private static final String topic = "articleTopic";
+    private static final String TOPIC_NAME = "articleTopic";
 
     public JmsProducer(JmsTemplate jmsTemplate) {
         this.jmsTemplate = jmsTemplate;
@@ -22,8 +22,8 @@ public class JmsProducer {
 
     public void sendMessage(String message) {
         try {
-            log.info("Attempting Send message to Topic: " + topic);
-            jmsTemplate.convertAndSend(topic, message);
+            log.info("Attempting Send message to Topic: " + TOPIC_NAME);
+            jmsTemplate.convertAndSend(TOPIC_NAME, message);
         } catch (Exception e) {
             log.error("Received Exception while sending Message: ", e);
         }

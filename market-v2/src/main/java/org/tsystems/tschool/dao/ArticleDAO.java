@@ -1,7 +1,6 @@
 package org.tsystems.tschool.dao;
 
 import org.springframework.stereotype.Repository;
-import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.entity.ArticleRating;
 import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Category;

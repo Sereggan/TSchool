@@ -97,6 +97,11 @@ public interface ArticleService {
      */
     public List<ArticleDto> getTopArticles();
 
+    /**
+     * Gets all articles filtered by 5 params
+     *
+     * @return the articles list
+     */
     public List<ArticleDto> findAllFiltered(String title, Float minPrice, Float maxPrice,
                                             Integer minQuantity, Integer maxQuantity);
 }

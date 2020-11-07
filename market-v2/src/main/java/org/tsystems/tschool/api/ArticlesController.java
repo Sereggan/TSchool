@@ -25,13 +25,8 @@ public class ArticlesController {
         return articleService.getTopArticles();
     }
 
-//    @GetMapping
-//    public List<ArticleDto> getAllArticles() {
-//        return articleService.findAll();
-//    }
-
     @GetMapping
-    public List<ArticleDto> getAllArticlesWithParams(@RequestParam(defaultValue = "0") Float minPrice,
+    public List<ArticleDto> getAllArticlesWithParams(@RequestParam(defaultValue = "1") Float minPrice,
                                                      @RequestParam(defaultValue = "1000000") Float maxPrice,
                                                      @RequestParam(defaultValue = "1") Integer minQuantity,
                                                      @RequestParam(defaultValue = "1000000") Integer maxQuantity,

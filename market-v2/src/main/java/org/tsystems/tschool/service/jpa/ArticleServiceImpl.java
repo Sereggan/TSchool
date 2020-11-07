@@ -154,9 +154,32 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDtos;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<ArticleDto> findAllFiltered(String title, Float minPrice, Float maxPrice,
                                             Integer minQuantity, Integer maxQuantity) {
+        if(minPrice>maxPrice){
+            minPrice = 1F;
+            maxPrice = 1000000F;
+        }
+        if(minPrice<1F){
+            minPrice = 1F;
+        }
+        if(maxPrice>1000000F){
+            maxPrice = 1000000F;
+        }
+        if(minQuantity>maxQuantity){
+            minQuantity = 1;
+            maxQuantity = 1000000;
+        }
+        if(minQuantity<1){
+            minQuantity = 1;
+        }
+        if(maxQuantity>1000000){
+            maxQuantity = 1000000;
+        }
         List<Article> articles = articleDAO.findAllFiltered(title, minPrice, maxPrice, minQuantity, maxQuantity);
         List<ArticleDto> articleDtos = new ArrayList<>();
         for (Article article : articles) {

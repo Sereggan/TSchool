@@ -2,15 +2,10 @@ package org.tsystems.tschool.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.tsystems.tschool.entity.Authority;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * User data transfer object

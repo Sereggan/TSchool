@@ -1,10 +1,6 @@
 package org.tsystems.tschool.service;
 
-import org.tsystems.tschool.dto.ArticleDto;
 import org.tsystems.tschool.dto.UserDto;
-import org.tsystems.tschool.dto.UserItemDto;
-
-import java.util.List;
 
 /**
  * The interface User to access and control User business logic.

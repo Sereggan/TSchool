@@ -18,13 +18,13 @@ import java.util.Collections;
 @Configuration
 public class ActiveMQConfig {
 
-    private final static String brokerUrl = "tcp://localhost:61616";
+    private static final String BROKER_URL = "tcp://localhost:61616";
 
     @Bean
     public ConnectionFactory connectionFactory() {
         ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
         activeMQConnectionFactory.setTrustedPackages(Collections.singletonList("org.tsysytems.tschool"));
-        activeMQConnectionFactory.setBrokerURL(brokerUrl);
+        activeMQConnectionFactory.setBrokerURL(BROKER_URL);
         return activeMQConnectionFactory;
     }
 

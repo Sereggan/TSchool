@@ -182,11 +182,11 @@ public class CartServiceImpl implements CartService {
         Article article;
         try {
             article = articleDAO.findByIdWithLock(articleId);
-        } catch (NoResultException e) {
+        } catch (EmptyResultDataAccessException e) {
+            log.info("Could not find article with id: " + articleId);
             throw new ItemNotFoundException(ARTICLE_DOESNT_EXIST_MESSAGE);
         }
         article.setQuantity(article.getQuantity() - 1);
-
         for (CartItemDto item : cartDto.getCartItems()) {
             if (item.getArticleId().equals(articleId)) {
                 item.setQuantity(item.getQuantity() + 1);

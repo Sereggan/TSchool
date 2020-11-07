@@ -21,6 +21,7 @@ import org.tsystems.tschool.service.jpa.CartServiceImpl;
 
 import javax.persistence.NoResultException;
 import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -111,9 +112,9 @@ class CartServiceTest {
     @DisplayName("addArticleInSession, add new Article to Cart Catch exception")
     @Test
     void addNewArticleInSession_should_catch_exception() {
-        when(articleDAO.findByIdWithLock(1L)).thenThrow(NoResultException.class);
+        when(articleDAO.findByIdWithLock(anyLong())).thenThrow(EmptyResultDataAccessException.class);
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
-            cartService.addArticleInSession(CartDto.builder().build(), 1L);
+            cartService.addArticleInSession(CartDto.builder().build(), anyLong());
         });
     }
 
@@ -163,11 +164,6 @@ class CartServiceTest {
         assertNotNull(cartDto);
     }
 
-    @Disabled
-    @Test
-    void createOrder() {
-    }
-
     @DisplayName("removeArticle")
     @Test
     void removeArticle() {
@@ -190,6 +186,15 @@ class CartServiceTest {
         cartService.removeArticle(1L, 1L);
         assertEquals(0, cart.getCartItems().size());
         assertEquals(5, article.getQuantity());
+    }
+
+    @Test
+    void removeArticle_should_catch_exception() {
+        when(cartDao.findById(anyLong())).thenReturn(cart);
+        when(articleDAO.findByIdWithLock(1L)).thenThrow(EmptyResultDataAccessException .class);
+        Assertions.assertThrows(ItemNotFoundException.class, () -> {
+            cartService.removeArticle(1L, 1L);
+        });
     }
 
     @DisplayName("Add items to database with empty cart in database")
@@ -239,6 +244,19 @@ class CartServiceTest {
         when(cartDao.findByUsername(any(String.class))).thenReturn(cart);
         CartDto newCartDto = cartService.moveItemsFromSessionToDatabase(null, "name");
         assertEquals(cart.getId(), newCartDto.getId());
+    }
+
+    @Test
+    void moveItemsFromSessionToDatabase_should_catch_exception() {
+        Set<CartItemDto> cartItems = new HashSet<>();
+
+        when(cartDao.findByUsername(anyString())).thenThrow(EmptyResultDataAccessException.class);
+        when(userDAO.getUserByUsername(anyString())).thenReturn(User.builder().build());
+        cart.setUser(User.builder().username("Name").id(1L).build());
+        when(cartDao.save(any(Cart.class))).thenReturn(cart);
+        CartDto newCart = cartService.moveItemsFromSessionToDatabase(CartDto.builder().cartItems(cartItems).id(1L)
+                .build(),anyString());
+        assertEquals(1L, newCart.getId());
     }
 
     @DisplayName("Test clearSessionCart")

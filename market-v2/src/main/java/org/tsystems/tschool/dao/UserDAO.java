@@ -4,7 +4,6 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.User;
 
 import javax.persistence.EntityManager;
