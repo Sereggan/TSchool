@@ -93,7 +93,6 @@ class Users extends Component {
       <div>
         <h2 className="text-center">Articles List</h2>
         <div className="row">
-          {this.state.title}
           <SearchBar  filterParams={this.state.filterParams}
           findArticles={this.findArticles}
           minPriceHandler = {this.minPriceHandler}
