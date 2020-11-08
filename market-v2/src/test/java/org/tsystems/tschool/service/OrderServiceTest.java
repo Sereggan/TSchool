@@ -74,8 +74,9 @@ class OrderServiceTest {
     @Test
     void updateStatus_should_catch_exception() {
         when(orderDAO.findById(1L)).thenThrow(EmptyResultDataAccessException.class);
+        OrderStatusDto orderStatusDto = OrderStatusDto.builder().build();
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
-            orderService.updateStatus(any(OrderStatusDto.class),1L);
+            orderService.updateStatus(orderStatusDto, 1L);
         });
     }
 }

@@ -113,8 +113,9 @@ class CartServiceTest {
     @Test
     void addNewArticleInSession_should_catch_exception() {
         when(articleDAO.findByIdWithLock(anyLong())).thenThrow(EmptyResultDataAccessException.class);
+        CartDto cartDto = CartDto.builder().build();
         Assertions.assertThrows(ItemNotFoundException.class, () -> {
-            cartService.addArticleInSession(CartDto.builder().build(), anyLong());
+            cartService.addArticleInSession(cartDto, 1L);
         });
     }
 
@@ -144,6 +145,13 @@ class CartServiceTest {
         assertEquals(5, article.getQuantity());
         assertEquals(0, cartDto.getCartItems().size());
         assertFalse(cartDto.getCartItems().contains(cartItemDto));
+    }
+
+    @Test
+    void removeArticleInSession_should_catch_exception(){
+        when(articleDAO.findByIdWithLock(1L)).thenThrow(EmptyResultDataAccessException .class);
+        CartDto cartDto = CartDto.builder().cartItems(new HashSet<>()).build();
+        Assertions.assertThrows(ItemNotFoundException.class, () -> cartService.removeArticleInSession(cartDto, 1L));
     }
 
     @DisplayName("findByUsername, cart exists")
