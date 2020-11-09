@@ -3,12 +3,14 @@ import React, { Component } from "react";
 import ArticleService from "../../services/ArticleService";
 import ArticlesList from "../components/ArticlesList";
 import SearchBar  from "../components/SearchBar";
+import LoadingSpinner from "../../shared/UI/LoadingSpinner"
 
 class Users extends Component {
   constructor(props) {
     super(props);
     this.state = {
       articles: [],
+      isLoading:false,
       filterParams:{
         minPrice:1,
         maxPrice:1000000,
@@ -32,8 +34,11 @@ class Users extends Component {
   }
 
   findArticles() {
+    this.setState({
+      isLoading: true
+    })
     ArticleService.getArticlesWithParams(this.state.filterParams).then((res)=>{
-      this.setState({articles:res.data})
+      this.setState({articles:res.data,isLoading:false})
     });
   } 
 
@@ -91,6 +96,11 @@ class Users extends Component {
   render() {
     return (
       <div>
+         {this.state.isLoading && (
+        <div className="center">
+          <LoadingSpinner />
+        </div>
+      )}
         <h2 className="text-center">Articles List</h2>
         <div className="row">
           <SearchBar  filterParams={this.state.filterParams}
@@ -101,7 +111,7 @@ class Users extends Component {
           maxQuantityHandler = {this.maxQuantityHandler}
           titleHandler = {this.titleHandler}/>
           <table className="table table-striped table-bordered">
-            <ArticlesList articles = {this.state.articles}/>
+            {!this.state.isLoading&&<ArticlesList articles = {this.state.articles}/>}
           </table>
         </div>
       </div>
