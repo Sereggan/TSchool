@@ -17,7 +17,6 @@ import org.tsystems.tschool.mapper.AddressDtoMapper;
 import org.tsystems.tschool.mapper.CartDtoMapper;
 import org.tsystems.tschool.service.CartService;
 
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.*;
 

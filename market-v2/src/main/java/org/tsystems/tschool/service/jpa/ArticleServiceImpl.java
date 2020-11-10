@@ -101,14 +101,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional
     @Override
     public boolean removeArticleById(Long id) {
-        boolean isDeleted = false;
         try {
-            isDeleted = articleDAO.removeById(id);
+            return articleDAO.removeById(id);
         } catch (EmptyResultDataAccessException e) {
             log.info(ID_NOT_FOUND_MESSAGE + id);
             throw new ItemNotFoundException(ARTICLE_DOESNT_EXIST_MESSAGE);
         }
-        return isDeleted;
     }
 
     /**
