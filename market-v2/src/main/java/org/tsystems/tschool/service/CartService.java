@@ -1,6 +1,7 @@
 package org.tsystems.tschool.service;
 
 import org.tsystems.tschool.dto.*;
+import org.tsystems.tschool.entity.Order;
 
 /**
  * The interface Category to access and control Cart business logic.
@@ -48,8 +49,9 @@ public interface CartService {
      * Converts Cart to Order when user makes order
      * @param cartDto         the cart transfer object
      * @param orderDetailsDto the order details transfer object
+     * @return created order
      */
-    public void createOrder(CartDto cartDto, OrderDetailsDto orderDetailsDto);
+    public Order createOrder(CartDto cartDto, OrderDetailsDto orderDetailsDto);
 
     /**
      * Remove article cart dto.

@@ -25,7 +25,6 @@ public class MainPageController {
 
             cartService.moveItemsFromSessionToDatabase(cartSessionDto, authentication.getName());
             session.setAttribute("cart", null);
-
         }
         return "index";
     }

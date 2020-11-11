@@ -1,9 +1,6 @@
 package org.tsystems.tschool.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.tsystems.tschool.enums.DeliveryMethod;
 import org.tsystems.tschool.enums.PaymentMethod;
 
@@ -15,6 +12,7 @@ import javax.persistence.Enumerated;
  */
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Setter
 @Getter
 public class OrderDetailsDto {

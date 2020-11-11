@@ -227,12 +227,12 @@ public class ArticleServiceImpl implements ArticleService {
         }
         Set<Value> valueList = article.getValues();
 
-        article.getValues().forEach(value -> articleCategoriesDto.add(
+        article.getValues().forEach(value -> articleCategoriesDto.add(  // add all current values of article
                 new ArticleCategoriesItemDto(value.getId(), value.getCategory().getId(),
                         value.getTitle(), value.getCategory().getTitle())));
 
         categoriesDto.setCurrent(articleCategoriesDto);
-        List<Value> allValues = valueDAO.findAll();
+        List<Value> allValues = valueDAO.findAll();  //
         List<Value> filteredValues = new ArrayList<>();
 
         for (Value value : allValues) {
@@ -304,8 +304,7 @@ public class ArticleServiceImpl implements ArticleService {
             }
         }
         if (!hasCategory) article.removeCategory(value.getCategory());  // Delete category if article doesnt contain
-        // values of this category
-
+                                                                        // values of this category
         articleDAO.save(article);
     }
 

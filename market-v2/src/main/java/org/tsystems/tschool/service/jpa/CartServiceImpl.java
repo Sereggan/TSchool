@@ -267,32 +267,38 @@ public class CartServiceImpl implements CartService {
      * {@inheritDoc}
      */
     @Override
-    public void createOrder(CartDto cartDto, OrderDetailsDto orderDetailsDto) {
-        Order order = new Order();
-        User user = userDAO.getUserById(cartDto.getUserId());
-        order.setUser(user);
-        order.setAddress(addressDtoMapper.dtoToAddress(orderDetailsDto.getAddressDto()));
-        order.setDeliveryMethod(orderDetailsDto.getDeliveryMethod());
-        order.setPaymentMethod(orderDetailsDto.getPaymentMethod());
-        order.setIsPaid(false);
-        order.setPrice(cartDto.getTotalCost());
-        order.setOrderStatus(OrderStatus.STATUS_AWAITING_SHIPMENT);
+    public Order createOrder(CartDto cartDto, OrderDetailsDto orderDetailsDto) {
+        if (!cartDto.getCartItems().isEmpty()) {
+            Order order = new Order();
+            User user = userDAO.getUserById(cartDto.getUserId());
+            order.setUser(user);
+            order.setAddress(addressDtoMapper.dtoToAddress(orderDetailsDto.getAddressDto()));
+            order.setDeliveryMethod(orderDetailsDto.getDeliveryMethod());
+            order.setPaymentMethod(orderDetailsDto.getPaymentMethod());
+            order.setIsPaid(false);
+            order.setPrice(cartDto.getTotalCost());
+            order.setOrderStatus(OrderStatus.STATUS_AWAITING_SHIPMENT);
 
-        for (CartItemDto item : cartDto.getCartItems()) {
-            Article article = articleDAO.findById(item.getArticleId());
-            OrderItem orderItem = new OrderItem();
-            orderItem.setArticleTitle(article.getTitle());
-            orderItem.setArticleTitle(item.getArticle());
-            orderItem.setOrder(order);
-            orderItem.setPrice(item.getPrice());
-            orderItem.setQuantity(item.getQuantity());
-            order.addOrderItem(orderItem);
+            for (CartItemDto item : cartDto.getCartItems()) {
+                Article article = articleDAO.findById(item.getArticleId());
+                OrderItem orderItem = new OrderItem();
+                orderItem.setArticleTitle(article.getTitle());
+                orderItem.setArticleTitle(item.getArticle());
+                orderItem.setOrder(order);
+                orderItem.setPrice(item.getPrice());
+                orderItem.setQuantity(item.getQuantity());
+                order.addOrderItem(orderItem);
+            }
+
+            user.getOrders().add(order);
+            orderDAO.save(order);
+            Cart cart = cartDao.findById(cartDto.getId());
+            cartDao.update(cart);
+            cartDao.delete(cart);
+            return order;
+        } else {
+            log.info("Tried to create order with empty cart");
+            return null;
         }
-
-        user.getOrders().add(order);
-        orderDAO.save(order);
-        Cart cart = cartDao.findById(cartDto.getId());
-        cartDao.update(cart);
-        cartDao.delete(cart);
     }
 }

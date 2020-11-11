@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.tsystems.tschool.dao.OrderDAO;
 import org.tsystems.tschool.dao.UserDAO;
+import org.tsystems.tschool.dto.CartDto;
 import org.tsystems.tschool.dto.OrderDto;
 import org.tsystems.tschool.dto.OrderStatusDto;
 import org.tsystems.tschool.entity.Order;
@@ -19,6 +20,7 @@ import org.tsystems.tschool.exception.ItemNotFoundException;
 import org.tsystems.tschool.service.jpa.OrderServiceImpl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

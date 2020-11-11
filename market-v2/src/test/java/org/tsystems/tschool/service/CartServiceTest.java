@@ -12,9 +12,11 @@ import org.tsystems.tschool.dao.OrderDAO;
 import org.tsystems.tschool.dao.UserDAO;
 import org.tsystems.tschool.dto.CartDto;
 import org.tsystems.tschool.dto.CartItemDto;
+import org.tsystems.tschool.dto.OrderDetailsDto;
 import org.tsystems.tschool.entity.Article;
 import org.tsystems.tschool.entity.Cart;
 import org.tsystems.tschool.entity.CartItem;
+import org.tsystems.tschool.entity.Order;
 import org.tsystems.tschool.entity.User;
 import org.tsystems.tschool.exception.ItemNotFoundException;
 import org.tsystems.tschool.service.jpa.CartServiceImpl;
@@ -288,5 +290,12 @@ class CartServiceTest {
         assertDoesNotThrow(() -> {
             cartService.clearSessionCart(cartDto);
         });
+    }
+
+    @Test
+    void createOrder_should_return_null() {
+        CartDto cartDto = CartDto.builder().cartItems(new HashSet<>()).build();
+        Order order = cartService.createOrder(cartDto, OrderDetailsDto.builder().build());
+        assertNull(order);
     }
 }
