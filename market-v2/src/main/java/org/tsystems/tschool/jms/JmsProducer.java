@@ -1,6 +1,7 @@
 package org.tsystems.tschool.jms;
 
-import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
@@ -9,8 +10,9 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-@Slf4j
 public class JmsProducer {
+
+    private static final Logger log = LogManager.getLogger(JmsProducer.class);
 
     private final JmsTemplate jmsTemplate;
 
@@ -25,7 +27,7 @@ public class JmsProducer {
             log.info("Attempting Send message to Topic: " + TOPIC_NAME);
             jmsTemplate.convertAndSend(TOPIC_NAME, message);
         } catch (Exception e) {
-            log.error("Received Exception while sending Message: ", e);
+            log.error("Received Exception while sending Message: " + message);
         }
     }
 }
