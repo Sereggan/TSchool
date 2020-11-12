@@ -203,9 +203,6 @@ public class ArticleServiceImpl implements ArticleService {
         article.setQuantity(articleDto.getQuantity());
         article.setPrice(articleDto.getPrice());
         article.setTitle(articleDto.getTitle());
-        if (isTopUpdated(article)) {
-            jmsProducer.sendMessage("Top updated");
-        }
         return mapper.articleToDto(article);
     }
 

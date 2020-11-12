@@ -55,6 +55,7 @@ public class CartServiceImpl implements CartService {
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public CartDto addArticle(Long cartId, Long articleId) {
         Cart cart = cartDao.findById(cartId);
@@ -92,6 +93,7 @@ public class CartServiceImpl implements CartService {
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public CartDto removeArticle(Long cartId, Long articleId) {
         Cart cart = cartDao.findById(cartId);
@@ -163,6 +165,7 @@ public class CartServiceImpl implements CartService {
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public void clearSessionCart(CartDto cartDto) {
         List<CartItemDto> items = new ArrayList<>(cartDto.getCartItems());
@@ -175,6 +178,7 @@ public class CartServiceImpl implements CartService {
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public CartDto addArticleInSession(CartDto cartDto, Long articleId) {
 
@@ -207,6 +211,7 @@ public class CartServiceImpl implements CartService {
     /**
      * {@inheritDoc}
      */
+    @Transactional
     @Override
     public CartDto removeArticleInSession(CartDto cartDto, Long id) {
         List<CartItemDto> list = new ArrayList<>(cartDto.getCartItems());
