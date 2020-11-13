@@ -144,6 +144,7 @@ public class ArticleDAO {
                 .setParameter(3,minQuantity)
                 .setParameter(4,maxQuantity)
                 .setParameter(5,"%"+title+"%")
+                .setMaxResults(20)      // max 20 articles
                 .getResultList();
     }
 }
