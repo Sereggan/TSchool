@@ -16,7 +16,7 @@ const SearchBar  = (props) => {
             <h3 className="text-center">Filter params:</h3>
             <div className="card-body">
                 <div className="form-row">
-                <div class="col">
+                <div className="col">
                   <label>
                     Title
                   </label>
@@ -28,7 +28,7 @@ const SearchBar  = (props) => {
                     onChange={titleHandler}
                   />
                   </div>
-                  <div class="col">
+                  <div className="col">
                   <label>
                     Min Price
                   </label>
@@ -43,7 +43,7 @@ const SearchBar  = (props) => {
                     onChange={minPriceHandler}
                   />
                   </div>
-                  <div class="col">
+                  <div className="col">
                   <label>
                     Max Price
                   </label>
@@ -58,7 +58,7 @@ const SearchBar  = (props) => {
                     onChange={maxPriceHandler}
                   />
                   </div>
-                  <div class="col">
+                  <div className="col">
                   <label>
                     Min Quantity
                   </label>
@@ -73,7 +73,7 @@ const SearchBar  = (props) => {
                     onChange={minQuantityHandler}
                   />
                   </div>
-                  <div class="col">
+                  <div className="col">
                    <label>
                     Max Quantity
                   </label>
