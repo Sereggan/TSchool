@@ -2,22 +2,22 @@ import React, { Component } from "react";
 
 import ArticleService from "../../services/ArticleService";
 import ArticlesList from "../components/ArticlesList";
-import SearchBar  from "../components/SearchBar";
-import LoadingSpinner from "../../shared/UI/LoadingSpinner"
+import SearchBar from "../components/SearchBar";
+import LoadingSpinner from "../../shared/UI/LoadingSpinner";
 
 class Users extends Component {
   constructor(props) {
     super(props);
     this.state = {
       articles: [],
-      isLoading:false,
-      filterParams:{
-        minPrice:1,
-        maxPrice:1000000,
-        minQuantity:1,
-        maxQuantity:1000000,
-        title: ""
-      }
+      isLoading: false,
+      filterParams: {
+        minPrice: 1,
+        maxPrice: 1000000,
+        minQuantity: 1,
+        maxQuantity: 1000000,
+        title: "",
+      },
     };
     this.findArticles = this.findArticles.bind(this);
     this.minQuantityHandler = this.minQuantityHandler.bind(this);
@@ -35,83 +35,89 @@ class Users extends Component {
 
   findArticles() {
     this.setState({
-      isLoading: true
-    })
-    ArticleService.getArticlesWithParams(this.state.filterParams).then((res)=>{
-      this.setState({articles:res.data,isLoading:false})
+      isLoading: true,
     });
-  } 
-
-  minPriceHandler(event){
-    let value = event.target.value;
-    if(value<1||value>1000000) value=1;
-    this.setState({
-      filterParams: {
-            ...this.state.filterParams,
-            minPrice: value
+    ArticleService.getArticlesWithParams(this.state.filterParams).then(
+      (res) => {
+        this.setState({ articles: res.data, isLoading: false });
       }
-  })
+    );
   }
 
-  maxPriceHandler(event){
+  minPriceHandler(event) {
     let value = event.target.value;
-    if(value<1||value>1000000) value=10000001;
+    if (value < 1 || value > 1000000) value = 1;
     this.setState({
       filterParams: {
-            ...this.state.filterParams,
-            maxPrice: value
-      }
-  })
+        ...this.state.filterParams,
+        minPrice: value,
+      },
+    });
   }
-  minQuantityHandler(event){
+
+  maxPriceHandler(event) {
     let value = event.target.value;
-    if(value<1||value>1000000) value=1;
+    if (value < 1 || value > 1000000) value = 10000001;
     this.setState({
       filterParams: {
-            ...this.state.filterParams,
-            minQuantity: value
-      }
-  })
+        ...this.state.filterParams,
+        maxPrice: value,
+      },
+    });
   }
-  maxQuantityHandler(event){
+  minQuantityHandler(event) {
     let value = event.target.value;
-    if(value<1||value>1000000) value=1000000;
+    if (value < 1 || value > 1000000) value = 1;
     this.setState({
       filterParams: {
-            ...this.state.filterParams,
-            maxQuantity: value
-      }
-  })
+        ...this.state.filterParams,
+        minQuantity: value,
+      },
+    });
   }
-  titleHandler(event){
-    console.log(this.state.title)
+  maxQuantityHandler(event) {
+    let value = event.target.value;
+    if (value < 1 || value > 1000000) value = 1000000;
     this.setState({
       filterParams: {
-            ...this.state.filterParams,
-            title: event.target.value
-      }
-  })
+        ...this.state.filterParams,
+        maxQuantity: value,
+      },
+    });
   }
-  
+  titleHandler(event) {
+    console.log(this.state.title);
+    this.setState({
+      filterParams: {
+        ...this.state.filterParams,
+        title: event.target.value,
+      },
+    });
+  }
+
   render() {
     return (
       <div>
-         {this.state.isLoading && (
-        <div className="center">
-          <LoadingSpinner />
-        </div>
-      )}
+        {this.state.isLoading && (
+          <div className="center">
+            <LoadingSpinner />
+          </div>
+        )}
         <h2 className="text-center">Articles List</h2>
         <div className="row">
-          <SearchBar  filterParams={this.state.filterParams}
-          findArticles={this.findArticles}
-          minPriceHandler = {this.minPriceHandler}
-          maxPriceHandler = {this.maxPriceHandler}
-          minQuantityHandler = {this.minQuantityHandler}
-          maxQuantityHandler = {this.maxQuantityHandler}
-          titleHandler = {this.titleHandler}/>
+          <SearchBar
+            filterParams={this.state.filterParams}
+            findArticles={this.findArticles}
+            minPriceHandler={this.minPriceHandler}
+            maxPriceHandler={this.maxPriceHandler}
+            minQuantityHandler={this.minQuantityHandler}
+            maxQuantityHandler={this.maxQuantityHandler}
+            titleHandler={this.titleHandler}
+          />
           <table className="table table-striped table-bordered">
-            {!this.state.isLoading&&<ArticlesList articles = {this.state.articles}/>}
+            {!this.state.isLoading && (
+              <ArticlesList articles={this.state.articles} />
+            )}
           </table>
         </div>
       </div>

@@ -8,23 +8,17 @@ const ArticlesList = (props) => {
 
   return (
     <React.Fragment>
-           <thead>
-              <tr>
-                <th> Title </th>
-                <th> Price </th>
-                <th> Quantity </th>
-              </tr>
-            </thead>
+      <thead>
+        <tr>
+          <th> Title </th>
+          <th> Price </th>
+          <th> Quantity </th>
+        </tr>
+      </thead>
       {articles.map((article) => {
-        return (
-        <ArticlesItem
-            article={article}
-            key={article.id}
-          />
-      
-        );
+        return <ArticlesItem article={article} key={article.id} />;
       })}
-        </React.Fragment>
+    </React.Fragment>
   );
 };
 

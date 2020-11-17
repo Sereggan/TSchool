@@ -14,11 +14,11 @@ function App() {
     <Router>
       <div className="container">
         <Switch>
-        <Switch>
-          <Route path="/" exact component={Articles} />
-          <Route path="/articles" exact component={Articles} />
-          <Redirect to="/" />
-        </Switch>
+          <Switch>
+            <Route path="/" exact component={Articles} />
+            <Route path="/articles" exact component={Articles} />
+            <Redirect to="/" />
+          </Switch>
         </Switch>
       </div>
     </Router>

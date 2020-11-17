@@ -7,14 +7,16 @@ class ArticleService {
     return axios.get(API_BASE_URL);
   }
 
-  getArticlesWithParams(params){
-    return axios.get(API_BASE_URL, {params : {
-      maxPrice: params.maxPrice,
-      minPrice: params.minPrice,
-      maxQuantity: params.maxQuantity,
-      minQuantity: params.minQuantity,
-      title: params.title,
-    }})
+  getArticlesWithParams(params) {
+    return axios.get(API_BASE_URL, {
+      params: {
+        maxPrice: params.maxPrice,
+        minPrice: params.minPrice,
+        maxQuantity: params.maxQuantity,
+        minQuantity: params.minQuantity,
+        title: params.title,
+      },
+    });
   }
 }
 
