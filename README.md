@@ -1,6 +1,7 @@
 # TSchool
 T-Systems Task    
-
+![Java CI with Maven](https://github.com/Sereggan/TSchool/workflows/Java%20CI%20with%20Maven/badge.svg)
+  
 market is the main part of the task
 Based on Spring boot, Spring Security, Spring Data.  
 You have to clone market-v2 folder, Create database marketdb and fill it with default user's profiles and it's authorities(run src/main/resources/script.sql) and run app  
