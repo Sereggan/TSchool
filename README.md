@@ -20,5 +20,5 @@ visit http://localhost:4680/
   
 To run market in docker:  
 docker run --name mysql-standalone -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=marketdb -e MYSQL_USER=sa -e MYSQL_PASSWORD=root -d mysql  
-docker build -t market-mysql .
+docker build -t market-mysql .  
 docker run -p 8081:8081 --name market-mysql --link mysql-standalone:mysql -d market-mysql
