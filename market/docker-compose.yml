@@ -12,6 +12,9 @@ services:
     ports:
       - "3306:3306"
     restart: always
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+
 
   spring-boot-docker-container:
     image: spring-boot-docker-container

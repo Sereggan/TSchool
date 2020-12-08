@@ -120,7 +120,7 @@ public class ArticleDAO {
     public List<ArticleRating> findBestSellers(Long limit) {
         return entityManager.createNativeQuery("SELECT id, order_article_title as article, " +
                 "sum(order_item_price * order_item_quantity) as price FROM order_item group by article " +
-                "order by price desc limit ?1", ArticleRating.class)
+                "order by price, id desc limit ?1", ArticleRating.class)
                 .setParameter(1, limit)
                 .getResultList();
     }

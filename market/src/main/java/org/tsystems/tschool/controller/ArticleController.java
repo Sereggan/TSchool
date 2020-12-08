@@ -14,8 +14,8 @@ import javax.validation.Valid;
 public class ArticleController {
 
     private ArticleService articleService;
-    private static final String REDIRECT = "redirect:";
-    private static final String ARTICLES_URL = "/articles";
+    private static final String REDIRECT = "redirect:/articles";
+    private static final String ARTICLES_URL = "articles";
 
     public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
@@ -39,7 +39,7 @@ public class ArticleController {
         }
 
         articleService.saveArticle(articleDto);
-        return REDIRECT + ARTICLES_URL;
+        return REDIRECT;
     }
 
     @GetMapping("/edit/article-info-page/{id}")
@@ -56,7 +56,7 @@ public class ArticleController {
             return ARTICLES_URL + "/editArticlePage";
         }
         articleService.updateArticle(articleDto);
-        return REDIRECT + ARTICLES_URL;
+        return REDIRECT;
     }
 
     @GetMapping("/values/{id}")
@@ -68,7 +68,7 @@ public class ArticleController {
     @GetMapping("/values/{id}/add/{valueId}")
     public String addCategory(@PathVariable(name = "id") Long articleId, @PathVariable(name = "valueId") Long valueID) {
         articleService.addValue(articleId, valueID);
-        return REDIRECT + "/articles/values/{id}";
+        return REDIRECT + "/values/{id}";
     }
 
     @GetMapping("/values/{id}/delete/{valueId}")
@@ -76,18 +76,18 @@ public class ArticleController {
                                  @PathVariable(name = "valueId") Long valueID) {
         articleService.deleteValue(articleId, valueID);
 
-        return REDIRECT + "/articles/values/{id}";
+        return REDIRECT + "/values/{id}";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteArticleById(@PathVariable Long id) {
         articleService.removeArticleById(id);
-        return REDIRECT + ARTICLES_URL;
+        return REDIRECT;
     }
 
     @GetMapping("/rating")
     public String getTopArticles(Model model) {
         model.addAttribute("articles", articleService.getArticlesRating());
-        return ARTICLES_URL + "/articlesRating";
+        return ARTICLES_URL + "articlesRating";
     }
 }
