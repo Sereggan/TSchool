@@ -3,6 +3,7 @@ T-Systems Task
 ![Java CI with Maven](https://github.com/Sereggan/TSchool/workflows/Java%20CI%20with%20Maven/badge.svg)
   
 To run market in docker:  
+cd market  
 docker-compose up  
 If spring app cant connect to db, try to reload spring app manually
   
