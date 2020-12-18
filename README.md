@@ -5,7 +5,7 @@ T-Systems Task
 To run market in docker:  
 cd market  
 docker-compose up  
-open http://localhost:8081
+open http://localhost:8081  
 If spring app cant connect to db, try to reload spring app manually
   
 Default credentionals: Kirill : 123456 - client, Sergey : 123456 - employee  
