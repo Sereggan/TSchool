@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Sergey Nikolaychuk on 02.11.2020
  */
-@CrossOrigin(origins = {"http://localhost:3000","http://localhost:4680"})
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController()
 @RequestMapping("/api/articles")
 public class ArticlesController {

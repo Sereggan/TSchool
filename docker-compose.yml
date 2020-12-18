@@ -1,0 +1,58 @@
+version: "3.6"
+
+services:
+  db:
+    container_name: postgres-db
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=marketdb
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - ./market/init:/docker-entrypoint-initdb.d/
+
+  spring-boot-app:
+    image: spring-boot-app
+    restart: always
+    build: 
+      context: market
+      dockerfile: Dockerfile
+    image: market
+    ports:
+      - 8081:8081
+
+  articles:
+    build:
+      context: articles # Use an image built from the specified dockerfile in the `polling-app-client` directory.
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80" # Forward the exposed port 80 on the container to port 80 on the host machine
+    restart: always
+    depends_on:
+      - spring-boot-app
+
+  activemq:
+    image: rmohr/activemq:5.10.0
+    container_name: activemq
+    restart: always
+    ports:
+      # jms
+      - "61616:61616"
+      - "9876:9876"
+    environment:
+      ACTIVEMQ_REMOVE_DEFAULT_ACCOUNT: "true"
+      ACTIVEMQ_ADMIN_LOGIN: admin
+      ACTIVEMQ_ADMIN_PASSWORD: admin
+      ACTIVEMQ_WRITE_LOGIN: write
+      ACTIVEMQ_WRITE_PASSWORD: admin
+      ACTIVEMQ_READ_LOGIN: read
+      ACTIVEMQ_READ_PASSWORD: admin
+      ACTIVEMQ_JMX_LOGIN: jmx
+      ACTIVEMQ_JMX_PASSWORD: admin
+      ACTIVEMQ_STATIC_TOPICS: articleTopic
+      ACTIVEMQ_ENABLED_SCHEDULER: "true"
+      ACTIVEMQ_MIN_MEMORY: 512
+      ACTIVEMQ_MAX_MEMORY: 2048
