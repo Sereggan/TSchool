@@ -5,8 +5,8 @@ T-Systems Task
 To run market in docker:  
 docker-compose up  
 open http://localhost:8081  
-open http://localhost:3000
-DB loads too long, you have to wait a bit    
+open http://localhost:3000  
+DB loads too long, you have to wait a bit, and manually restart spring app  
 Default credentionals: Kirill : 123456 - client, Sergey : 123456 - employee  
   
 market has a Unit tests on businness logic with 80% coverage.  
