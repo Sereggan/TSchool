@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/marketdb
-    username: postgres
+    url: jdbc:mysql://localhost:3306/marketdb?autoReconnect=true
+    username: root
     password: root
   jpa:
     show-sql: true
-    hibernate:
-      ddl-auto: update
+    hibernate:  
+      ddl-auto: update  
   activemq:
     broker-url: tcp://localhost:9876
     user: admin
@@ -18,3 +18,4 @@ server:
   error:
     whitelabel:
       enabled: false
+
