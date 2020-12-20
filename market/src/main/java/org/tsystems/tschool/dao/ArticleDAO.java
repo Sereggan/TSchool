@@ -16,7 +16,6 @@ import java.util.Set;
  * Article class data access object
  * Class to access and control article data
  */
-@Transactional
 @Repository
 public class ArticleDAO {
 

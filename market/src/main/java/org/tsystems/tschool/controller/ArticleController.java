@@ -13,7 +13,7 @@ import javax.validation.Valid;
 @RequestMapping("/articles")
 public class ArticleController {
 
-    private ArticleService articleService;
+    private final ArticleService articleService;
     private static final String REDIRECT = "redirect:/articles";
     private static final String ARTICLES_URL = "articles";
 
@@ -88,6 +88,6 @@ public class ArticleController {
     @GetMapping("/rating")
     public String getTopArticles(Model model) {
         model.addAttribute("articles", articleService.getArticlesRating());
-        return ARTICLES_URL + "articlesRating";
+        return ARTICLES_URL + "/articlesRating";
     }
 }

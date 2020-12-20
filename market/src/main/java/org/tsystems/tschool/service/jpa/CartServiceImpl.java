@@ -24,7 +24,6 @@ import java.util.*;
  * Implementation of CartService interface
  */
 @Service
-@Transactional
 public class CartServiceImpl implements CartService {
 
     private final CartDAO cartDao;
@@ -126,6 +125,7 @@ public class CartServiceImpl implements CartService {
     /**
      * {@inheritDoc}
      */
+    @javax.transaction.Transactional
     @Override
     public CartDto moveItemsFromSessionToDatabase(CartDto cartDto, String username) {
         Cart cart;
